@@ -38,43 +38,45 @@
 .hero-honey.is-active .hb-cond { transition-delay: .75s; }
 .hero-honey.is-active .hb-mist { transition-delay: 1s; }
 
-/* ---------------- Christmas: burgundy and gold ---------------- */
-.hero-noel { --gold: #e8c98c; background:
-    radial-gradient(48% 60% at 70% 40%, #8a1f3a 0%, rgba(138, 31, 58, 0) 70%),
-    radial-gradient(70% 70% at 20% 100%, #2a0610 0%, rgba(42, 6, 16, 0) 70%),
-    linear-gradient(160deg, #5e1027 0%, #46091c 55%, #2b0511 100%); }
-.hero-noel::before { content: ''; position: absolute; inset: 0; opacity: .18; mix-blend-mode: soft-light; pointer-events: none;
+/* ---------------- the pouch: classy brown (the Cozy Edit's palette), the ritual bursting out of it ---------------- */
+.hero-noel { --gold: #e3c37c; --cream: #f4e8da; --rose: #dba6aa; --caramel: #c69563;
+  background:
+    radial-gradient(42% 58% at 70% 46%, rgba(214, 140, 78, .26) 0%, rgba(214, 140, 78, 0) 70%),
+    radial-gradient(70% 80% at 18% 100%, #140a05 0%, rgba(20, 10, 5, 0) 70%),
+    linear-gradient(160deg, #3a1f11 0%, #2c170c 55%, #1c0e07 100%); }
+.hero-noel::before { content: ''; position: absolute; inset: 0; opacity: .2; mix-blend-mode: soft-light; pointer-events: none;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23v)'/></svg>"); }
 .nb-glitter { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .nb-stage { position: absolute; left: 40%; right: 0; top: 5%; bottom: 3%; transform: translate(calc(var(--mx) * 12px), calc(var(--my) * 8px)); }
-.nb-glow { position: absolute; left: 20%; right: 20%; top: 10%; bottom: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 214, 190, .3), rgba(255, 214, 190, 0)); }
+.nb-glow { position: absolute; left: 20%; right: 20%; top: 10%; bottom: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 206, 150, .26), rgba(255, 206, 150, 0)); }
 .nb-pouch { position: absolute; left: 50%; bottom: 13%; width: 32%; height: auto; transform: translateX(-50%); z-index: 6;
-  filter: drop-shadow(0 22px 22px rgba(20, 2, 8, .55)); }
-.nb-stage::after { content: ''; position: absolute; left: 30%; right: 30%; bottom: 11%; height: 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(10, 0, 4, .6), rgba(10, 0, 4, 0)); }
+  filter: drop-shadow(0 22px 22px rgba(12, 5, 1, .6)); }
+.nb-stage::after { content: ''; position: absolute; left: 30%; right: 30%; bottom: 11%; height: 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(8, 3, 0, .65), rgba(8, 3, 0, 0)); }
 .nb-p { position: absolute; left: var(--x); top: var(--y); width: var(--w); transform: translate(-50%, 0) rotate(var(--r)); z-index: 1; }
-/* each product hangs in space: it bobs, turns slowly, catches a sheen of light, casts a soft shadow on
-   the velvet, and sits at its own depth (further back: smaller, softer, a little darker) */
+/* each product hangs in space: it bobs, turns slowly, catches a sheen of light, casts a soft shadow, and sits at its
+   own depth (further back: smaller, softer, a little darker) */
 .nb-bobber { display: block; animation: nb-bob var(--bob, 6s) ease-in-out var(--bd, 0s) infinite alternate; }
 .nb-turn { display: block; position: relative; transform-style: preserve-3d; animation: nb-turn var(--turn, 9s) ease-in-out var(--bd, 0s) infinite alternate; }
 .nb-p { perspective: 760px; scale: var(--sc, 1); filter: blur(var(--blur, 0px)) brightness(var(--lit, 1)); }
-.nb-p img { display: block; width: 100%; height: auto; filter: drop-shadow(16px 30px 20px rgba(24, 0, 10, .55)) drop-shadow(0 2px 2px rgba(24, 0, 10, .35)); }
+.nb-p img { display: block; width: 100%; height: auto; filter: drop-shadow(16px 30px 20px rgba(12, 5, 1, .6)) drop-shadow(0 2px 2px rgba(12, 5, 1, .4)); }
 .nb-sheen { position: absolute; inset: 0; pointer-events: none; -webkit-mask: var(--src) center / 100% 100% no-repeat; mask: var(--src) center / 100% 100% no-repeat;
-  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 30%, rgba(255, 244, 236, .5) 46%, rgba(255, 255, 255, 0) 60%) 0 0 / 300% 100% no-repeat;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 30%, rgba(255, 240, 222, .45) 46%, rgba(255, 255, 255, 0) 60%) 0 0 / 300% 100% no-repeat;
   animation: nb-sheen var(--turn, 9s) ease-in-out var(--bd, 0s) infinite alternate; mix-blend-mode: screen; }
 @keyframes nb-turn { from { transform: rotateY(-18deg) rotateX(4deg); } to { transform: rotateY(18deg) rotateX(-3deg); } }
 @keyframes nb-sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
 @keyframes nb-bob { from { transform: translateY(-9px) rotate(-2deg); } to { transform: translateY(9px) rotate(2deg); } }
 .hero-slide:not(.is-active) .nb-bobber, .hero-slide:not(.is-active) .nb-turn, .hero-slide:not(.is-active) .nb-sheen { animation-play-state: paused; }
 .nb-foot { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 7; display: flex; justify-content: center; }
-.nb-copy { color: #f7e6ea; }
-.nb-copy .eyebrow { color: var(--gold); }
-.nb-copy .eyebrow .dot { background: var(--gold); box-shadow: 0 0 0 4px rgba(232, 201, 140, .2); }
-.hero-noel .hero-title { color: #fbeef0; font-size: clamp(44px, 5.4vw, 80px); max-width: 560px; }
-.hero-noel .hero-title em { color: var(--gold); }
-.nb-btn { --bg: var(--gold); --fg: #3d0817; }
-.nb-btn::after { background: #fff4e0; }
-.nb-link { color: #f7e6ea; }
-.nb-link:hover { color: var(--gold); }
+/* the copy: cream Cormorant Garamond with the dusty-rose word, as on the Cozy Edit */
+.nb-copy { color: var(--cream); }
+html .hero-slide.hero-noel .eyebrow { gap: 14px; font-size: 11.5px; letter-spacing: .34em; color: var(--caramel); }
+html .hero-slide.hero-noel .eyebrow .dot { width: 34px; height: 1px; border-radius: 0; background: var(--caramel); box-shadow: none; -webkit-mask: none; mask: none; clip-path: none; }
+html .hero-slide.hero-noel .hero-title { font: 500 clamp(42px, 4.2vw, 66px)/1.02 'Cormorant Garamond', Georgia, serif; letter-spacing: -.01em; color: var(--cream); max-width: 9.6em; }
+html .hero-slide.hero-noel .hero-title em { font-style: italic; color: var(--rose); }
+.nb-btn { --bg: var(--rose); --fg: #160b06; border-radius: 0; min-height: 50px; padding-inline: 32px; font-size: 12.5px; letter-spacing: .2em; }
+.nb-btn::after { background: var(--cream); }
+.nb-link { color: var(--cream); font-weight: 500; letter-spacing: .04em; border-bottom-color: rgba(244, 232, 218, .45); }
+.nb-link:hover { color: var(--rose); }
 
 /* ---------------- phones ---------------- */
 @media (max-width: 900px) {
@@ -84,7 +86,7 @@
   .hb-sub { font-size: 15px; margin-top: 14px; }
   .nb-stage { left: 0; right: 0; top: 40%; bottom: 9%; }
   .nb-copy { justify-content: flex-start; }
-  .hero-noel .hero-title { font-size: clamp(34px, 9vw, 52px); }
+  html .hero-slide.hero-noel .hero-title { font-size: clamp(36px, 9.5vw, 54px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .nb-bobber, .nb-turn, .nb-sheen { animation: none !important; }

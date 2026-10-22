@@ -1,0 +1,147 @@
+<!--meta
+title: New Features - ÀLara Line
+desc: The ÀLara Hair Lab before-and-after preview, the ÀLara Hair Scan, and the ÀLara Care assistant.
+nav: features
+body: page-features
+js: assets/js/lab-looks.js, assets/js/hairlab.js, assets/js/main.js, assets/christmas/hero-snow.js, assets/christmas/season.js, assets/js/support.js, assets/js/scan.js
+-->
+    <section class="page-band">
+      <div class="wrap">
+        <h1 class="band-title">New Features</h1>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i></i><span>New Features</span></nav>
+        <nav class="feature-jump" aria-label="On this page">
+          <a href="#hair-lab"><svg class="ic sm"><use href="#i-flask"/></svg> Hair Lab: before &amp; after</a>
+          <a href="#hair-scan"><svg class="ic sm"><use href="#i-sparkle"/></svg> Hair Scan: hair analysis</a>
+          <a href="#assistant"><svg class="ic sm"><use href="#i-mail"/></svg> ÀLara Care assistant</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- HAIR LAB -->
+    <section class="section lab" id="hair-lab" aria-labelledby="lab-title">
+      <div class="lab-bg" aria-hidden="true"></div>
+      <div class="wrap">
+        <header class="sec-head center reveal">
+          <p class="eyebrow"><svg class="ic sm"><use href="#i-flask"/></svg> New · The ÀLara Hair Lab</p>
+          <h2 class="sec-title" id="lab-title">See the magic on <em>your hair</em></h2>
+          <p class="sec-sub">Use the arrows to find hair like yours, choose your products, and see how results build over time.</p>
+        </header>
+
+        <div class="lab-grid" data-lab>
+          <div class="lab-stage-wrap">
+            <div class="lab-viewer">
+              <button type="button" class="lab-nav lab-prev" aria-label="Previous hair type"><svg class="ic sm flip"><use href="#i-arrow"/></svg></button>
+              <div class="lab-stage" aria-label="Drag the line to compare before and after.">
+              <canvas class="lab-canvas-before" aria-hidden="true"></canvas>
+              <div class="lab-after"><canvas class="lab-canvas-after" aria-hidden="true"></canvas></div>
+              <div class="lab-stage-title" aria-hidden="true"><b>Your <em>Beautiful</em><br>Hair Journey</b><small>Swipe to find your hair</small></div>
+              <span class="lab-count" aria-live="polite">1/1</span>
+              <div class="lab-dots" aria-hidden="true"></div>
+              <span class="lab-tag lab-tag-before">Before</span>
+              <span class="lab-tag lab-tag-after lab-after-label">After</span>
+              <div class="lab-handle" role="slider" tabindex="0" aria-label="Compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span><svg class="ic sm flip"><use href="#i-arrow"/></svg><svg class="ic sm"><use href="#i-arrow"/></svg></span></div>
+              <img class="lab-logo" src="assets/img/site/logo.png" alt="" aria-hidden="true">
+            </div>
+              <button type="button" class="lab-nav lab-next" aria-label="Next hair type"><svg class="ic sm"><use href="#i-arrow"/></svg></button>
+            </div>
+            <p class="lab-type-name" aria-live="polite">Soft waves hair</p>
+            <div class="lab-timeline" role="group" aria-label="Results over time"></div>
+            <div class="lab-result" aria-live="polite"></div>
+            <p class="lab-note">Illustrative preview based on each product’s described benefits. Individual results vary.</p>
+          </div>
+
+          <div class="lab-panel">
+            <div class="lab-block">
+              <div class="lab-step"><h3>Choose your products</h3>
+                <label class="switch"><input type="checkbox" class="lab-routine"><i></i><span>Combine products</span></label>
+              </div>
+              <div class="lab-concern-row"><span class="lab-label">Main concern</span><div class="lab-concerns" role="group" aria-label="Main concern"></div></div>
+              <div class="lab-filters" role="group" aria-label="Filter products"></div>
+              <div class="lab-rail" role="group" aria-label="ÀLara products"></div>
+              <div class="lab-panel-foot"><span class="lab-sel-count" aria-live="polite">No product selected</span><button class="link-btn lab-reset" type="button" disabled>Clear selection</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAIR SCAN -->
+    <section class="section scan" id="hair-scan" aria-labelledby="scan-title" data-mode="empty">
+      <div class="wrap">
+        <header class="sec-head center reveal">
+          <p class="eyebrow"><svg class="ic sm"><use href="#i-sparkle"/></svg> ÀLara Hair Scan</p>
+          <h2 class="sec-title" id="scan-title">Show us your hair, <em>we’ll do the rest</em></h2>
+          <p class="sec-sub">Take a photo or use your camera. We analyse your hair and build the ÀLara routine that suits it.</p>
+        </header>
+        <div class="scan-grid">
+          <div class="scan-left">
+            <div class="scan-stage">
+              <video class="scan-video" playsinline muted aria-label="Live camera preview"></video>
+              <canvas class="scan-canvas" aria-label="Your hair photo"></canvas>
+              <div class="scan-guide" aria-hidden="true"><i></i><span>Fit your hair inside the frame</span></div>
+              <div class="scan-beam" aria-hidden="true"></div>
+              <div class="scan-empty">
+                <span class="scan-empty-ic"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+                <b>Show us your hair</b>
+                <span>Hair down, natural light, from the back or the side.</span>
+                <div class="scan-actions">
+                  <button type="button" class="btn btn-primary scan-cam">Use my camera</button>
+                  <label class="btn btn-outline scan-upload">Upload a photo<input type="file" class="scan-file" accept="image/*" capture="environment" hidden></label>
+                </div>
+              </div>
+            </div>
+            <div class="scan-controls">
+              <button type="button" class="btn btn-primary scan-shoot">Take photo</button>
+              <button type="button" class="btn btn-primary scan-analyze">Analyse my hair</button>
+              <button type="button" class="link-btn scan-retake">Start over</button>
+            </div>
+            <ol class="scan-steps" aria-live="polite"></ol>
+          </div>
+          <div class="scan-right">
+            <div class="scan-budget-row"><label for="scan-budget">Budget</label>
+              <select id="scan-budget" class="scan-budget"><option value="25">Under $25</option><option value="50" selected>$25 – $50</option><option value="80">$50 – $80</option><option value="0">No limit</option></select>
+            </div>
+            <div class="scan-result" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÀLARA CARE ASSISTANT -->
+    <section class="section assistant" id="assistant" aria-labelledby="as-title">
+      <div class="wrap assistant-grid">
+        <div class="reveal">
+          <p class="eyebrow"><svg class="ic sm"><use href="#i-sparkle"/></svg> ÀLara Care</p>
+          <h2 class="sec-title" id="as-title">Questions about your hair? <em>Just ask</em></h2>
+          <p class="sec-sub">Usage tips, when you’ll see results, and a routine built for your hair type and budget. It knows every ÀLara product and hands you over to the team on WhatsApp when you need a person.</p>
+          <button class="btn btn-primary" type="button" data-support-open>Chat with ÀLara Care <svg class="ic sm"><use href="#i-arrow"/></svg></button>
+        </div>
+        <ul class="assistant-points reveal">
+          <li><b>How do I use it?</b><span>Step-by-step use and how often, for every product.</span></li>
+          <li><b>When will I see results?</b><span>Timings from the ÀLara team’s own formulas.</span></li>
+          <li><b>Build my routine</b><span>Pick your hair type, concern and budget.</span></li>
+        </ul>
+      </div>
+    </section>
+
+  <!-- ÀLara Care support -->
+  <div class="support" id="support">
+    <section class="sp-panel" role="dialog" aria-label="ÀLara Care support" hidden>
+      <header class="sp-head">
+        <span class="sp-avatar"><img src="assets/img/site/bee.png" alt=""></span>
+        <div><b>ÀLara Care</b><small>Usage tips, results & recommendations</small></div>
+        <button type="button" class="icon-btn sp-close" aria-label="Close support"><svg class="ic sm"><use href="#i-close"/></svg></button>
+      </header>
+      <div class="sp-log" aria-live="polite"></div>
+      <div class="sp-chips"></div>
+      <form class="sp-form" autocomplete="off">
+        <label class="sr" for="sp-input">Ask a question</label>
+        <input id="sp-input" class="sp-input" placeholder="Ask about a product, results, a routine…">
+        <button type="submit" class="sp-send" aria-label="Send"><svg class="ic sm"><use href="#i-arrow"/></svg></button>
+      </form>
+    </section>
+    <button type="button" class="sp-fab" aria-expanded="false" aria-controls="support" aria-label="Open ÀLara Care support">
+      <svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+      <span>Need help?</span>
+    </button>
+  </div>

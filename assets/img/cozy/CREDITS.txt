@@ -1,0 +1,7 @@
+The Cozy Edit banner (curls-sunday.webp, curls-sunday-phone.webp)
+- The bear photo is ÀLara Line's own (src/curls-bear.png, with the team's cut-out src/curls-bear-cutout.png).
+  tools/cozy_scene.py regrades and extends it: the wall and bed are rebuilt in brown, the sherpa throw is
+  rebuilt from the photo's own blanket, and the shampoo's left edge (cut by the photo's frame) is restored.
+- linen-choc.webp (the brown bed): "Linen, Texture (2242358989)" - Wikimedia Commons,
+  https://commons.wikimedia.org/wiki/File:Linen,_Texture_(2242358989).jpg (toned chocolate).
+  Check the file page for its exact licence and attribution line before launch.

@@ -1,0 +1,225 @@
+<!--meta
+title: ÀLara Line — Awaken The Magic of Hair Growth
+desc: Pharmacy-developed, 100% organic hair care from Lebanon. Powered by advanced vitamins, peptides and caffeine for healthier, fuller-looking hair.
+nav: home
+body: page-home
+head: <link rel="preload" as="image" href="assets/christmas/box/interior.jpg">
+css: assets/css/banners.css, assets/css/pantry.css, assets/css/cozy.css
+js: assets/js/main.js, assets/js/banners.js, module assets/js/honey.js, assets/js/pantry.js, assets/christmas/hero-snow.js, assets/christmas/gift.js, assets/christmas/season.js
+-->
+    <!-- HERO: the season's banners -->
+    <section class="hero" aria-roledescription="carousel" aria-label="Featured">
+      <div class="hero-slides">
+        <article class="hero-slide hero-gift is-active" data-slide="gift" data-duration="22000">
+          <picture class="hero-media">
+            <source media="(max-width: 760px)" srcset="assets/img/site/cat-offers.jpg">
+            <img src="assets/img/site/hero-box.jpg" alt="The ÀLara Line ritual box, open in warm sunlight, holding the full hair-care routine" fetchpriority="high">
+          </picture>
+          <div class="gift" data-gift role="img" aria-label="The ÀLara Christmas gift box opening to reveal the Full Treatment Set: shampoo, conditioner, Leave In Your Dreams, Miracle Mask and The Miracle Pro-Edition"></div>
+          <div class="hero-copy" data-season-only="christmas">
+            <p class="eyebrow"><span class="dot"></span> The Christmas Gift</p>
+            <h1 class="hero-title">Unwrap your <em>Christmas glow</em></h1>
+            <div class="hero-ctas">
+              <a href="product.html?p=full-treatment-set" class="btn btn-primary" data-quick="full-treatment-set">Shop the gift set <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <button type="button" class="text-link" data-gift-replay>Unwrap it again <svg class="ic sm"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+          <div class="hero-copy" data-season-off>
+            <p class="eyebrow"><span class="dot"></span> Full Treatment Set</p>
+            <h1 class="hero-title">Discover the Full Routine for <em>Healthier Hair</em></h1>
+            <div class="hero-ctas">
+              <a href="product.html?p=full-treatment-set" class="btn btn-primary" data-quick="full-treatment-set">Shop Now <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="features.html?try=full-treatment-set#hair-lab" class="text-link">Try the ritual <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- THE COZY EDIT: the brand's own photo (a teddy bear in a towel turban and eye patches hugging Curls On), regraded and
+             extended into a low-key brown room by tools/cozy_scene.py -->
+        <article class="hero-slide hero-banner hero-cozy" data-slide="cozy" data-duration="15000" aria-hidden="true">
+          <picture class="cz-photo">
+            <source media="(max-width: 760px)" srcset="assets/img/cozy/curls-sunday-phone.webp">
+            <img src="assets/img/cozy/curls-sunday.webp" alt="A teddy bear in a towel turban, bathrobe and eye patches hugging the Curls On Curl Defining Shampoo and Hydrating Curl Conditioner on a cream sherpa throw, an iced latte beside it" loading="lazy">
+          </picture>
+          <div class="hero-copy cz-copy">
+            <p class="eyebrow"><span class="dot"></span> The Cozy Edit</p>
+            <h2 class="hero-title">Slow mornings, <em>softer hair</em></h2>
+            <div class="hero-ctas">
+              <a href="shop.html" class="btn btn-primary cz-btn">Shop ÀLara <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="shop.html?cat=curls-on-collection" class="text-link">All curl care <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- INGREDIENT BANNER: a huge word behind each Oh Honey / Curls On / Tropical Vanilla trio, real photographed ingredients in depth -->
+        <article class="hero-slide hero-banner hero-pantry" data-slide="pantry" data-duration="24000" aria-hidden="true" data-pantry="honey">
+          <h2 class="sr">The Oh Honey, Curls On and Tropical Vanilla collections</h2>
+          <div class="pn-word" aria-hidden="true"></div>
+          <div class="pn-ing pn-far" aria-hidden="true"></div>
+          <div class="pn-product" aria-hidden="true">
+            <span class="pn-shadow"></span>
+            <div class="pn-trio is-on" data-state="honey"><img class="pn-b pn-b0" src="assets/img/products/cut/conditioner.webp" alt=""><img class="pn-b pn-b1" src="assets/img/products/cut/shampoo.webp" alt=""><img class="pn-b pn-b2" src="assets/img/products/cut/hair-mist-oh-honey.webp" alt=""></div>
+            <div class="pn-trio" data-state="curls"><img class="pn-b pn-b0" src="assets/img/products/cut/hydrating-curl-conditioner.webp" alt=""><img class="pn-b pn-b1" src="assets/img/products/cut/curl-defining-shampoo.webp" alt=""><img class="pn-b pn-b2" src="assets/img/products/cut/curl-boosting-cream.webp" alt=""></div>
+            <div class="pn-trio" data-state="tropical"><img class="pn-b pn-b0" src="assets/img/products/cut/hydrating-conditioner-tropical-vanilla.webp" alt=""><img class="pn-b pn-b1" src="assets/img/products/cut/intensive-repair-shampoo-tropical-vanilla.webp" alt=""><img class="pn-b pn-b2" src="assets/img/products/cut/hair-mist-tropical-vanilla.webp" alt=""></div>
+          </div>
+          <div class="pn-ing pn-near" aria-hidden="true"></div>
+          <button type="button" class="pn-arrow pn-prev" data-pantry-go="-1" aria-label="Previous collection"><svg class="ic sm flip"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="pn-arrow pn-next" data-pantry-go="1" aria-label="Next collection"><svg class="ic sm"><use href="#i-arrow"/></svg></button>
+          <div class="pn-foot">
+            <p class="pn-name" aria-live="polite"></p>
+            <a href="product.html?p=shampoo" class="btn pn-btn" data-quick="shampoo">Shop now <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+        <!-- AUTUMN BANNER: "Oh, Honey." Real 3D honey dripping over espresso and amber, the pink Oh Honey line -->
+        <article class="hero-slide hero-banner hero-honey" data-slide="honey" data-duration="15000" aria-hidden="true">
+          <canvas class="hb-honey" aria-hidden="true"></canvas>
+          <div class="hb-stage" aria-hidden="true">
+            <img class="hb-p hb-cond" src="assets/img/products/cut/conditioner.webp" alt="">
+            <img class="hb-p hb-mist" src="assets/img/products/cut/hair-mist-oh-honey.webp" alt="">
+            <img class="hb-p hb-shampoo" src="assets/img/products/cut/shampoo.webp" alt="">
+          </div>
+          <div class="hero-copy hb-copy">
+            <p class="eyebrow"><span class="dot"></span> The autumn edit</p>
+            <h2 class="hero-title hb-title">Oh, <em>Honey.</em></h2>
+            <p class="hb-sub">Shampoo, conditioner and hair mist, all scented with honey.</p>
+            <div class="hero-ctas">
+              <a href="product.html?p=shampoo" class="btn hb-btn" data-quick="shampoo">Shop Oh Honey <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="product.html?p=hair-mist-oh-honey" class="text-link hb-link" data-quick="hair-mist-oh-honey">The hair mist <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <!-- CHRISTMAS BANNER: burgundy velvet, gold glitter, a whole ritual bursting out of ÀLara's Pouch -->
+        <article class="hero-slide hero-banner hero-noel" data-slide="noel" data-season-only="christmas" data-duration="14000" aria-hidden="true">
+                    <canvas class="nb-glitter" aria-hidden="true"></canvas>
+          <div class="nb-stage" aria-hidden="true">
+            <div class="nb-glow"></div>
+            <span class="nb-p" style="--x:17%;--y:28%;--w:9%;--r:-28deg"><img src="assets/img/products/cut/curly-hair-brush.webp" alt=""></span>
+            <span class="nb-p" style="--x:30%;--y:13%;--w:8%;--r:-12deg"><img src="assets/img/products/cut/serum.webp" alt=""></span>
+            <span class="nb-p" style="--x:47%;--y:1%;--w:8.6%;--r:4deg"><img src="assets/img/products/cut/miracle-pro-edition.webp" alt=""></span>
+            <span class="nb-p" style="--x:64%;--y:9%;--w:6.6%;--r:14deg"><img src="assets/img/products/cut/heat-protectant.webp" alt=""></span>
+            <span class="nb-p" style="--x:78%;--y:25%;--w:8.6%;--r:18deg"><img src="assets/img/products/cut/deep-repair-capsules.webp" alt=""></span>
+            <span class="nb-p" style="--x:89%;--y:46%;--w:8%;--r:22deg"><img src="assets/img/products/cut/hair-mist-oh-honey.webp" alt=""></span>
+            <span class="nb-p" style="--x:23%;--y:47%;--w:6.4%;--r:-18deg"><img src="assets/img/products/cut/curl-defining-shampoo.webp" alt=""></span>
+            <span class="nb-p" style="--x:38%;--y:31%;--w:6.4%;--r:-6deg"><img src="assets/img/products/cut/shampoo.webp" alt=""></span>
+            <span class="nb-p" style="--x:50%;--y:22%;--w:8.2%;--r:2deg"><img src="assets/img/products/cut/hair-mist-tropical-vanilla.webp" alt=""></span>
+            <span class="nb-p" style="--x:61%;--y:31%;--w:6.4%;--r:8deg"><img src="assets/img/products/cut/conditioner.webp" alt=""></span>
+            <span class="nb-p" style="--x:77%;--y:53%;--w:10%;--r:24deg"><img src="assets/img/products/cut/scalp-massager.webp" alt=""></span>
+            <img class="nb-pouch" src="assets/img/products/cut/alaras-pouch.webp" alt="">
+          </div>
+          <div class="hero-copy nb-copy">
+            <p class="eyebrow"><span class="dot"></span> The Christmas edit</p>
+            <h2 class="hero-title">One pouch, <em>a whole ritual</em></h2>
+            <div class="hero-ctas">
+              <a href="product.html?p=alaras-pouch" class="btn nb-btn" data-quick="alaras-pouch">Shop ÀLara’s Pouch <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="#gift-edit" class="text-link nb-link">Build your gift <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-slide hero-festive" data-slide="curls" data-duration="16000" aria-hidden="true">
+          <picture class="hero-media">
+            <img src="assets/img/site/hero-curls.jpg" alt="Two jars of ÀLara Curls On Curl Boosting Cream stacked on a white table with fresh blackberries, raspberries and blueberries" loading="lazy">
+          </picture>
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="dot"></span> The Holiday Edit</p>
+            <h2 class="hero-title">#1 Best Seller <em>Curls On</em> Collection</h2>
+            <div class="hero-ctas">
+              <a href="product.html?p=curls-on-collection" class="btn btn-primary" data-quick="curls-on-collection">Shop Now <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="features.html?try=curls-on-collection#hair-lab" class="text-link">See it on your curls <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+        <article class="hero-slide" data-slide="0" aria-hidden="true">
+          <picture class="hero-media">
+            <source media="(max-width: 760px)" srcset="assets/img/site/hero-portrait.jpg">
+            <img src="assets/img/site/hero-miracle.jpg" alt="The Miracle Pro-Edition — a pink glass bottle rising from a splash of rose water" loading="lazy">
+          </picture>
+          <video class="hero-video" muted loop playsinline preload="none" aria-hidden="true" data-src="assets/video/hero-miracle.mp4" data-src-mobile="assets/video/hero-miracle-mobile.mp4"></video>
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="dot"></span> The Miracle Pro-Edition</p>
+            <h2 class="hero-title">Awaken The Magic of <em>Hair Growth</em></h2>
+            <div class="hero-ctas">
+              <a href="product.html?p=miracle-pro-edition" class="btn btn-primary" data-quick="miracle-pro-edition">Shop Now <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+              <a href="features.html#hair-lab" class="text-link">See it on your hair <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="festive" aria-hidden="true"><canvas class="festive-canvas"></canvas></div>
+      <div class="hero-ui">
+        <button class="hero-arrow" type="button" data-hero="-1" aria-label="Previous slide"><svg class="ic sm flip"><use href="#i-arrow"/></svg></button>
+        <span class="hero-count"><b>01</b> / <i data-hero-total>05</i></span>
+        <button class="hero-arrow" type="button" data-hero="1" aria-label="Next slide"><svg class="ic sm"><use href="#i-arrow"/></svg></button>
+        <button class="hero-arrow snow-toggle" type="button" data-snow-toggle aria-pressed="false" aria-label="Pause snow" data-season-only="christmas"><svg class="ic sm" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M9 4l3 2 3-2M9 20l3-2 3 2"/></svg></button>
+      </div>
+    </section>
+
+
+    <!-- BEST SELLERS -->
+    <section class="lsec" id="best-sellers">
+      <div class="lwrap">
+        <h2 class="ltitle squiggle">Best Sellers</h2>
+        <div class="lgrid" data-best role="list"></div>
+      </div>
+    </section>
+
+    <!-- CHRISTMAS BUNDLES (season only) -->
+    <section class="section gift-edit" id="gift-edit" data-season-only="christmas" aria-labelledby="ge-title">
+      <div class="wrap">
+        <header class="xb-head reveal">
+          <p class="eyebrow"><span class="dot"></span> The Christmas gift edit</p>
+          <h2 class="sec-title" id="ge-title">Wrapped in <em>a little magic</em></h2>
+          <p class="sec-sub">Nine festive favourites, dressed in fairy lights and ready for gifting.</p>
+        </header>
+        <div class="xb" data-christmas-bundles></div>
+      </div>
+    </section>
+
+    <!-- YOUR HAIR ESSENTIALS -->
+    <section class="lsec" id="essentials">
+      <div class="lwrap">
+        <h2 class="ltitle">Your Hair Essentials</h2>
+        <div class="lcats" data-cats></div>
+        <div class="lcenter"><a href="shop.html" class="lbtn">View all products</a></div>
+      </div>
+    </section>
+
+    <!-- ELEVATE -->
+    <section class="lelevate" id="elevate">
+      <div class="lelevate-copy">
+        <img class="lelevate-bee" src="assets/img/site/bee-line.png" alt="" aria-hidden="true">
+        <h2 class="ltitle">Elevate Your Haircare Routine with ÀLara Line</h2>
+        <p>ÀLara Line Exclusive Lineup of Dreamy Hair Essentials!</p>
+        <a href="shop.html" class="lbtn">Explore more</a>
+      </div>
+      <img class="lelevate-img" src="assets/img/site/elevate-collage.webp" alt="An ÀLara beekeeper holding a Miracle Mask jar over a honeycomb frame, beside the pink ÀLara hives" loading="lazy">
+    </section>
+
+    <!-- PRODUCTS BY CATEGORY -->
+    <section class="lsec" id="collection">
+      <div class="lwrap">
+        <div class="ltabs" role="tablist" aria-label="Product categories">
+          <button role="tab" data-tab="Hair Care" aria-selected="true">Hair Care</button>
+          <button role="tab" data-tab="Body Care" aria-selected="false">Body Care</button>
+          <button role="tab" data-tab="Hair Accessories" aria-selected="false">Hair Accessories</button>
+        </div>
+        <div class="lgrid" data-tab-grid role="list"></div>
+        <div class="lcenter"><a href="shop.html" class="lbtn">View all</a></div>
+      </div>
+    </section>
+
+    <!-- OFFERS -->
+    <section class="lsec" id="offers">
+      <div class="lwrap">
+        <h2 class="ltitle squiggle">Offers</h2>
+        <div class="lgrid" data-offers role="list"></div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER LOVE -->
+    <section class="love" id="reviews">
+      <div class="lwrap">
+        <svg class="love-ic" xmlns="http://www.w3.org/2000/svg" width="48" height="43" viewBox="0 0 48 43" aria-hidden="true"><path d="M7.5 8.25H40.5V9.75H7.5V8.25ZM7.5 15.75H40.5V17.25H7.5V15.75ZM7.5 23.25H40.5V24.75H7.5V23.25ZM12.75 42.8438L24.2812 33H48V0H0V33H12.75V42.8438ZM1.5 31.5V1.5H46.5V31.5H23.7188L14.25 39.6562V31.5H1.5Z" fill="currentColor"/></svg>
+        <h2 class="love-title">Customer Love</h2>
+        <p class="love-sub">Over 78K Positive Reviews</p>
+        <div class="love-slider" data-reviews></div>
+      </div>
+    </section>
+

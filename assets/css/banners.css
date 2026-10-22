@@ -1,0 +1,95 @@
+/* ==========================================================================
+   Hero banners: "Oh, Honey." (real 3D honey over espresso and amber, the pink Oh Honey line) and
+   "One pouch, a whole ritual" (burgundy velvet and gold, the ritual bursting out of
+   ÀLara's Pouch). Both are hero slides; their motion runs only while they are on screen.
+   ========================================================================== */
+.hero-count i { font-style: normal; }
+.hero-slide.hero-banner::after { display: none; }
+.hero .festive { transition: opacity .8s ease; }
+.hero[data-slide="honey"] .festive, .hero[data-slide="noel"] .festive { opacity: 0; }
+.hero-banner { overflow: hidden; --mx: 0; --my: 0; }
+.hero-banner .hero-copy .eyebrow, .hero-banner .hero-title, .hero-banner .hero-ctas { max-width: none; }
+
+/* ---------------- autumn: "Oh, Honey." ---------------- */
+.hero-honey { --cream: #f7e4cc; --rose: #f39ac0; --amber: #e9a54a;
+  background: radial-gradient(60% 60% at 72% 72%, #6a3815, #2b1508 60%, #160a04); }   /* shown if WebGL is unavailable */
+.hb-honey { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hb-stage { position: absolute; left: 52%; right: 5%; bottom: 10%; height: 64%; transform: translate(calc(var(--mx) * 10px), calc(var(--my) * 5px)); }
+.hb-p { position: absolute; bottom: 0; height: auto;
+  filter: drop-shadow(0 22px 22px rgba(20, 8, 2, .55)) drop-shadow(0 2px 3px rgba(20, 8, 2, .4));
+  -webkit-box-reflect: below 1px linear-gradient(transparent 76%, rgba(255, 255, 255, .22)); }
+.hb-cond { left: 18%; width: 22%; }
+.hb-shampoo { left: 39%; width: 24.5%; z-index: 2; }
+.hb-mist { left: 61%; width: 22%; }
+.hb-copy { color: var(--cream); }
+.hb-copy .eyebrow { color: var(--amber); }
+.hb-copy .eyebrow .dot { background: var(--amber); box-shadow: 0 0 0 4px rgba(233, 165, 74, .2); }
+.hb-title { color: var(--cream); font-size: clamp(76px, 10.2vw, 168px); line-height: .9; letter-spacing: -.02em; }
+.hb-title em { color: var(--rose); }
+.hb-sub { margin: 22px 0 0; max-width: 380px; font-size: 17px; line-height: 1.55; color: rgba(247, 228, 204, .82); }
+.hb-btn { --bg: var(--rose); --fg: #2b1508; }
+.hb-btn::after { background: var(--cream); }
+.hb-link { color: var(--cream); }
+.hb-link:hover { color: var(--amber); }
+/* arrival: the products rise into the light one by one */
+.hero-honey .hb-p { opacity: 0; translate: 0 50px; transition: opacity 1s ease, translate 1.6s cubic-bezier(.16, 1, .3, 1); }
+.hero-honey.is-active .hb-p { opacity: 1; translate: 0 0; }
+.hero-honey.is-active .hb-shampoo { transition-delay: .5s; }
+.hero-honey.is-active .hb-cond { transition-delay: .75s; }
+.hero-honey.is-active .hb-mist { transition-delay: 1s; }
+
+/* ---------------- Christmas: burgundy and gold ---------------- */
+.hero-noel { --gold: #e8c98c; background:
+    radial-gradient(48% 60% at 70% 40%, #8a1f3a 0%, rgba(138, 31, 58, 0) 70%),
+    radial-gradient(70% 70% at 20% 100%, #2a0610 0%, rgba(42, 6, 16, 0) 70%),
+    linear-gradient(160deg, #5e1027 0%, #46091c 55%, #2b0511 100%); }
+.hero-noel::before { content: ''; position: absolute; inset: 0; opacity: .18; mix-blend-mode: soft-light; pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23v)'/></svg>"); }
+.nb-glitter { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.nb-stage { position: absolute; left: 40%; right: 0; top: 5%; bottom: 3%; transform: translate(calc(var(--mx) * 12px), calc(var(--my) * 8px)); }
+.nb-glow { position: absolute; left: 20%; right: 20%; top: 10%; bottom: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 214, 190, .3), rgba(255, 214, 190, 0)); }
+.nb-pouch { position: absolute; left: 50%; bottom: 13%; width: 32%; height: auto; transform: translateX(-50%); z-index: 6;
+  filter: drop-shadow(0 22px 22px rgba(20, 2, 8, .55)); }
+.nb-stage::after { content: ''; position: absolute; left: 30%; right: 30%; bottom: 11%; height: 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(10, 0, 4, .6), rgba(10, 0, 4, 0)); }
+.nb-p { position: absolute; left: var(--x); top: var(--y); width: var(--w); transform: translate(-50%, 0) rotate(var(--r)); z-index: 1; }
+/* each product hangs in space: it bobs, turns slowly, catches a sheen of light, casts a soft shadow on
+   the velvet, and sits at its own depth (further back: smaller, softer, a little darker) */
+.nb-bobber { display: block; animation: nb-bob var(--bob, 6s) ease-in-out var(--bd, 0s) infinite alternate; }
+.nb-turn { display: block; position: relative; transform-style: preserve-3d; animation: nb-turn var(--turn, 9s) ease-in-out var(--bd, 0s) infinite alternate; }
+.nb-p { perspective: 760px; scale: var(--sc, 1); filter: blur(var(--blur, 0px)) brightness(var(--lit, 1)); }
+.nb-p img { display: block; width: 100%; height: auto; filter: drop-shadow(16px 30px 20px rgba(24, 0, 10, .55)) drop-shadow(0 2px 2px rgba(24, 0, 10, .35)); }
+.nb-sheen { position: absolute; inset: 0; pointer-events: none; -webkit-mask: var(--src) center / 100% 100% no-repeat; mask: var(--src) center / 100% 100% no-repeat;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 30%, rgba(255, 244, 236, .5) 46%, rgba(255, 255, 255, 0) 60%) 0 0 / 300% 100% no-repeat;
+  animation: nb-sheen var(--turn, 9s) ease-in-out var(--bd, 0s) infinite alternate; mix-blend-mode: screen; }
+@keyframes nb-turn { from { transform: rotateY(-18deg) rotateX(4deg); } to { transform: rotateY(18deg) rotateX(-3deg); } }
+@keyframes nb-sheen { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes nb-bob { from { transform: translateY(-9px) rotate(-2deg); } to { transform: translateY(9px) rotate(2deg); } }
+.hero-slide:not(.is-active) .nb-bobber, .hero-slide:not(.is-active) .nb-turn, .hero-slide:not(.is-active) .nb-sheen { animation-play-state: paused; }
+.nb-foot { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 7; display: flex; justify-content: center; }
+.nb-copy { color: #f7e6ea; }
+.nb-copy .eyebrow { color: var(--gold); }
+.nb-copy .eyebrow .dot { background: var(--gold); box-shadow: 0 0 0 4px rgba(232, 201, 140, .2); }
+.hero-noel .hero-title { color: #fbeef0; font-size: clamp(44px, 5.4vw, 80px); max-width: 560px; }
+.hero-noel .hero-title em { color: var(--gold); }
+.nb-btn { --bg: var(--gold); --fg: #3d0817; }
+.nb-btn::after { background: #fff4e0; }
+.nb-link { color: #f7e6ea; }
+.nb-link:hover { color: var(--gold); }
+
+/* ---------------- phones ---------------- */
+@media (max-width: 900px) {
+  .hb-stage { left: 2%; right: 2%; bottom: 13%; height: 40%; }
+  .hb-cond { left: 14%; width: 26%; } .hb-shampoo { left: 38%; width: 28%; } .hb-mist { left: 66%; width: 17%; }
+  .hb-title { font-size: clamp(64px, 19vw, 110px); }
+  .hb-sub { font-size: 15px; margin-top: 14px; }
+  .nb-stage { left: 0; right: 0; top: 40%; bottom: 9%; }
+  .nb-copy { justify-content: flex-start; }
+  .hero-noel .hero-title { font-size: clamp(34px, 9vw, 52px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nb-bobber, .nb-turn, .nb-sheen { animation: none !important; }
+  .hero-honey .hb-p { transition: none; }
+}
+/* the autumn banner keeps its own marker: a small honeycomb cell, not the season's snowflake */
+html .hero-honey .hb-copy .eyebrow .dot { width: 10px; height: 11px; border-radius: 0; box-shadow: none; background: var(--amber);
+  -webkit-mask: none; mask: none; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }

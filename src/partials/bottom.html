@@ -1,0 +1,85 @@
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-wave" aria-hidden="true"></div>
+    <div class="wrap footer-grid">
+      <div class="f-brand">
+        <img src="assets/img/site/logo.png" alt="ÀLara Line" class="f-logo">
+        <p>Made using clean, non-toxic ingredients, our products are designed for everyone.</p>
+        <p class="xm-greet" data-season-only="christmas">Merry Christmas from the hive.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/Alaralineofficial" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
+          <a href="https://www.instagram.com/alaraline_lb?igsh=MWswMjF0OThlN2F5cQ==" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ic"><use href="#i-ig"/></svg></a>
+          <a href="https://www.tiktok.com/search?q=alaraline" target="_blank" rel="noopener" aria-label="TikTok"><svg class="ic"><use href="#i-tt"/></svg></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h3>Get In Touch</h3>
+        <a href="mailto:Info@alaraline.co"><svg class="ic sm"><use href="#i-mail"/></svg> Info@alaraline.co</a>
+        <a href="tel:+96181624204"><svg class="ic sm"><use href="#i-phone"/></svg> +961 81 624 204</a>
+        <span><svg class="ic sm"><use href="#i-pin"/></svg> Baabda, Lebanon</span>
+      </div>
+      <div class="f-col">
+        <h3>Shop</h3>
+        <a href="shop.html?cat=hair-care">Hair Care</a>
+        <a href="shop.html?cat=offers">Offers</a>
+        <a href="shop.html?cat=hair-accessories">Hair Accessories</a>
+        <a href="shop.html?cat=body-care">Body Care</a>
+      </div>
+      <div class="f-col">
+        <h3>Quick Links</h3>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="shipping-policy.html">Shipping Policy</a>
+        <a href="about.html">Our Story</a>
+        <a href="ingredients.html">Ingredients</a>
+        <a href="features.html#hair-scan">Hair Scan</a>
+      </div>
+      <div class="f-news">
+        <h3>Join the hive</h3>
+        <p>Hair rituals, new launches and offers — straight to your inbox.</p>
+        <form class="news-form" data-news novalidate>
+          <label class="sr" for="nl-email">Email address</label>
+          <input id="nl-email" type="email" placeholder="Your email" required autocomplete="email">
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+          <p class="form-msg" role="status"></p>
+        </form>
+      </div>
+    </div>
+    <div class="wrap footer-base">
+      <span>ÀLara Line | 2026 <button type="button" class="snow-link" data-snow-toggle aria-pressed="false" data-season-only="christmas">Pause snow</button></span>
+      <span>Website By Blue Boost Agency</span>
+    </div>
+  </footer>
+
+  <!-- Shopping bag (mini cart, as on alaraline.co) -->
+  <div class="drawer drawer-right" id="cart" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="drawer-head"><h2 id="cart-title">Shopping bag <span data-cart-count-text></span></h2><button class="icon-btn" data-close aria-label="Close bag"><svg class="ic"><use href="#i-close"/></svg></button></div>
+      <div class="ship-meter" data-ship-meter></div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-foot" data-cart-foot></div>
+    </div>
+  </div>
+
+  <!-- Search overlay -->
+  <div class="modal search-modal" id="search" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Search products">
+      <div class="search-bar">
+        <svg class="ic"><use href="#i-search"/></svg>
+        <label class="sr" for="search-input">Search for products</label>
+        <input id="search-input" type="search" placeholder="Search for: shampoo, mask, mist…" autocomplete="off">
+        <button class="icon-btn" data-close aria-label="Close search"><svg class="ic"><use href="#i-close"/></svg></button>
+      </div>
+      <div class="search-results" data-search-results></div>
+    </div>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+{{EXTRA}}
+  <script src="assets/js/hairlab-data.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/christmas/season-data.js"></script>
+{{JS}}</body>
+</html>

@@ -1,0 +1,51 @@
+/* ==========================================================================
+   The Cozy Edit: the brand's own photo of a teddy bear in a towel turban, bathrobe and eye patches hugging
+   the Curls On shampoo and conditioner, with an iced latte. The photo is regraded and extended into a
+   low-key brown room (tools/cozy_scene.py renders curls-sunday.webp and the phone framing): a cream
+   sherpa throw on a deep brown bed, window light on a brown wall, everything away from the bear falling
+   into warm shadow, where the copy sits. Copy in Cormorant Garamond: cream, with dusty rose.
+   ========================================================================== */
+.hero[data-slide="cozy"] .festive { opacity: 0; }
+.hero-cozy { --espresso: #160b06; --caramel: #c69563; --cream: #f4e8da; --rose: #dba6aa; background: #2c170c; }
+
+/* the photo fills the slide, anchored on the bear; a slow push-in while the slide is on screen */
+.cz-photo { position: absolute; inset: 0; overflow: hidden; }
+.cz-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; display: block;
+  transform-origin: 78% 70%; transform: translate(calc(var(--mx, 0) * -5px), calc(var(--my, 0) * -3px)) scale(1.001); transition: transform 1.2s cubic-bezier(.22, 1, .36, 1); }
+.hero-cozy.is-active .cz-photo img { animation: cz-push 15s linear both; }
+@keyframes cz-push { from { scale: 1.06; } to { scale: 1; } }
+/* deepen the shadow behind the copy a little more on narrower desktops */
+.hero-cozy::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(18, 9, 4, .5) 0%, rgba(18, 9, 4, .25) 32%, rgba(18, 9, 4, 0) 50%); }
+
+/* ---------- the copy ---------- */
+.hero-cozy .hero-copy { z-index: 2; }
+html .hero-slide.hero-cozy .hero-copy > * { max-width: 560px; }
+html .hero-slide.hero-cozy .hero-title { font: 500 clamp(46px, 5vw, 80px)/1 'Cormorant Garamond', Georgia, serif; letter-spacing: -.01em; color: var(--cream); }
+html .hero-slide.hero-cozy .hero-title em { font-style: italic; color: var(--rose); }
+html .hero-slide.hero-cozy .hero-copy > .hero-title { max-width: 7.4em; }   /* always two lines */
+html .hero-slide.hero-cozy .eyebrow { gap: 14px; font-size: 11.5px; letter-spacing: .34em; color: var(--caramel); }
+html .hero-slide.hero-cozy .eyebrow .dot { width: 34px; height: 1px; border-radius: 0; background: var(--caramel); box-shadow: none; -webkit-mask: none; mask: none; clip-path: none; }
+.cz-sub { margin: 22px 0 0; font: italic 500 21px/1.45 'Cormorant Garamond', Georgia, serif; color: rgba(244, 232, 218, .82); }
+html .hero-slide.hero-cozy .hero-copy > .cz-sub { max-width: 420px; }
+.hero-copy .cz-sub { opacity: 0; transform: translateY(14px); transition: opacity .8s var(--ease) .45s, transform .8s var(--ease) .45s; }
+.hero-slide.is-active .cz-sub { opacity: 1; transform: none; }
+html .hero-slide.hero-cozy .hero-ctas { gap: 30px; margin-top: 38px; }
+.cz-btn { --bg: var(--rose); --fg: var(--espresso); border-radius: 0; min-height: 50px; padding-inline: 32px; font-size: 12.5px; letter-spacing: .2em; }
+.cz-btn::after { background: var(--cream); }
+html .hero-slide.hero-cozy .text-link { color: var(--cream); font-weight: 500; letter-spacing: .04em; border-bottom-color: rgba(244, 232, 218, .45); }
+html .hero-slide.hero-cozy .text-link:hover { color: var(--rose); }
+
+/* ---------- tablets and phones: the copy on the wall, the bear below it ---------- */
+@media (max-width: 900px) {
+  .hero-copy.cz-copy { justify-content: flex-start; }
+  html .hero-slide.hero-cozy .hero-title { font-size: clamp(40px, 10.5vw, 60px); }
+  .cz-sub { font-size: 18px; margin-top: 12px; }
+}
+@media (max-width: 760px) {
+  .hero-cozy::before { background: linear-gradient(180deg, rgba(18, 9, 4, .35) 0%, rgba(18, 9, 4, 0) 45%); }
+  html .hero-slide.hero-cozy .hero-ctas { margin-top: 22px; }
+  html .hero-slide.hero-cozy .hero-ctas .text-link { display: none; }
+  .cz-photo img { object-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-cozy.is-active .cz-photo img { animation: none; } }

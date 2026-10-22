@@ -1,0 +1,464 @@
+/* ==========================================================================
+   ÀLara Line — Christmas 2026 season
+   Pink × silver × winter light. Everything here is scoped to html[data-season="christmas"];
+   remove that attribute (or this file) and the everyday brand returns untouched.
+   Tokens mirror DESIGN.md.
+   ========================================================================== */
+
+/* the gift stage only exists in season */
+.gift { display: none; }
+html:not([data-season="christmas"]) [data-season-only="christmas"] { display: none; }
+html[data-season="christmas"] [data-season-off] { display: none; }
+
+html[data-season="christmas"] {
+  /* brand tokens, seasonal values */
+  --paper: #fcf8f8;
+  --cream: #f6e4ea;
+  --blush-2: #fbeff3;
+  --line: rgba(35, 23, 28, .09);
+  /* season */
+  --xm-velvet: #3b1528;
+  --xm-velvet-2: #2c0f1e;
+  --xm-frost: #f6e4ea;
+  --xm-pearl: #ffffff;
+  --xm-silver: #c5cad3;
+  --xm-silver-strong: #8d94a1;
+  --xm-silver-ink: #5f6673;
+  --xm-silver-soft: #eceef2;
+  --xm-hairline: #d9dde4;
+  --xm-champagne: #e3cfa8;
+  --xm-glass: rgba(255, 252, 252, .72);
+  --xm-snow-shadow: rgba(96, 104, 132, .28);
+  --xm-satin: linear-gradient(180deg, #f4f5f8 0%, #dfe2e8 38%, #c9ced6 52%, #e9ebef 70%, #d3d7de 100%);
+  --ease-expo: cubic-bezier(.16, 1, .3, 1);
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-reveal: 800ms;
+}
+html[data-season="christmas"] ::selection { background: #f3cfdd; }
+
+/* ---------- announcement: velvet with a silver hairline ---------- */
+html[data-season="christmas"] .announce {
+  background: var(--xm-velvet); color: #fbe6ee;
+  box-shadow: inset 0 -1px 0 rgba(197, 202, 211, .28);
+}
+
+/* ---------- header: frosted glass ---------- */
+html[data-season="christmas"] .site-header { background: var(--xm-glass); }
+html[data-season="christmas"] .site-header.is-scrolled { border-color: var(--xm-hairline); box-shadow: 0 12px 30px -26px rgba(60, 40, 70, .45); }
+html[data-season="christmas"] .icon-btn:hover { background: rgba(197, 202, 211, .28); }
+html[data-season="christmas"] .icon-btn .count { box-shadow: 0 0 0 2px var(--xm-pearl); }
+/* the bag answers an add with a frost ring */
+html[data-season="christmas"] .icon-btn.is-frosted::after {
+  content: ''; position: absolute; inset: 2px; border-radius: 50%; pointer-events: none;
+  box-shadow: 0 0 0 1.5px rgba(197, 202, 211, .9), 0 0 14px 2px rgba(255, 255, 255, .9);
+  animation: xm-frost-ring 900ms var(--ease-expo) forwards;
+}
+@keyframes xm-frost-ring { from { transform: scale(.7); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+
+/* ---------- buttons: a pearl sheen passes once on hover ---------- */
+html[data-season="christmas"] .btn::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .5) 47%, rgba(255, 255, 255, .15) 55%, transparent 68%);
+  transform: translateX(-110%); mix-blend-mode: soft-light;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html[data-season="christmas"] .btn:hover::before { transform: translateX(110%); transition: transform 900ms var(--ease-expo); }
+}
+
+/* ---------- hero ---------- */
+html[data-season="christmas"] .hero { background: #f4e2e9; }
+html[data-season="christmas"] .hero-gift .hero-media { display: none; }
+html[data-season="christmas"] .hero-gift::after {
+  background: linear-gradient(90deg, rgba(36, 6, 16, .55) 0%, rgba(36, 6, 16, .22) 34%, rgba(36, 6, 16, 0) 52%);
+}
+/* the copy on burgundy: cream, gold and the brand pink */
+html[data-season="christmas"] .hero-gift .hero-title { color: #fbf0e6; }
+html[data-season="christmas"] .hero-gift .hero-title em { color: #f49ac0; }
+html[data-season="christmas"] .hero-gift .eyebrow { color: #e3c37c; }
+html[data-season="christmas"] .hero-gift .eyebrow .dot { background: #e3c37c; }
+html[data-season="christmas"] .hero-gift .text-link { color: #fbf0e6; }
+html[data-season="christmas"] .hero-gift .text-link:hover { color: #e3c37c; }
+html[data-season="christmas"] .hero-count { background: rgba(255, 255, 255, .8); }
+
+/* a Christmas window: a burgundy velvet drape with soft folds, gold fairy lights out of focus behind it,
+   a pool of warm light on the box, and a polished walnut table it stands on */
+html[data-season="christmas"] .gift {
+  display: block; position: absolute; inset: 0; overflow: hidden; cursor: default;
+  background:
+    radial-gradient(34% 40% at 70% 50%, rgba(255, 196, 170, .32) 0%, rgba(255, 196, 170, 0) 70%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 74%, rgba(122, 72, 40, .9) 74.4%, #5a3018 80%, #3a1c0c 100%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .16) 0, rgba(255, 255, 255, .035) 3.2%, rgba(0, 0, 0, .1) 6.4%, rgba(0, 0, 0, .16) 8%),
+    radial-gradient(90% 70% at 60% 30%, #7a1530 0%, #5a0e24 45%, #340616 100%);
+}
+/* the table's gloss and the line where the drape meets it */
+html[data-season="christmas"] .gift::before { content: ''; position: absolute; left: 0; right: 0; top: 74%; bottom: 0; pointer-events: none;
+  background: radial-gradient(40% 60% at 70% 0%, rgba(255, 214, 170, .22), rgba(255, 214, 170, 0) 70%),
+              linear-gradient(180deg, rgba(255, 230, 200, .35) 0, rgba(255, 230, 200, 0) 2px, rgba(0, 0, 0, .25) 14px, rgba(0, 0, 0, 0) 60px); }
+.gift-bokeh { position: absolute; inset: 0 0 26% 0; pointer-events: none; }
+.gift-bokeh.b { animation: gift-twinkle 4.6s ease-in-out infinite alternate; }
+.gift-bokeh.a { animation: gift-twinkle 6.2s ease-in-out -2s infinite alternate-reverse; }
+@keyframes gift-twinkle { from { opacity: .35; } to { opacity: 1; } }
+.gift-trinket { position: absolute; pointer-events: none; z-index: 1; filter: drop-shadow(0 10px 8px rgba(20, 4, 8, .55)); }
+.gift-trinket canvas { display: block; width: 100%; height: auto; }
+.gift-trinket::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 60%; transform: scaleY(-1); opacity: .18;
+  background: var(--refl) center top / 100% auto no-repeat; -webkit-mask: linear-gradient(transparent 40%, #000); mask: linear-gradient(transparent 40%, #000); }
+@media (prefers-reduced-motion: reduce) { .gift-bokeh { animation: none !important; } }
+.gift-stage { position: absolute; inset: 0; opacity: 0; }
+.gift-fit { position: absolute; left: 70%; top: 80%; width: 0; height: 0; perspective: 4600px; transform: scale(var(--fit, 1)); }   /* a long lens, like product photography: no stretching of the near parts */
+.gift-cam, .gb-lid, .gb-ribbon { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+.gb-face { position: absolute; left: 0; top: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+
+/* board: pink paperboard with a faint grain */
+.gb-face {
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .07 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+.gb-base-front { background: url(box/base-front.jpg) center / 100% 100%; box-shadow: inset 0 1.5px 0 rgba(255, 236, 240, .55), inset 0 -10px 18px -10px rgba(90, 30, 50, .35); }
+.gb-ledge { background: url(box/base-ledge.jpg) center / 100% 100%; }
+.gb-tray-front { background: url(box/tray-front.jpg) center / 100% 100%; box-shadow: inset 0 1.5px 0 rgba(255, 236, 240, .6), inset 0 -8px 14px -8px rgba(90, 30, 50, .3); }
+.gb-side, .gb-back, .gb-lid-side, .gb-lid-back, .gb-lid-edge { background: var(--grain), #d18896; }
+.gb-side::after, .gb-lid-side::after { content: ''; position: absolute; inset: 0; background: rgba(70, 20, 40, var(--shade, .2)); }
+.gb-back { background: var(--grain), #c17b8a; }
+.gb-lid-edge { background: var(--grain), linear-gradient(#e7a9b7, #d58f9e); box-shadow: inset 0 1px 0 rgba(255, 240, 244, .7); }
+/* the products in the tray, and the lid lining; --dark is the shade cast by the lid */
+.gb-opening { background: url(box/opening.jpg) center / 100% 100%; box-shadow: inset 0 0 34px 6px rgba(110, 40, 64, .38); }   /* soft shade along the tray's inner walls */
+.gb-lid-in { background: url(box/lid-inner.jpg) center / 100% 100%; }
+.gb-opening::after, .gb-lid-in::after { content: ''; position: absolute; inset: 0; opacity: var(--dark, 0); }
+.gb-opening::after { background: linear-gradient(180deg, #2a0d1a 0%, #4a1a2e 70%, #5a2236 100%); }
+.gb-lid-in::after { background: #3a1626; }
+/* the closed lid: the box's own foil bee, catching snow until it opens */
+.gb-lid-top {
+  background:
+    url(box/bee-foil.png) 50% 34% / 26% auto no-repeat,
+    radial-gradient(90% 70% at 30% 20%, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 60%),
+    var(--grain), #e2a0af;
+}
+.gb-lid-top::after {
+  content: ''; position: absolute; inset: 0; opacity: var(--dust, 0); pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 22%, #fff 0 1.6px, transparent 2.2px),
+    radial-gradient(circle at 64% 38%, #fff 0 1.3px, transparent 1.9px),
+    radial-gradient(circle at 41% 71%, #fff 0 1.8px, transparent 2.4px),
+    radial-gradient(circle at 83% 66%, #fff 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 9% 84%, #fff 0 1.4px, transparent 2px);
+  background-size: 53px 47px, 61px 59px, 71px 43px, 37px 67px, 83px 51px;
+  filter: drop-shadow(0 .6px .4px rgba(96, 104, 132, .45));
+}
+/* silver satin ribbon and a pearl seal with the bee */
+.gb-rib-top { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .0) 0 3px, rgba(255, 255, 255, .16) 3px 4px), linear-gradient(90deg, #cfd3db, #f6f7f9 22%, #c3c8d1 48%, #eef0f3 72%, #c9ced6); box-shadow: 0 0 0 .5px rgba(120, 128, 140, .35); }
+.gb-rib-side { background: linear-gradient(#e8eaee, #b9bec8); }
+.gb-seal {
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #eef0f4 34%, #c7ccd5 72%, #9ba2ae 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .6), inset 0 0 0 4px rgba(150, 158, 170, .45);
+}
+.gb-seal-bee {
+  position: absolute; inset: 18%;
+  background: linear-gradient(140deg, #8a919d, #d9dde3 55%, #7f8692);
+  -webkit-mask: url(../img/site/bee.png) center / contain no-repeat; mask: url(../img/site/bee.png) center / contain no-repeat;
+}
+/* light, floor */
+.gb-glow {
+  position: absolute; left: 0; top: 0; width: 640px; height: 360px; margin: -180px 0 0 -320px; opacity: 0; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 236, 200, .75), rgba(255, 210, 170, .35) 45%, rgba(255, 210, 170, 0) 100%);
+  /* no blend modes inside the 3D scene: they make the browser flatten it */
+}
+.gift-floor { position: absolute; left: 0; top: 0; width: 1100px; height: 800px; margin: -400px 0 0 -550px; background: radial-gradient(closest-side, rgba(255, 210, 170, .28), rgba(255, 210, 170, 0)); }
+.gift-shadow { position: absolute; left: 0; top: 0; width: 540px; height: 470px; margin: -235px 0 0 -270px; background: radial-gradient(closest-side, rgba(70, 26, 44, .62), rgba(70, 26, 44, .22) 58%, rgba(70, 26, 44, 0)); }   /* contact shadow: the box sits, it doesn't float */
+/* silver shimmer from the open box */
+.gb-spark {
+  position: absolute; pointer-events: none; z-index: 2;
+  background: radial-gradient(circle, #fff 0 18%, rgba(236, 238, 244, .9) 30%, rgba(197, 202, 211, 0) 70%);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+}
+
+/* ---------- trust ribbon: a brushed-silver satin band ---------- */
+html[data-season="christmas"] .ribbon {
+  position: relative; overflow: visible; overflow-x: clip; color: var(--ink);
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 0 3px, rgba(255, 255, 255, .14) 3px 4px), var(--xm-satin);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 0 rgba(140, 148, 160, .45);
+}
+html[data-season="christmas"] .ribbon .hex { fill: var(--pink); opacity: .75; }
+
+/* ---------- section surfaces ---------- */
+html[data-season="christmas"] .ritual { background: var(--xm-velvet); }
+html[data-season="christmas"] .ritual-steps::before { background: linear-gradient(90deg, transparent, rgba(197, 202, 211, .55), transparent); }
+html[data-season="christmas"] .services { background: var(--xm-frost); color: var(--ink); box-shadow: inset 0 1px 0 var(--xm-hairline), inset 0 -1px 0 var(--xm-hairline); }
+html[data-season="christmas"] .service-ic { background: var(--xm-pearl); color: var(--pink-deep); box-shadow: 0 0 0 1px var(--xm-hairline); }
+html[data-season="christmas"] .service span { color: var(--ink-2); opacity: 1; }
+
+/* ---------- product cards ---------- */
+html[data-season="christmas"] .card-media { background: radial-gradient(120% 90% at 50% 18%, #fff 0%, #fbf1f5 52%, #f3e3ea 100%); box-shadow: inset 0 0 0 1px rgba(217, 221, 228, .6); }
+html[data-season="christmas"] .card { transition: transform 450ms var(--ease); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html[data-season="christmas"] .card:hover { transform: translateY(-6px); }
+  /* one silver sheen across the picture */
+  html[data-season="christmas"] .card-media::before {
+    content: ''; position: absolute; inset: -10% -40%; z-index: 1; pointer-events: none;
+    background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, .55) 48%, rgba(230, 233, 240, .25) 53%, transparent 62%);
+    transform: translateX(-75%); opacity: 0;
+  }
+  html[data-season="christmas"] .card:hover .card-media::before { transform: translateX(75%); opacity: 1; transition: transform 1100ms var(--ease-expo), opacity 200ms; }
+}
+html[data-season="christmas"] .badge { box-shadow: 0 0 0 1px var(--xm-hairline); }
+html[data-season="christmas"] .badge.new { background: var(--xm-silver-soft); color: var(--xm-silver-ink); box-shadow: inset 0 0 0 1px var(--xm-silver); }
+html[data-season="christmas"] .wish { background: rgba(255, 255, 255, .9); box-shadow: 0 0 0 1px var(--xm-hairline); }
+
+/* ---------- snow edge: a soft drift on a top edge ---------- */
+.snow-edge { position: absolute; z-index: 3; pointer-events: none; height: 8px; transform-origin: 50% 100%; }
+.snow-edge svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 .6px rgba(96, 104, 132, .45)) drop-shadow(0 1.5px 1.5px rgba(96, 104, 132, .22)); }
+.snow-edge .sparkle { fill: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .snow-edge { transform: scaleY(0); opacity: 0; transition: transform 1600ms var(--ease-expo), opacity 600ms; }
+  .snow-edge.is-in { transform: none; opacity: 1; }
+}
+.card > .snow-edge { top: -6px; height: 6px; }   /* rests exactly on the picture's top edge */
+.flake-fall { position: absolute; z-index: 4; pointer-events: none; width: 4px; height: 4px; border-radius: 50%; background: #fff; box-shadow: 0 .6px 1px var(--xm-snow-shadow); }
+
+/* ---------- drawers, modals, toast ---------- */
+html[data-season="christmas"] .drawer-panel { background: var(--paper); }
+html[data-season="christmas"] .drawer-head { border-bottom: 1px solid var(--xm-hairline); position: relative; }
+html[data-season="christmas"] .drawer-head::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px; border-radius: 3px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 0 3px, rgba(255, 255, 255, .2) 3px 4px), var(--xm-satin);
+}
+html[data-season="christmas"] .drawer::before, html[data-season="christmas"] .modal::before { background: rgba(59, 21, 40, .38); backdrop-filter: blur(6px); }
+html[data-season="christmas"] .search-modal .modal-panel { background: rgba(252, 248, 248, .9); backdrop-filter: blur(18px) saturate(1.2); box-shadow: 0 0 0 1px var(--xm-hairline), 0 40px 80px -40px rgba(59, 21, 40, .45); }
+html[data-season="christmas"] .modal-panel { box-shadow: 0 0 0 1px var(--xm-hairline), 0 40px 80px -40px rgba(59, 21, 40, .45); }
+html[data-season="christmas"] .ship-meter .m i { background: linear-gradient(90deg, var(--xm-silver), var(--pink)); }
+html[data-season="christmas"] .toast { background: var(--xm-velvet); box-shadow: 0 0 0 1px rgba(197, 202, 211, .3), 0 20px 40px -16px rgba(0, 0, 0, .4); }
+html[data-season="christmas"] .tabs { box-shadow: inset 0 0 0 1px rgba(217, 221, 228, .7); }
+
+/* ---------- footer: velvet with snow on its edge ---------- */
+html[data-season="christmas"] .footer { background: var(--xm-velvet-2); overflow: visible; }
+html[data-season="christmas"] .footer-base { border-top-color: rgba(197, 202, 211, .2); }
+html[data-season="christmas"] .socials a { box-shadow: inset 0 0 0 1px rgba(197, 202, 211, .35); }
+html[data-season="christmas"] .ribbon > .snow-edge { top: -4px; left: 0; right: 0; height: 6px; }
+
+/* ---------- add-to-bag shimmer ---------- */
+.xm-burst { position: fixed; z-index: 300; pointer-events: none; width: 10px; height: 10px; margin: -5px 0 0 -5px;
+  background: radial-gradient(circle, #fff 0 20%, rgba(220, 224, 232, .95) 34%, rgba(197, 202, 211, 0) 70%);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); }
+
+/* ---------- the whole site in winter ---------- */
+/* eyebrows: a small snowflake instead of the dot */
+html[data-season="christmas"] .eyebrow .dot {
+  width: 12px; height: 12px; border-radius: 0; box-shadow: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M9.5 3.8 12 5.5l2.5-1.7M9.5 20.2 12 18.5l2.5 1.7M3.6 10.4l2.6-.4.9-2.8M20.4 13.6l-2.6.4-.9 2.8M3.6 13.6l2.6.4.9 2.8M20.4 10.4l-2.6-.4-.9-2.8'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M9.5 3.8 12 5.5l2.5-1.7M9.5 20.2 12 18.5l2.5 1.7M3.6 10.4l2.6-.4.9-2.8M20.4 13.6l-2.6.4-.9 2.8M3.6 13.6l2.6.4.9 2.8M20.4 10.4l-2.6-.4-.9-2.8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* winter grounds for the light sections: frost, pearl and a cool silver light */
+html[data-season="christmas"] .essentials { background: linear-gradient(var(--paper), #f5e6ed); }
+html[data-season="christmas"] .lab { background: linear-gradient(180deg, #f5e6ed 0%, #f8eef3 60%, #f3f0f4 100%); }
+html[data-season="christmas"] .ingredients { background: radial-gradient(55% 45% at 85% 0%, #eceef4 0%, transparent 70%), radial-gradient(45% 40% at 5% 100%, #f8e3ec 0%, transparent 70%), var(--paper); }
+html[data-season="christmas"] .story { background: linear-gradient(180deg, #f6ebef, #f3eff3); }
+html[data-season="christmas"] .collection, html[data-season="christmas"] .best { background: linear-gradient(180deg, var(--paper), #fbf4f7); }
+html[data-season="christmas"] .nav-gifts { color: var(--pink-deep); }
+html[data-season="christmas"] .badge.xm-gift { background: linear-gradient(180deg, #f7f8fa, #dfe2e8); color: var(--xm-silver-ink); box-shadow: inset 0 0 0 1px #c5cad3; }
+html[data-season="christmas"] .xm-greet { font: italic 400 19px/1.3 var(--f-serif); color: var(--pink-2) !important; margin-top: -4px; }
+
+/* the surfaces that carry snow need room above them */
+html[data-season="christmas"] .rev, html[data-season="christmas"] .scan-right { position: relative; }
+html[data-season="christmas"] .rev-marquee { padding-top: 16px; }
+.lab-stage-wrap > .snow-edge, .scan-right > .snow-edge, .contact > .snow-edge, .story-portrait > .snow-edge, .rev > .snow-edge { top: -6px; height: 6px; }
+.snow-edge.snow-bank { z-index: 2; }
+
+/* category arches with snow on their tops */
+.cat-wrap { position: relative; }
+.arch-cap { position: absolute; left: 0; right: 0; top: -14px; z-index: 3; pointer-events: none; }
+.arch-cap svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 .6px rgba(96, 104, 132, .45)) drop-shadow(0 1.5px 1.5px rgba(96, 104, 132, .22)); }
+
+/* glass ornaments hanging into the section headers */
+.xm-hang { position: absolute; left: 0; right: 0; top: 0; height: 0; z-index: 1; pointer-events: none; }
+.xm-garland { position: absolute; left: 0; top: -1px; }
+.xm-orn { position: absolute; top: 0; width: 0; height: 0; transform-origin: 50% 0; animation: xm-sway 4s ease-in-out infinite alternate; }
+.xm-orn .xm-str { position: absolute; left: -.7px; top: 0; width: 1.4px; height: var(--len); background: linear-gradient(90deg, #a98d55, #f5e7c4 55%, #b39760); }
+.xm-orn canvas { position: absolute; }
+@keyframes xm-sway { from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
+
+/* ---------- the Christmas gift edit (velvet) ---------- */
+.gift-edit { display: none; }
+html[data-season="christmas"] .gift-edit { display: block; background: var(--xm-velvet); color: #fbe6ee; overflow: clip; }
+.gift-edit .sec-title { color: #fff; }
+.gift-edit .eyebrow { color: var(--pink-2); }
+.gift-edit .sec-sub { color: rgba(251, 230, 238, .78); }
+.ge-open { position: absolute; inset: 0; z-index: 1; border-radius: var(--r); }
+.ge-open:focus-visible { outline: 2px solid var(--pink-2); outline-offset: 3px; }
+.ge-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; position: relative; z-index: 2; }
+.ge-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.ge-price b { font: 400 26px/1 var(--f-display); }
+.ge-price s { opacity: .6; font-size: 14px; }
+.ge-price em { font-style: normal; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: #ffd3e4; }
+.ge-add { position: relative; z-index: 2; height: 38px; padding: 0 16px; border-radius: 99px; background: var(--pink); color: #fff; font: 600 12px/1 var(--f-sans); letter-spacing: .08em; text-transform: uppercase; transition: background var(--t-hover, .18s); }
+.ge-add:hover { background: var(--ink); }
+.ge-add[disabled] { opacity: .45; }
+@media (max-width: 520px) {
+  .ge-row { gap: 8px; }
+  .ge-add { height: 34px; padding: 0 12px; }
+}
+
+/* Christmas bundles: pearl cards with burgundy-brown product wells and satin bows */
+.xb { position: relative; }
+.xb-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 0 clamp(38px, 5vw, 62px); }
+.xb-head .eyebrow { color: #e3c37c; }
+.xb-head .eyebrow .dot { background: #e3c37c; }
+.xb-head .sec-title { max-width: 760px; }
+.xb-head .sec-title em { color: #ff93b9; }
+.xb-head .sec-sub { max-width: 680px; }
+.xb-grid { --xb-gap: clamp(16px, 2vw, 26px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--xb-gap); }
+.xb-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 16px; border-radius: 24px; color: var(--ink);
+  background: linear-gradient(150deg, #fffaf6, #f6e8e5); box-shadow: inset 0 0 0 1px rgba(227, 195, 124, .58), 0 26px 50px -30px rgba(20, 0, 8, .85);
+  transition: transform 450ms var(--ease); }
+.xb-media {
+  position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 17px;
+  background:
+    radial-gradient(82% 74% at 42% 28%, rgba(188, 105, 98, .48), transparent 66%),
+    linear-gradient(145deg, #642638 0%, #421d23 58%, #281513 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 224, 217, .15), inset 0 -28px 40px -32px rgba(0, 0, 0, .65);
+}
+.xb-media .xb-product { position: absolute; z-index: 1; left: 7%; top: 8%; width: 86%; height: 84%; object-fit: contain; filter: drop-shadow(0 16px 14px rgba(20, 0, 8, .46)); transition: transform .9s var(--ease); }
+.xb-media .xb-photo { inset: 0; width: 100%; height: 100%; object-fit: contain; filter: none; }
+.xb-media { --band-top: clamp(21px, 2.25vw, 30px); --band-h: clamp(9px, .9vw, 13px); --bw: clamp(54px, 4.6vw, 70px); }
+.xb-ribbon-band {
+  position: absolute; z-index: 2; left: -7%; right: -7%; top: var(--band-top); height: var(--band-h);
+  transform: rotate(8deg); transform-origin: 84% 50%; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 100, 104, .78) 0%, #d20b23 24%, #89000f 50%, #c80a20 74%, #5b0008 100%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .2) 0 1px, transparent 1px 5px);
+  background-blend-mode: soft-light;
+  border-top: 1px solid rgba(255, 130, 134, .55); border-bottom: 1px solid rgba(66, 0, 8, .72);
+  box-shadow: 0 4px 7px rgba(20, 0, 6, .38), inset 0 1px rgba(255, 194, 195, .22);
+}
+/* the bow is tied on the ribbon: its knot (58.5% across, 20% down the photo) sits on the band's centre line at the
+   band's pivot (88.8% across the well), where the band's rotation does not move it */
+.xb-media .xb-bow { position: absolute; z-index: 4; width: var(--bw); height: auto; pointer-events: none;
+  left: calc(88.8% - var(--bw) * .585); top: calc(var(--band-top) + var(--band-h) / 2 - var(--bw) * 1.369 * .2);
+  transform: rotate(8deg); transform-origin: 58.5% 20%; filter: drop-shadow(0 7px 7px rgba(20, 0, 6, .55)); }
+.xb-no { position: absolute; z-index: 5; top: 14px; left: 14px; display: grid; place-items: center; min-width: 30px; height: 22px; padding: 0 7px; border-radius: 99px; color: #f1d28f; border: 1px solid rgba(241, 210, 143, .48); background: rgba(44, 10, 20, .44); backdrop-filter: blur(6px); font: 600 10px/1 var(--f-sans); letter-spacing: .14em; }
+.xb-card h3 { font: 400 21px/1.2 var(--f-display); margin: 6px 0 0; }
+.xb-in { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--muted); min-height: 36px; }
+.xb-card .ge-price b { font-size: 21px; }
+.xb-card .ge-price em { color: #b3152b; }
+.xb-card .ge-add { background: #b3152b; }
+.xb-card .ge-add:hover { background: var(--ink); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .xb-card:hover { transform: translateY(-6px); }
+  .xb-card:hover .xb-media .xb-product { transform: scale(1.05) rotate(-1deg); }
+}
+@media (max-width: 900px) {
+  .xb-grid { grid-template-columns: repeat(2, 1fr); }
+  .xb-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc((100% - var(--xb-gap)) / 2); }
+}
+@media (max-width: 520px) {
+  .xb-grid { --xb-gap: 14px; }
+  .xb-card { padding: 10px 10px 12px; }
+  .xb-card h3 { font-size: 17px; }
+  .xb-in { display: none; }
+  .xb-media { --band-top: 22px; --band-h: 9px; --bw: 48px; }
+  .xb-ribbon-band { transform: rotate(7deg); }
+  .xb-media .xb-bow { transform: rotate(7deg); }
+  .xb-no { top: 9px; left: 9px; }
+}
+
+/* one red satin bow at the section's top-right corner */
+.ge-corner { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.ge-bow { position: absolute; right: 28px; top: 18px; width: 144px; height: auto; transform: rotate(-6deg);
+  filter: drop-shadow(0 10px 12px rgba(30, 0, 8, .55)); }
+.gift-edit > .wrap { position: relative; z-index: 2; }
+@media (max-width: 760px) {
+  .ge-bow { right: 12px; top: 14px; width: 84px; }
+}
+
+/* ---------- the Christmas gift guide: red and burgundy ---------- */
+.xmas-guide { display: none; }
+html[data-season="christmas"] .xmas-guide {
+  --gg-red: #a01c31; --gg-burgundy: #4a0a1c; --gg-gold: #e3c37c; --gg-cream: #fff4ea;
+  display: block; position: relative; overflow: clip; color: var(--gg-cream);
+  background:
+    radial-gradient(80% 70% at 12% 0%, #b8243a 0%, rgba(184, 36, 58, 0) 70%),
+    radial-gradient(70% 80% at 100% 100%, #3b0716 0%, rgba(59, 7, 22, 0) 70%),
+    linear-gradient(160deg, #9a1a2f 0%, #7a1227 45%, #4a0a1c 100%);
+}
+/* a faint gold-foil snowflake pattern in the paper */
+html[data-season="christmas"] .xmas-guide::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .07;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23f2d898' stroke-width='1.2' stroke-linecap='round'%3E%3Cg transform='translate(30 30)'%3E%3Cpath d='M0-14V14M-12-7 12 7M-12 7 12-7M-3-11 0-8 3-11M-3 11 0 8 3 11'/%3E%3C/g%3E%3Cg transform='translate(90 90) scale(.7)'%3E%3Cpath d='M0-14V14M-12-7 12 7M-12 7 12-7M-3-11 0-8 3-11M-3 11 0 8 3 11'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 120px 120px;
+}
+html[data-season="christmas"] .xmas-guide { padding-top: clamp(150px, 14vw, 200px); }
+.xmas-guide .sec-title { font-size: clamp(36px, 3.8vw, 54px); }
+.gg-grid { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.xmas-guide .eyebrow { color: var(--gg-gold); }
+.xmas-guide .sec-title { color: #fff; text-align: left; }
+.xmas-guide .sec-title em { color: var(--gg-gold); }
+.gg-sub { margin: 18px 0 28px; color: rgba(255, 244, 234, .8); font-size: 17px; }
+.gg-tabs { display: flex; flex-direction: column; border-top: 1px solid rgba(227, 195, 124, .28); }
+.gg-tabs button {
+  position: relative; text-align: left; padding: 18px 40px 18px 0; border-bottom: 1px solid rgba(227, 195, 124, .28);
+  font: 400 clamp(20px, 1.9vw, 26px)/1.2 var(--f-display); color: rgba(255, 244, 234, .62); transition: color var(--t-hover, .18s);
+}
+.gg-tabs button::after { content: '→'; position: absolute; right: 4px; top: 50%; transform: translate(-8px, -50%); opacity: 0; font: 400 18px var(--f-sans); color: var(--gg-gold); transition: transform .4s var(--ease), opacity .3s; }
+.gg-tabs button:hover { color: #fff; }
+.gg-tabs button[aria-selected="true"] { color: #fff; }
+.gg-tabs button[aria-selected="true"]::after { opacity: 1; transform: translate(0, -50%); }
+.gg-tabs button:focus-visible { outline: 2px solid var(--gg-gold); outline-offset: 2px; }
+.gg-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.gg-card { min-width: 0; }
+.gg-card { position: relative; background: var(--gg-cream); color: var(--ink); border-radius: var(--r); padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; transition: transform 450ms var(--ease); }
+.gg-card .gg-media { aspect-ratio: 16/10; border-radius: 14px; overflow: hidden; background: radial-gradient(110% 90% at 50% 20%, #fff, #f6ebe6); display: grid; place-items: center; }
+.gg-card img { width: 84%; height: 84%; object-fit: contain; mix-blend-mode: multiply; transition: transform .9s var(--ease); }
+.gg-card h3 { font: 400 19px/1.2 var(--f-display); margin: 4px 0 0; }
+.gg-card p { margin: 0; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gg-card .ge-price b { font-size: 21px; }
+.gg-add { position: relative; z-index: 2; height: 38px; padding: 0 16px; border-radius: 99px; background: var(--gg-burgundy); color: var(--gg-cream); font: 600 12px/1 var(--f-sans); letter-spacing: .08em; text-transform: uppercase; transition: background var(--t-hover, .18s), color var(--t-hover, .18s); }
+.gg-add:hover { background: var(--gg-gold); color: var(--gg-burgundy); }
+.gg-card > .snow-edge { top: -6px; height: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  .gg-card { animation: gg-in 650ms var(--ease-expo, ease) both; animation-delay: calc(var(--i) * 70ms); }
+  @keyframes gg-in { from { opacity: 0; transform: translateY(14px); } }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .gg-card:hover { transform: translateY(-6px); }
+  .gg-card:hover img { transform: scale(1.06); }
+}
+@media (max-width: 900px) {
+  .gg-grid { grid-template-columns: 1fr; }
+  .gg-tabs { flex-direction: row; overflow-x: auto; border: 0; gap: 8px; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); }
+  .gg-tabs::-webkit-scrollbar { display: none; }
+  .gg-tabs button { flex: none; padding: 10px 16px; border: 1px solid rgba(227, 195, 124, .4); border-radius: 99px; font: 500 14px/1.2 var(--f-sans); }
+  .gg-tabs button::after { display: none; }
+  .gg-tabs button[aria-selected="true"] { background: var(--gg-gold); color: var(--gg-burgundy); border-color: var(--gg-gold); }
+}
+@media (max-width: 520px) {
+  .gg-panel { gap: 12px; }
+  .gg-card { padding: 8px 9px 11px; }
+  .gg-card h3 { font-size: 16px; }
+  .gg-card p { display: none; }
+  .gg-add { height: 34px; padding: 0 12px; }
+}
+
+/* ---------- the bag suggests the gift box ---------- */
+.xm-upsell { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; margin: 10px 0 12px; padding: 10px; border-radius: 14px; background: var(--xm-frost, #f6e4ea); box-shadow: inset 0 0 0 1px var(--xm-hairline, #d9dde4); }
+.xm-upsell[hidden] { display: none; }
+.xm-upsell img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
+.xm-upsell small { display: block; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--xm-silver-ink, #5f6673); font-weight: 600; }
+.xm-upsell b { display: block; font: 400 17px/1.2 var(--f-display); }
+.xm-upsell span { font-size: 13px; }
+.xm-upsell s { color: var(--muted); }
+
+/* ---------- site-wide snowfall ---------- */
+.site-snow { position: fixed; inset: 0; z-index: 55; pointer-events: none; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; }
+.site-snow.is-on { opacity: 1; }
+.site-snow.is-off { display: none; }
+
+/* pause snow */
+.snow-toggle[aria-pressed="true"] { background: var(--xm-silver-soft, #eceef2); color: var(--xm-silver-ink, #5f6673); }
+.snow-link { margin-left: 14px; font-size: 13px; color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(197, 202, 211, .5); }
+.snow-link:hover { color: #fff; }
+
+@media (max-width: 760px) {
+  html[data-season="christmas"] .hero-gift::after { background: linear-gradient(180deg, rgba(36, 6, 16, .6) 0%, rgba(36, 6, 16, .3) 40%, rgba(36, 6, 16, 0) 58%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gift-stage { opacity: 1; }
+  .site-snow, [data-gift-replay], [data-snow-toggle] { display: none; }
+}

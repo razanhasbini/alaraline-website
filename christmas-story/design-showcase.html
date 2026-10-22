@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ÀLara Christmas Story Studio — Design System</title>
+<link rel="icon" href="data:,">
+<style>
+@font-face{font-family:Butler;src:url(assets/fonts/Butler-Regular.otf) format('opentype');font-display:swap}
+:root{
+  --primary:#E85C9C;--red:#9B1B30;--gold:#C9A35A;--silver:#D8DBE1;
+  --ink:#2A1418;--muted:#6F5A5F;--canvas:#F5EDEF;--surface:#FFFFFF;
+  --paper:#FBF6F0;--stage:#241519;--line:#E3D7DA;--line-strong:#CFC0C4;
+  --success:#247B50;--error:#9B1B30;--sans:"DM Sans",Arial,sans-serif;--serif:"PT Serif",Georgia,serif;--display:Butler,Georgia,serif
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.top{height:52px;display:flex;align-items:center;justify-content:space-between}.top img{width:82px;height:auto}.top nav{display:flex;gap:22px}.top a{text-decoration:none;color:var(--muted)}
+.hero{background:var(--stage);color:#fff;padding:64px 0}.hero-grid{display:grid;grid-template-columns:1fr .72fr;gap:52px;align-items:center}.hero h1{font:400 clamp(46px,7vw,82px)/.96 var(--display);margin:0;letter-spacing:-1.8px}.hero p{max-width:590px;color:#e8dadd;font-size:17px;margin:24px 0 0}.story-mini{position:relative;width:min(100%,340px);aspect-ratio:9/16;max-height:620px;margin:auto;overflow:hidden;border-radius:16px;background:url(assets/sample/bundle.jpg) center/cover}.story-mini:after{content:"";position:absolute;inset:auto 10% 8% 10%;height:25%;background:var(--paper);border:1px solid var(--gold);border-radius:8px}.story-mini img{position:absolute;z-index:2;top:10%;left:50%;transform:translateX(-50%);width:30%;height:auto}.story-mini .note{position:absolute;z-index:3;left:16%;right:16%;bottom:13%;font:italic 15px/1.45 var(--serif);color:var(--ink)}
+section{padding:74px 0;border-bottom:1px solid var(--line)}.num{color:var(--red);font-weight:600}.title{font:400 clamp(34px,5vw,54px)/1 var(--display);margin:8px 0 14px}.intro{max-width:720px;color:var(--muted);font-size:16px}.group-title{margin:34px 0 12px;font-size:14px}.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.swatch{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}.color{height:86px}.meta{padding:12px}.meta b,.meta small{display:block}.meta small{color:var(--muted);margin-top:4px}
+.type-row{display:grid;grid-template-columns:180px 1fr;gap:26px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line)}.spec{color:var(--muted);font-size:12px}.sample{overflow-wrap:anywhere}.display{font:400 46px/1 var(--display)}.headline{font:600 15px/1.1 var(--sans)}.title-sm{font:600 13px/1.3 var(--sans)}.body{font:400 14px/1.5 var(--sans)}.body-sm{font:400 13px/1.45 var(--sans)}.review{font:italic 400 34px/1.42 var(--serif)}.name{font:400 30px/1.1 var(--display)}.product{font:600 15px/1.2 var(--sans);letter-spacing:4px}.caption{font:400 12px/1.4 var(--sans)}.button-type{font:600 13px/1 var(--sans)}
+.component-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;min-height:180px}.card h3{margin:0 0 20px;font-size:13px}.preview{min-height:92px;display:grid;place-items:center}.button{border:0;border-radius:8px;background:var(--red);color:#fff;padding:11px 18px;font-weight:600}.secondary{background:#fff;color:var(--ink);border:1px solid var(--line-strong)}.field{width:100%;height:40px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;padding:9px 11px}.paper{font:italic 20px/1.45 var(--serif);background:var(--paper);border:1px solid var(--gold);border-radius:10px;padding:24px}.wave{display:flex;align-items:center;gap:5px;height:44px}.wave i{display:block;width:4px;border-radius:99px;background:var(--red)}
+.material-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.material{height:155px;border-radius:8px;display:grid;place-items:end start;padding:14px;color:#fff;font-weight:600;overflow:hidden}.m-red{background:#6a0813}.m-gold{background:#c9a35a;color:var(--ink)}.m-silver{background:#d8dbe1;color:var(--ink)}.m-pearl{background:#f1c3d1;color:var(--ink)}
+.levels,.shape-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.level,.shape{background:#fff;border:1px solid var(--line);padding:18px;min-height:110px}.level.dark{background:var(--stage);color:#fff}.shape i{display:block;width:54px;height:54px;background:var(--paper);border:1px solid var(--line-strong);margin-bottom:12px}.r4 i{border-radius:4px}.r6 i{border-radius:6px}.r8 i{border-radius:8px}.r16 i{border-radius:16px}.rfull i{border-radius:50%}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:18px}.rules>div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:24px}.rules h3{margin-top:0}.rules ul{margin:0;padding-left:20px}.rules li+li{margin-top:10px}.do h3{color:var(--success)}.dont h3{color:var(--error)}footer{padding:34px 0;color:var(--muted)}
+@media(max-width:780px){.top nav{display:none}.hero-grid{grid-template-columns:1fr}.story-mini{max-height:520px}.swatches,.component-grid,.material-grid{grid-template-columns:repeat(2,1fr)}.levels,.shape-grid{grid-template-columns:repeat(2,1fr)}.rules{grid-template-columns:1fr}.type-row{grid-template-columns:1fr}.review{font-size:27px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top wrap"><img src="assets/brand/logo.png" width="1080" height="437" alt="ÀLara Line"><nav aria-label="Showcase sections"><a href="#colors">Colors</a><a href="#type">Typography</a><a href="#components">Components</a><a href="#rules">Directives</a></nav></header>
+<main>
+  <div class="hero"><div class="wrap hero-grid"><div><h1>Christmas Story Studio</h1><p>A media-first Story system: quiet blush tools around a full-bleed customer photograph, finished with physical red satin, champagne gold, silver, pearl and a compact gift-card testimonial.</p></div><div class="story-mini"><img src="assets/brand/logo.png" width="1080" height="437" alt=""><div class="note">“Opened it on Christmas morning. The box alone made me emotional.”</div></div></div></div>
+
+  <section id="logo"><div class="wrap"><span class="num">Foundation</span><h2 class="title">Identity & hierarchy</h2><p class="intro">Customer media leads. Christmas atmosphere comes second. The customer’s words come third. The ÀLara mark stays small and unmistakable.</p></div></section>
+
+  <section id="colors"><div class="wrap"><span class="num">Color</span><h2 class="title">Canvas, voltage & material</h2><p class="intro">The editor is mostly pearl blush and white. Campaign colours appear as rendered materials inside the Story, not as a rainbow of controls.</p>
+    <h3 class="group-title">Brand & campaign</h3><div class="swatches">
+      <div class="swatch"><div class="color" style="background:#E85C9C"></div><div class="meta"><b>Primary</b>#E85C9C<small>Logo and focus</small></div></div>
+      <div class="swatch"><div class="color" style="background:#9B1B30"></div><div class="meta"><b>Campaign red</b>#9B1B30<small>Satin and one action</small></div></div>
+      <div class="swatch"><div class="color" style="background:#C9A35A"></div><div class="meta"><b>Campaign gold</b>#C9A35A<small>Foil and metal</small></div></div>
+      <div class="swatch"><div class="color" style="background:#D8DBE1"></div><div class="meta"><b>Campaign silver</b>#D8DBE1<small>Cool reflection</small></div></div>
+    </div>
+    <h3 class="group-title">Surfaces & ink</h3><div class="swatches">
+      <div class="swatch"><div class="color" style="background:#F5EDEF"></div><div class="meta"><b>Canvas</b>#F5EDEF<small>Editor frame</small></div></div>
+      <div class="swatch"><div class="color" style="background:#FFFFFF"></div><div class="meta"><b>Surface 1</b>#FFFFFF<small>Fields and controls</small></div></div>
+      <div class="swatch"><div class="color" style="background:#FBF6F0"></div><div class="meta"><b>Story paper</b>#FBF6F0<small>Testimonial enclosure</small></div></div>
+      <div class="swatch"><div class="color" style="background:#241519"></div><div class="meta"><b>Stage</b>#241519<small>Preview well</small></div></div>
+      <div class="swatch"><div class="color" style="background:#2A1418"></div><div class="meta"><b>Ink</b>#2A1418<small>Primary type</small></div></div>
+      <div class="swatch"><div class="color" style="background:#6F5A5F"></div><div class="meta"><b>Muted ink</b>#6F5A5F<small>Helper text</small></div></div>
+      <div class="swatch"><div class="color" style="background:#E3D7DA"></div><div class="meta"><b>Hairline</b>#E3D7DA<small>Quiet dividers</small></div></div>
+      <div class="swatch"><div class="color" style="background:#CFC0C4"></div><div class="meta"><b>Strong hairline</b>#CFC0C4<small>Controls</small></div></div>
+      <div class="swatch"><div class="color" style="background:#247B50"></div><div class="meta"><b>Success</b>#247B50<small>Confirmed output</small></div></div>
+      <div class="swatch"><div class="color" style="background:#F486B8"></div><div class="meta"><b>Primary focus</b>#F486B8<small>Keyboard focus halo</small></div></div>
+      <div class="swatch"><div class="color" style="background:#FFFFFF"></div><div class="meta"><b>On primary</b>#FFFFFF<small>Action-label contrast</small></div></div>
+      <div class="swatch"><div class="color" style="background:#9B1B30"></div><div class="meta"><b>Error</b>#9B1B30<small>Campaign red, reused sparingly</small></div></div>
+    </div>
+  </div></section>
+
+  <section id="type"><div class="wrap"><span class="num">Typography</span><h2 class="title">Three voices, three jobs</h2><p class="intro">DM Sans operates the tool. PT Serif carries the customer’s own words. Butler signs the card and gives rare editorial emphasis.</p>
+    <div class="type-row"><div class="spec">DISPLAY-MD · Butler<br>30 / 400 / 1.1</div><div class="sample display">A gift enclosure, not a chat bubble</div></div>
+    <div class="type-row"><div class="spec">HEADLINE · DM Sans<br>15 / 600 / 1.1</div><div class="sample headline">Christmas Story Studio</div></div>
+    <div class="type-row"><div class="spec">TITLE-SM · DM Sans<br>13 / 600 / 1.3</div><div class="sample title-sm">Customer story</div></div>
+    <div class="type-row"><div class="spec">BODY · DM Sans<br>14 / 400 / 1.5</div><div class="sample body">Upload, crop, edit and export from one quiet workspace.</div></div>
+    <div class="type-row"><div class="spec">BODY-SM · DM Sans<br>13 / 400 / 1.45</div><div class="sample body-sm">Drag over the image to refine the crop.</div></div>
+    <div class="type-row"><div class="spec">STORY-REVIEW · PT Serif<br>34 / 400 / 1.42</div><div class="sample review">Opened it on Christmas morning. The box alone made me emotional.</div></div>
+    <div class="type-row"><div class="spec">STORY-NAME · Butler<br>30 / 400 / 1.1</div><div class="sample name">Maya K.</div></div>
+    <div class="type-row"><div class="spec">STORY-PRODUCT · DM Sans<br>15 / 600 / +4</div><div class="sample product">FULL TREATMENT SET</div></div>
+    <div class="type-row"><div class="spec">CAPTION · DM Sans<br>12 / 400 / 1.4</div><div class="sample caption">Instagram Story · 1080 × 1920</div></div>
+    <div class="type-row"><div class="spec">BUTTON · DM Sans<br>13 / 600 / 1</div><div class="sample button-type">Export Story</div></div>
+  </div></section>
+
+  <section id="components"><div class="wrap"><span class="num">Components</span><h2 class="title">Editor controls</h2><div class="component-grid">
+    <div class="card"><h3>Primary action</h3><div class="preview"><button class="button">Export Story</button></div></div>
+    <div class="card"><h3>Secondary action</h3><div class="preview"><button class="button secondary">Sample Photo</button></div></div>
+    <div class="card"><h3>Text input</h3><div class="preview"><input class="field" value="Full Treatment Set" aria-label="Product name"></div></div>
+  </div></div></section>
+
+  <section><div class="wrap"><span class="num">Story card</span><h2 class="title">Testimonial system</h2><div class="component-grid">
+    <div class="card" style="grid-column:span 2"><h3>Paper review</h3><div class="paper">“The whole ritual turned Christmas morning into something memorable.”<br><span class="name" style="font-size:22px">Maya K.</span></div></div>
+    <div class="card"><h3>Voice waveform</h3><div class="preview"><div class="wave" aria-label="Decorative waveform"> <i style="height:12px"></i><i style="height:28px"></i><i style="height:40px"></i><i style="height:20px"></i><i style="height:35px"></i><i style="height:16px"></i><i style="height:31px"></i><i style="height:10px"></i></div></div></div>
+  </div></div></section>
+
+  <section><div class="wrap"><span class="num">Materials</span><h2 class="title">Christmas materials</h2><p class="intro">Colour becomes credible through material and light: clearcoat glass, satin sheen, metallic roughness, pearl iridescence and individual pine needles.</p><div class="material-grid"><div class="material m-red">Oxblood satin</div><div class="material m-gold">Champagne foil</div><div class="material m-silver">Polished silver</div><div class="material m-pearl">Blush pearl</div></div></div></section>
+
+  <section><div class="wrap"><span class="num">Elevation</span><h2 class="title">Depth</h2><div class="levels"><div class="level">Canvas<br>Flat ground</div><div class="level">White control<br>Quiet edge</div><div class="level dark">Stage<br>Dark well</div><div class="level">Story preview<br>Soft cast</div><div class="level">Focus<br>2px pink ring</div></div></div></section>
+
+  <section><div class="wrap"><span class="num">Geometry</span><h2 class="title">Radius & spacing</h2><div class="shape-grid"><div class="shape r4"><i></i>4px · foil</div><div class="shape r6"><i></i>6px · nudge</div><div class="shape r8"><i></i>8px · controls</div><div class="shape r16"><i></i>16px · stage</div><div class="shape rfull"><i></i>Full · play disc</div></div></div></section>
+
+  <section id="rules"><div class="wrap"><span class="num">Usage</span><h2 class="title">Directives</h2><div class="rules"><div class="do"><h3>Do</h3><ul><li>Keep customer media edge-to-edge.</li><li>Crop decoration at the outer edges.</li><li>Use real waveform data and duration.</li><li>Keep the card compact and readable.</li><li>Let packaging provide most pink.</li></ul></div><div class="dont"><h3>Don’t</h3><ul><li>Draw CSS circles as ornaments.</li><li>Use flat rectangles as ribbons.</li><li>Add generic holiday slogans.</li><li>Blur or tint over the product.</li><li>Turn the voice note into a chat bubble.</li></ul></div></div></div></section>
+
+  <section><div class="wrap"><span class="num">Responsive</span><h2 class="title">Responsive composition</h2><p class="intro">Desktop uses a 352px tool rail beside the Story. Tablet and mobile place a sticky 9:16 preview first and move every control below it. Export remains one click away.</p></div></section>
+</main>
+<footer><div class="wrap">ÀLara Line · Christmas Story Studio · DESIGN.md companion · 2026</div></footer>
+</body>
+</html>

@@ -1,0 +1,7 @@
+.DS_Store
+tools/hairlab/seg.tflite
+tools/hairlab/out/
+alaraline/node_modules/
+alaraline/dist/
+.playwright-cli/
+.taste-skill/

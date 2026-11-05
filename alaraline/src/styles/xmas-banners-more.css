@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Three more Christmas banners: The Turning Tree, Light Up the Hive, The 12 Days of ÀLara.
+   ========================================================================== */
+
+/* ---------- The Turning Tree ---------- */
+.xb-tt { background: #2c1f1a; color: #fbeef3; }
+.xb-tt::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 46% 78% at 66% 52%, rgba(232, 92, 156, .3) 0%, rgba(232, 92, 156, .08) 52%, rgba(232, 92, 156, 0) 100%); }
+.xb-tt h1 em { color: #f8bed6; }
+.xb-tt .xb-copy { left: 6%; width: calc(480 * var(--u)); }
+.xb-tt .xb-btn { background: #f4b6cf; color: #2a1712; }
+.xb-tt .xb-btn:hover { background: #fff; }
+.tt-stage { position: absolute; left: calc(50% - 120 * var(--u)); top: 0; width: calc(820 * var(--u)); height: calc(760 * var(--u)); cursor: grab; touch-action: pan-y; user-select: none; }
+.tt-stage.is-grabbing { cursor: grabbing; }
+.tt-item { position: absolute; left: 0; top: 0; display: block; height: calc(var(--h) * var(--u)); transform-origin: 50% 100%; will-change: transform; }
+.tt-item img { display: block; width: auto; height: 100%; filter: drop-shadow(0 calc(8 * var(--u)) calc(9 * var(--u)) rgba(10, 4, 2, .5)); transition: translate .3s var(--ease); }
+.tt-item:hover img { translate: 0 calc(-10 * var(--u)); }
+.tt-g { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.tt-g-back { z-index: 20; }
+.tt-g-front { z-index: 500; }
+.tt-wire { fill: none; stroke: #c99f5f; stroke-width: 1.4; opacity: .7; }
+.tt-bulbs { fill: none; stroke: #fff3cf; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 0 26; animation: tt-chase 2.4s linear infinite; }
+.tt-g-back .tt-bulbs { opacity: .55; }
+.tt-g-front { filter: drop-shadow(0 0 calc(5 * var(--u)) rgba(255, 225, 150, .95)); }
+@keyframes tt-chase { to { stroke-dashoffset: -26; } }
+.tt-star { position: absolute; left: calc(410 * var(--u) - 44 * var(--u)); top: calc(92 * var(--u)); z-index: 600; width: calc(88 * var(--u)); filter: drop-shadow(0 0 calc(16 * var(--u)) rgba(255, 226, 150, .95)); animation: tt-star 3.4s ease-in-out infinite alternate; pointer-events: none; }
+@keyframes tt-star { from { scale: 1; rotate: -4deg; } to { scale: 1.08; rotate: 4deg; } }
+.tt-floor { position: absolute; left: calc(40 * var(--u)); top: calc(620 * var(--u)); width: calc(740 * var(--u)); height: calc(140 * var(--u)); border-radius: 50%; background: radial-gradient(ellipse at center, rgba(8, 2, 2, .6) 0%, rgba(8, 2, 2, .25) 55%, rgba(8, 2, 2, 0) 72%); }
+.xb-tt .tt-name { min-height: 1.3em; margin: calc(26 * var(--u)) 0 0; font: italic 400 max(14px, calc(20 * var(--u)))/1.3 'PT Serif', serif; color: #f8d9e5; }
+
+/* ---------- Light Up the Hive ---------- */
+.xb-lh { --mx: 70%; --my: 50%; background: #1d110b; color: #fbeef3; }
+.lh-wall { position: absolute; inset: 0; overflow: hidden; }
+.lh-board { position: absolute; left: 50%; top: 0; width: calc(1440 * var(--u)); height: calc(760 * var(--u)); margin-left: calc(-720 * var(--u)); }
+.lh-board svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.lh-board polygon { fill: #2b1810; stroke: #5c3f25; stroke-width: 2; stroke-linejoin: round; }
+.lh-board img { position: absolute; left: calc(var(--cx) * var(--u)); top: calc(var(--cy) * var(--u)); width: calc(128 * var(--u)); height: calc(150 * var(--u)); object-fit: contain; transform: translate(-50%, -50%); }
+.lh-board img.is-dim { filter: brightness(.16) saturate(.4); }
+.lh-lit { -webkit-mask: radial-gradient(circle calc(330 * var(--u)) at var(--mx) var(--my), #000 42%, rgba(0, 0, 0, .55) 66%, transparent 100%); mask: radial-gradient(circle calc(330 * var(--u)) at var(--mx) var(--my), #000 42%, rgba(0, 0, 0, .55) 66%, transparent 100%); }
+.lh-lit polygon { fill: #fdeef3; stroke: #d9b172; stroke-width: 3.4; }
+.lh-lit img { filter: drop-shadow(0 calc(6 * var(--u)) calc(8 * var(--u)) rgba(100, 30, 50, .3)); }
+.lh-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle calc(400 * var(--u)) at var(--mx) var(--my), rgba(255, 214, 150, .16) 0%, rgba(255, 214, 150, 0) 100%); }
+.xb-lh::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, #1d110b 33%, rgba(29, 17, 11, .86) 40%, rgba(29, 17, 11, 0) 52%); }
+.xb-lh .xb-copy { left: 6%; width: calc(460 * var(--u)); }
+.xb-lh h1 em { color: #f4b6cf; }
+.lh-found.lh-found { margin: 0 0 calc(22 * var(--u)); min-height: 3em; font: 400 max(17px, calc(25 * var(--u)))/1.25 Butler, 'PT Serif', serif; color: #f6dfa8; }
+.lh-found span { display: block; font: italic 400 max(14px, calc(18 * var(--u)))/1.4 'PT Serif', serif; color: #fbeef3; }
+.lh-found b { font-weight: 400; }
+.xb-lh .xb-btn { background: #e6c78f; color: #2a1712; }
+.xb-lh .xb-btn:hover { background: #fff; }
+
+/* ---------- The 12 Days of ÀLara ---------- */
+.xb-td { background: var(--f); color: var(--i); transition: background .9s ease, color .6s ease; }
+.td-title.td-title { position: absolute; left: 7%; top: calc(46 * var(--u)); margin: 0; font-size: calc(30 * var(--u)); letter-spacing: 0; }
+.td-num { position: absolute; left: calc(50% + 250 * var(--u)); top: 50%; z-index: 1; font: 400 calc(760 * var(--u))/.8 Butler, 'PT Serif', serif; letter-spacing: -.04em; white-space: nowrap; color: var(--i); opacity: .14; transform: translate(-50%, -50%); animation: td-num .9s var(--ease) both; }
+@keyframes td-num { from { opacity: 0; scale: .92; } }
+.td-p { position: absolute; left: calc(50% + 250 * var(--u)); bottom: calc(70 * var(--u)); z-index: 2; width: auto; height: calc(var(--h) * var(--u)); transform: translateX(-50%); transform-origin: 50% 100%; filter: drop-shadow(0 calc(24 * var(--u)) calc(26 * var(--u)) rgba(30, 5, 15, .35)); animation: td-p .85s cubic-bezier(.2, 1.25, .4, 1) both; }
+@keyframes td-p { from { translate: 0 calc(90 * var(--u)); opacity: 0; scale: .94; } }
+.td-copy.td-copy { left: 7%; top: calc(150 * var(--u)); width: calc(590 * var(--u)); transform: none; animation: td-copy .7s var(--ease) both; }
+@keyframes td-copy { from { translate: 0 calc(16 * var(--u)); opacity: 0; } }
+.td-copy .td-song { margin: 0 0 calc(20 * var(--u)); max-width: 26ch; font: italic 400 calc(31 * var(--u))/1.25 'PT Serif', serif; }
+.td-copy h2 { text-wrap: balance; margin: 0; font: 400 calc(70 * var(--u))/1.04 Butler, 'PT Serif', serif; letter-spacing: -.012em; color: inherit; }
+.td-copy .td-line { margin: calc(18 * var(--u)) 0 calc(28 * var(--u)); font-size: max(15px, calc(18 * var(--u))); }
+.xb-td .xb-btn { background: var(--i); color: var(--f); transition: opacity .2s, transform .2s var(--ease); }
+.xb-td .xb-btn:hover { opacity: .85; }
+.td-days { position: absolute; left: 7%; bottom: calc(40 * var(--u)); z-index: 3; display: flex; gap: calc(6 * var(--u)); }
+.td-days button { width: calc(36 * var(--u)); height: calc(36 * var(--u)); min-width: 24px; min-height: 24px; border-radius: 50%; color: inherit; font: 400 max(11px, calc(14 * var(--u)))/1 'DM Sans', sans-serif; opacity: .55; transition: background .3s, color .3s, opacity .3s; }
+.td-days button:hover { opacity: 1; }
+.td-days button[aria-pressed="true"] { background: var(--i); color: var(--f); opacity: 1; }
+
+/* ---------- phones ---------- */
+@media (max-width: 760px) {
+  .xb-tt { min-height: 720px; }
+  .xb-tt .xb-copy, .xb-lh .xb-copy { position: relative; left: auto; top: auto; z-index: 5; transform: none; width: auto; padding: 30px 20px 0; }
+  .tt-stage { --u: calc(100vw / 700); left: 50%; top: 290px; margin-left: calc(-410 * var(--u)); }
+  .xb-lh { --u: calc(100vw / 700); min-height: 740px; }
+  .lh-board { left: 0; top: 240px; margin-left: calc(-430 * var(--u)); }
+  .xb-lh::after { background: linear-gradient(180deg, #1d110b 44%, rgba(29, 17, 11, 0) 56%); }
+  .xb-td { --u: calc(100vw / 700); min-height: 760px; }
+  .td-title.td-title { left: 20px; top: 20px; font-size: 18px; }
+  .td-copy.td-copy { position: absolute; left: 20px; right: 20px; top: 52px; width: auto; padding: 0; }
+  .td-copy .td-song { font-size: 18px; margin-bottom: 8px; }
+  .td-copy h2 { font-size: 34px; }
+  .td-copy .td-line { margin: 8px 0 12px; font-size: 14px; }
+  .td-num, .td-p { left: 50%; }
+  .td-num { top: auto; bottom: 80px; font-size: 300px; transform: translateX(-50%); }
+  .td-p { bottom: 66px; height: calc(var(--h) * var(--u) * .95); }
+  .td-days { left: 12px; right: 12px; bottom: 14px; gap: 2px; justify-content: space-between; }
+}

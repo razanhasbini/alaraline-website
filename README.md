@@ -14,15 +14,16 @@ The prototype now has the live site's pages, with the same components on each:
 **The pages are generated.** The shared head, header, footer, bag and search live in `src/partials/`, and each page's content lives in `src/pages/`. Edit those, then run `python3 tools/build_pages.py`. Don't edit the generated `.html` files at the root.
 
 ## What's in it
-- **Same brand, elevated:** logo pink `#E85C9C`, blush `#F8BED6`, cream `#F7E9E3`, honey `#C26431`, orange `#F58448`; Butler, PT Serif and DM Sans; every original photo, the bee illustration, the honeycomb motif, and all copy from alaraline.co (story, ingredients, FAQ, shipping policy, all 11 customer reviews, contact details).
+- **Same brand, elevated:** logo pink `#E85C9C`, blush `#F8BED6`, cream `#F7E9E3`, honey `#C26431`, orange `#F58448`; Butler, PT Serif and DM Sans; every product photo from alaraline.co (`assets/img/products/<slug>.jpg`, downloaded Nov 2026; `products/cut/` holds transparent versions for the banners), the bee illustration, the honeycomb motif, and all copy from alaraline.co (story, ingredients, FAQ, shipping policy, all 11 customer reviews, contact details).
 - **All 29 live products** with real prices, sale prices, sold-out states and descriptions (`assets/js/data.js`).
 - **ÀLara Hair Lab** (`assets/js/hairlab.js`, section `#hair-lab`): a before/after preview on real photography with hair-only effect layers. Everything runs in the browser; there's no AI model or server.
   - **One model, seen from behind,** on the pink cream set from the "Your Beautiful Hair Journey" campaign. Only her hair type changes. The ‹ › arrows outside the photo switch hair types; there's no swipe and no list of types.
   - **A white before/after line** inside the photo that you drag to compare.
-  - **A products panel** beside the photo, the same height as the photo column, with a "Main concern" selector (Dry & frizzy, Damaged & dull, Thinning & shedding, Flakes & oily roots), tabs (All, Hair care, Accessories, Sets) and a product list that scrolls inside the panel. Clicking a product shows its effect on the photo and opens its details under it: "What's inside", "Why your hair looks like this", "When you'll see it", the full ingredient list and Add to bag. "Combine products" stacks several products; the panel footer shows how many are selected.
+  - **A products panel** beside the photo, the same height as the photo column, with a "Main concern" selector (Dry & frizzy, Damaged & dull, Thinning & shedding, Flakes & oily roots), tabs (All, Hair care, Accessories, Sets) and a product list that scrolls inside the panel. Pressing a product selects it and shows its effect on the photo. The arrow on its row opens the details under it: "What's inside", "Why your hair looks like this", "When you'll see it", the full ingredient list and Add to bag. "Combine products" stacks several products; the panel footer shows how many are selected.
+  - **Best match** products move to the top of the list. Soft waves, Loose curls and Curly get the Curls On Collection plus the best product for the chosen concern. Coily gets Curls On, plus The Miracle Pro-Edition for "Thinning & shedding". Straight gets the top three for the concern. Curl products add hydration and shine on any hair and define the pattern on waves and curls (waves look wavier), but they don't make purely straight hair curlier.
   - **A results timeline:** First use, 1 week, 15 days, 1 month, 2 months. Masks and serums show most of their effect right away; growth and scalp products build up over weeks.
   - **Effects come from the ÀLara team's real ingredient lists.** `alaraline-ai/scripts/build_effects.py` scores each formula (ingredients higher on the label count more, rinse-off vs leave-in changes delivery, and the team's claims and timings set minimums) and writes `assets/js/hairlab-data.js`. Never hand-edit that file. The effects are capped so results stay believable, and there's deliberately no hair score.
-  - Layer files (dryness, frizz, flakes, thinning, damaged ends, oily roots, hydration, shine, golden glow) live in `assets/img/lab/<type>/`, masked to the hair with MediaPipe segmentation.
+  - Layer files (dryness, frizz, flakes, thinning, damaged ends, oily roots, hydration, definition, shine, golden glow) live in `assets/img/lab/<type>/`, masked to the hair with MediaPipe segmentation.
 - A working bag, wishlist, search (⌘K), quick view, category tabs and sorting, a 5-step ritual, an interactive ingredient honeycomb, a reviews marquee, FAQ, and a shipping-policy modal. The layout is responsive from 360px up and respects reduced-motion settings.
 
 ## Christmas 2026 season
@@ -39,7 +40,7 @@ The whole site has a seasonal layer: pink × silver × winter light. `DESIGN.md`
   - a red and burgundy Christmas gift guide (before the reviews): pick who the gift is for and see four real products with Add to bag;
   - a velvet "Christmas gift edit" with every ÀLara set, linked as "Gifts" in the menu;
   - a fine gold and silver bead garland across the top of the hero and the section headers, with gold, silver and pearl ornaments hanging from it;
-  - Santa hats on the shampoos and conditioners (product photos in `assets/christmas/hats/`, swapped in only during the season);
+  - Product photos are the same all year: the Santa-hat and fairy-light photos in `assets/christmas/hats/` and `assets/christmas/products/` are no longer used;
   - visible six-armed snowflake crystals in the snowfall;
   - snow caps on the category arches;
   - snow on the Hair Lab photo, the scan and contact panels and the reviews;
@@ -57,9 +58,11 @@ The Lab shows one campaign model and changes only her hair. Each hair type is a 
 
 The build tools live in `tools/hairlab/`:
 - `generate.py` creates a new hair type with Qwen Image Edit on Hugging Face. The token is read from the `HF_TOKEN` environment variable and never stored. A free account allows about one image a day. Without a token the script tries anonymously, but the Space currently refuses anonymous requests (not enough GPU time), so in practice a token is needed. Fallback: ChatGPT image editing with the prompts in `hair-types-kit/HOW-TO.md`.
+- `match_model.py <photo> <out.jpg>` brings an edit back to the campaign model when the AI changed her skin tone or hair colour (it did on Coily): it matches both to an existing look and repaints the neck. Run it before `build_look.py`.
+- `build_look.py --rebuild [key ...]` regenerates a look's mask, painted back and layers from its existing `base.jpg`.
 - `build_look.py <photo> <key> --align` turns the result into a Lab look. It matches the model's size and position to the other looks, keeps the campaign crop line, and builds the masks and effect layers.
 
-Current types: Soft waves, Straight, Loose curls and Curly. Coily is next.
+Current types: Soft waves, Straight, Loose curls, Curly, Tight curls, Full curls and Coily. Coily's hair ends above the shoulders, so growth products show fullness but no extra length.
 
 ## ÀLara Care (support assistant)
 `assets/js/support.js` is the floating "Need help?" assistant. It's guided and runs in the browser:

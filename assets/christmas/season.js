@@ -2,8 +2,8 @@
    - Snow over the whole page on one fixed canvas: three depths, wind gusts, now and then a flurry,
      and depth parallax as you scroll. A little lighter over the shop, none over the hero (it has its
      own), paused when the tab is hidden, off for reduced motion. Never takes clicks.
-   - The Christmas gift edit on the home page: nine seasonal product photographs
-     with one red satin bow at the section's corner and one on every card.
+   - The Christmas gift edit on the home page: five real gift bundles, each presented as its own
+     editorial still-life using the transparent product cut-outs (never AI-redrawn packaging).
    - Add to bag: a silver shimmer from the button and a frost ring on the bag.
    Everything else on the page matches alaraline.co. The cart and product logic are untouched: everything
    here uses data-add / data-qv, which main.js already handles. */
@@ -62,9 +62,9 @@
       edgeIO.observe(edge);
     });
   }
-  // only where white snow shows: the pearl cards on burgundy, the white review cards on pink, the services strip
-  const DRIFTS = [['.xb-card', { left: '8%', width: '52%', top: '-7px', height: '9px' }],
-    ['.love-card', { left: '10%', width: '46%', top: '-7px', height: '9px' }], ['.services', { left: '0', right: '0', width: 'auto', top: '-7px', height: '9px' }]];
+  // only where white snow shows: the white review cards on pink and the services strip
+  const DRIFTS = [['.love-card', { left: '10%', width: '46%', top: '-7px', height: '9px' }],
+    ['.services', { left: '0', right: '0', width: 'auto', top: '-7px', height: '9px' }]];
   const settle = root => DRIFTS.forEach(([sel, st]) => root.querySelectorAll(sel).forEach(el => addEdge(el, st)));
   settle(document);
   new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1) settle(n.parentNode || n); })
@@ -77,34 +77,36 @@
   const sec = document.querySelector('.gift-edit');
   const xb = sec && sec.querySelector('[data-christmas-bundles]');
   if (sec && xb) {
-    if (!sec.querySelector(':scope > .ge-corner')) sec.insertAdjacentHTML('afterbegin',
-      '<div class="ge-corner" aria-hidden="true"><img class="ge-bow" src="assets/img/products/bundles/bow.webp" alt=""></div>');
     const price = p => `<span class="ge-price"><b>${money(p.price)}</b>${p.was ? `<s>${money(p.was)}</s><em>Save ${money(p.was - p.price)}</em>` : ''}</span>`;
-    const festivePhotos = [
-      ['anti-dandruff-shampoo', 'anti-dandruff-christmas.webp'],
-      ['detox-scalp-scrub', 'detox-scalp-scrub-christmas.webp'],
-      ['scalp-massager', 'scalp-massager-christmas.webp'],
-      ['curly-hair-brush', 'curly-hair-brush-christmas.webp'],
-      ['diffuser-top', 'diffuser-top-christmas.webp'],
-      ['curls-on-collection', 'curls-on-collection-christmas.webp'],
-      ['deep-repair-duo', 'deep-repair-duo-christmas.webp'],
-      ['full-treatment-set', 'full-treatment-set-christmas.webp'],
-      ['golden-dusky-tanning-oil', 'golden-dusky-christmas.webp']
-    ].map(([slug, image]) => A.bySlug[slug] && {
-      ...A.bySlug[slug], img: `assets/christmas/products/${image}`
-    }).filter(p => p && !p.oos);
-    xb.innerHTML = festivePhotos.length ? `<div class="xb-grid">${festivePhotos.map((p, i) => `
-          <article class="xb-card">
+    const studies = [
+      ['deep-repair-duo', 'duo', true, 'Satin plinth'],
+      ['deep-repair-duo', 'orbit', false, 'Ribbon orbit'],
+      ['deep-repair-duo', 'steps', false, 'Burgundy blush'],
+      ['deep-repair-duo', 'ornaments', false, 'Ornament glow'],
+      ['deep-repair-duo', 'winter', false, 'Winter ribbon'],
+      ['deep-repair-duo', 'steps-light', true, 'Pink ivory']
+    ].map(([slug, art, featured, template]) => {
+      const p = A.bySlug[slug];
+      return p && !p.oos ? Object.assign({}, p, {
+        art,
+        featured: !!featured,
+        template,
+        tag: slug === 'deep-repair-duo' ? 'Buttered Up Mask · Miracle Pro-Edition' : p.tag
+      }) : null;
+    }).filter(Boolean);
+    const cuts = () => '';
+    xb.innerHTML = studies.length ? `<div class="xb-grid">${studies.map(p => `
+          <article class="xb-card xb-card--${p.art}${p.featured ? ' xb-card--featured' : ''}">
             <button class="ge-open" type="button" data-qv="${p.slug}" aria-label="Quick view ${esc(p.name)}"></button>
-            <div class="xb-media">
-              <span class="xb-no" aria-hidden="true">0${i + 1}</span>
-              <img class="xb-product xb-photo" src="${p.img}" alt="${esc(p.name)} dressed for Christmas" loading="lazy">
-              <span class="xb-ribbon-band" aria-hidden="true"></span>
-              <img class="xb-bow" src="assets/img/products/bundles/bow.webp" alt="" aria-hidden="true">
+            <div class="xb-media xb-art xb-art--${p.art}" role="img" aria-label="${esc(p.name)} Christmas gift set: ${esc(p.tag)}">
+              <div class="xb-still" aria-hidden="true">${cuts(p)}</div>
             </div>
-            <h3>${esc(p.name)}</h3>
-            <p class="xb-in">${esc(p.tag)}</p>
-            <div class="ge-row">${price(p)}<button class="ge-add" type="button" data-add="${p.slug}" aria-label="Add ${esc(p.name)} to bag">Add</button></div>
+            <div class="xb-copy">
+              <p class="xb-kicker">Christmas bundle · ${esc(p.template)}</p>
+              <h3>${esc(p.name)}</h3>
+              <p class="xb-in">${esc(p.tag)}</p>
+              <div class="ge-row">${price(p)}<button class="ge-add" type="button" data-add="${p.slug}" aria-label="Add ${esc(p.name)} to bag">Add</button></div>
+            </div>
           </article>`).join('')}
         </div>` : '';
   }

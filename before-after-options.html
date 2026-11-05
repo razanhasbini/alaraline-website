@@ -1,0 +1,230 @@
+<!doctype html>
+<!-- TEMPORARY design preview: five ways to show clients' before & after photos. Pick one, then delete this file. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Before &amp; After options - ÀLara Line</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=PT+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family: Butler; src: url(assets/fonts/Butler-Regular.otf) format('opentype'); font-weight: 400; }
+    :root { --pink: #e85c9c; --blush: #f8bed6; --wash: #fdecf4; --ivory: #fbf7f4; --velvet: #3b1528; --champagne: #e3cfa8; --text: #696969; --soft: #8b7b81; --line: #eadfda;
+      --ease: cubic-bezier(.22, 1, .36, 1); }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font: 400 15px/1.65 'DM Sans', system-ui, sans-serif; color: var(--text); background: #fff; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+
+    /* the picker bar and option labels (not part of any design) */
+    .pick { position: sticky; top: 0; z-index: 20; background: #23171c; color: #fff; }
+    .pick .wrap { display: flex; align-items: center; gap: 10px 22px; flex-wrap: wrap; padding-block: 14px; }
+    .pick b { font: 400 18px/1 Butler, serif; margin-right: auto; }
+    .pick a { font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+    .pick a:hover { opacity: 1; color: var(--blush); }
+    .opt-label { position: absolute; top: 18px; left: 18px; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; background: #23171c; color: #fff;
+      font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .08em; }
+    .opt-label span { width: 26px; height: 26px; border-radius: 50%; background: var(--pink); display: grid; place-items: center; font: 400 15px/1 Butler, serif; }
+    .opt { position: relative; padding: 110px 0 100px; scroll-margin-top: 50px; }
+    .opt + .opt { border-top: 6px solid #23171c; }
+
+    /* shared bits */
+    .head { text-align: center; margin-bottom: 56px; }
+    .eyebrow { margin: 0 0 16px; font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--pink); }
+    .title { position: relative; margin: 0; padding-bottom: 20px; font: 400 clamp(32px, 4.5vw, 48px)/1.2 Butler, 'PT Serif', serif; color: #000; }
+    .title::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 40px; height: 5px; margin-left: -20px; background: var(--pink);
+      -webkit-mask: url(assets/img/site/squiggle.svg) center / contain no-repeat; mask: url(assets/img/site/squiggle.svg) center / contain no-repeat; }
+    .sub { margin: 18px 0 0; }
+    .tag { position: absolute; z-index: 2; padding: 7px 12px; background: rgba(255, 255, 255, .92); color: #000; font: 500 10.5px/1 'DM Sans', sans-serif; letter-spacing: .22em; text-transform: uppercase; pointer-events: none; }
+    .ph { position: absolute; top: 10px; right: 10px; z-index: 3; padding: 4px 8px; border-radius: 999px; background: #eceef2; color: #5f6673; font: 700 9px/1.2 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .name { margin: 0; font: 400 17px/1.45 'PT Serif', serif; color: #000; }
+    .meta { margin: 4px 0 0; font: 500 11px/1.4 'DM Sans', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); }
+    .arrows { display: flex; justify-content: center; gap: 10px; margin-top: 40px; }
+    .arrow { width: 46px; height: 46px; display: grid; place-items: center; border: 1px solid #d9cbc5; color: #000; font-size: 18px; transition: .25s; }
+    .arrow:hover { background: #000; color: #fff; border-color: #000; }
+    .rail { display: grid; grid-auto-flow: column; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .rail::-webkit-scrollbar { display: none; }
+    .rail > * { scroll-snap-align: start; }
+
+    /* ===== A. Side by side ===== */
+    .a { background: var(--ivory); }
+    .a .rail { grid-auto-columns: calc((100% - 60px) / 3); gap: 30px; }
+    .a-card { background: #fff; padding: 14px 14px 24px; box-shadow: 0 30px 60px -45px rgba(90, 40, 60, .4); text-align: center; }
+    .a-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 20px; }
+    .a-pair figure { position: relative; margin: 0; aspect-ratio: 3 / 4; overflow: hidden; }
+    .a-pair img { width: 100%; height: 100%; object-fit: cover; }
+    .a-pair .tag { left: 8px; bottom: 8px; }
+
+    /* ===== B. Arches on velvet ===== */
+    .b { background: var(--velvet); color: #e9d7df; }
+    .b .title { color: #fff; }
+    .b .eyebrow { color: var(--champagne); }
+    .b .title::after { background: var(--champagne); }
+    .b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; }
+    .b-pair { position: relative; height: 380px; }
+    .b-arch { position: absolute; bottom: 70px; width: 58%; aspect-ratio: 3 / 4.3; border-radius: 999px 999px 4px 4px; overflow: hidden; border: 1px solid rgba(227, 207, 168, .5); }
+    .b-arch img { width: 100%; height: 100%; object-fit: cover; }
+    .b-arch.before { left: 0; bottom: 110px; filter: saturate(.75); }
+    .b-arch.after { right: 0; box-shadow: -20px 30px 50px -20px rgba(0, 0, 0, .6); }
+    .b-arch .tag { left: 50%; bottom: 12px; transform: translateX(-50%); background: rgba(59, 21, 40, .82); color: var(--champagne); }
+    .b-arch .ph { top: auto; right: auto; left: 50%; bottom: 46px; transform: translateX(-50%); }
+    .b-cap { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; }
+    .b .name { color: #fff; }
+    .b .meta { color: var(--champagne); opacity: .8; }
+
+    /* ===== C. Polaroids that flip ===== */
+    .c { background: var(--wash); }
+    .c-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; padding-top: 10px; }
+    .c-pol { perspective: 1200px; }
+    .c-pol:nth-child(odd) { transform: rotate(-2.5deg); }
+    .c-pol:nth-child(even) { transform: rotate(2deg) translateY(14px); }
+    .c-flip { position: relative; display: block; width: 100%; aspect-ratio: 1 / 1.22; transform-style: preserve-3d; transition: transform .8s var(--ease); }
+    .c-face { position: absolute; inset: 0; background: #fff; padding: 12px 12px 0; box-shadow: 0 18px 30px -18px rgba(120, 40, 80, .45); backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; }
+    .c-face img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .c-face p { margin: auto 0; text-align: center; font: italic 400 19px/1 'PT Serif', serif; color: #000; }
+    .c-face.back { transform: rotateY(180deg); }
+    .c-face.back p { color: var(--pink); }
+    .c-pol:hover .c-flip, .c-flip[aria-pressed="true"] { transform: rotateY(180deg); }
+    .c-pin { position: absolute; top: -9px; left: 50%; z-index: 2; width: 54px; height: 18px; margin-left: -27px; background: rgba(248, 190, 214, .75); transform: rotate(-3deg); }
+    .c-cap { margin-top: 18px; text-align: center; }
+
+    /* ===== D. Stories ===== */
+    .d { background: #fff; }
+    .d .rail { grid-auto-columns: calc((100% - 72px) / 4); gap: 24px; }
+    .d-story { position: relative; aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; background: #000; display: grid; grid-template-rows: 1fr 1fr; box-shadow: 0 24px 40px -28px rgba(0, 0, 0, .5); }
+    .d-story figure { position: relative; margin: 0; overflow: hidden; }
+    .d-story figure img { width: 100%; height: 100%; object-fit: cover; }
+    .d-story figure + figure { border-top: 2px solid #fff; }
+    .d-story .tag { left: 12px; bottom: 12px; border-radius: 999px; }
+    .d-bar { position: absolute; top: 10px; left: 12px; right: 12px; z-index: 3; display: flex; gap: 4px; }
+    .d-bar i { flex: 1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .5); }
+    .d-bar i:first-child { background: #fff; }
+    .d-who { position: absolute; top: 22px; left: 12px; z-index: 3; display: flex; align-items: center; gap: 8px; color: #fff; font: 600 12px/1 'DM Sans', sans-serif; text-shadow: 0 1px 4px rgba(0, 0, 0, .5); }
+    .d-who img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--pink); background: #fff; object-fit: contain; padding: 3px; }
+    .d-prod { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 3; padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, .94); text-align: left; }
+    .d-prod .name { font-size: 14px; }
+    .d-prod .meta { font-size: 9.5px; margin-top: 2px; }
+    .d-story figure:last-of-type .tag { bottom: auto; top: 12px; }
+
+    /* ===== E. One big slider + client list ===== */
+    .e { background: var(--ivory); }
+    .e-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 6vw, 90px); align-items: center; }
+    .e-frame { padding: 14px; background: #fff; box-shadow: 0 40px 70px -45px rgba(90, 40, 60, .35); }
+    .e-cmp { --split: 50%; position: relative; aspect-ratio: 1; overflow: hidden; cursor: ew-resize; touch-action: pan-y; user-select: none; }
+    .e-cmp img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .e-cmp .after { clip-path: inset(0 0 0 var(--split)); }
+    .e-cmp .tag { bottom: 14px; }
+    .e-line { position: absolute; top: 0; bottom: 0; left: var(--split); width: 2px; margin-left: -1px; background: #fff; z-index: 2; }
+    .e-line span { position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; margin: -23px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 6px 18px rgba(0, 0, 0, .18); color: #000; font-size: 14px; }
+    .e-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .e-list button { width: 100%; display: grid; grid-template-columns: 56px 1fr auto; gap: 18px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); text-align: left; opacity: .5; transition: opacity .25s; }
+    .e-list button:hover, .e-list [aria-selected="true"] { opacity: 1; }
+    .e-list img { width: 56px; height: 56px; object-fit: cover; }
+    .e-list .num { font: 400 30px/1 Butler, serif; color: #000; }
+    .e-list [aria-selected="true"] .num { color: var(--pink); }
+
+    /* ===== phones ===== */
+    @media (max-width: 900px) {
+      .opt { padding: 90px 0 70px; }
+      .a .rail { grid-auto-columns: 82%; gap: 16px; }
+      .b-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; gap: 30px; }
+      .c-grid { grid-template-columns: 1fr 1fr; gap: 30px 20px; }
+      .d .rail { grid-auto-columns: 62%; gap: 14px; }
+      .e-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="pick" aria-label="Options">
+    <div class="wrap"><b>Before &amp; After: 5 options</b>
+      <a href="#a">A · Side by side</a><a href="#b">B · Velvet arches</a><a href="#c">C · Polaroids</a><a href="#d">D · Stories</a><a href="#e">E · Slider + list</a>
+    </div>
+  </nav>
+
+  <section class="opt a" id="a">
+    <p class="opt-label"><span>A</span> Side by side · cards you swipe through</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Our clients</p><h2 class="title">Real Hair, Real Results</h2></header>
+      <div class="rail" data-rail data-build="a"></div>
+      <div class="arrows"><button class="arrow" data-go="-1" aria-label="Previous">←</button><button class="arrow" data-go="1" aria-label="Next">→</button></div>
+    </div>
+  </section>
+
+  <section class="opt b" id="b">
+    <p class="opt-label"><span>B</span> Velvet arches · luxury, matches the gift edit</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">The ÀLara effect</p><h2 class="title">Real Hair, Real Results</h2></header>
+      <div class="b-grid" data-build="b"></div>
+    </div>
+  </section>
+
+  <section class="opt c" id="c">
+    <p class="opt-label"><span>C</span> Polaroids · hover or tap to flip</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Our clients</p><h2 class="title">Real Hair, Real Results</h2><p class="sub">Hover over a photo (or tap it) to flip it.</p></header>
+      <div class="c-grid" data-build="c"></div>
+    </div>
+  </section>
+
+  <section class="opt d" id="d">
+    <p class="opt-label"><span>D</span> Stories · like the Instagram stories clients send</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Shared with us</p><h2 class="title">Real Hair, Real Results</h2></header>
+      <div class="rail" data-rail data-build="d"></div>
+      <div class="arrows"><button class="arrow" data-go="-1" aria-label="Previous">←</button><button class="arrow" data-go="1" aria-label="Next">→</button></div>
+    </div>
+  </section>
+
+  <section class="opt e" id="e">
+    <p class="opt-label"><span>E</span> One big slider + client list</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Our clients</p><h2 class="title">Real Hair, Real Results</h2><p class="sub">Drag the line, or choose a client.</p></header>
+      <div class="e-grid">
+        <div class="e-frame"><div class="e-cmp"><img class="before" alt=""><img class="after" alt=""><span class="tag" style="left:14px">Before</span><span class="tag" style="right:14px">After</span><span class="ph">Placeholder</span><div class="e-line"><span>↔</span></div></div></div>
+        <ul class="e-list" data-build="e"></ul>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const C = [
+      { key: 'curly', hair: 'Curly hair', product: 'Curls On Collection', time: '6 weeks', who: '@client_one' },
+      { key: 'wavy', hair: 'Wavy hair', product: 'Miracle Mask', time: '1 month', who: '@client_two' },
+      { key: 'straight', hair: 'Straight hair', product: 'Leave In Your Dreams + Serum', time: '3 weeks', who: '@client_three' },
+      { key: 'long', hair: 'Long waves', product: 'Full Treatment Set', time: '2 months', who: '@client_four' }
+    ];
+    const img = (c, s) => `assets/img/clients/${c.key}-${s}.webp`;
+    const cap = c => `<p class="name">${c.product}</p><p class="meta">${c.hair} · ${c.time}</p>`;
+    const ph = '<span class="ph">Placeholder</span>';
+    const build = {
+      a: c => `<article class="a-card"><div class="a-pair"><figure><img src="${img(c, 'before')}" alt=""><span class="tag">Before</span></figure><figure><img src="${img(c, 'after')}" alt=""><span class="tag">After</span>${ph}</figure></div>${cap(c)}</article>`,
+      b: (c, i) => i > 2 ? '' : `<article class="b-pair"><div class="b-arch before"><img src="${img(c, 'before')}" alt=""><span class="tag">Before</span></div><div class="b-arch after"><img src="${img(c, 'after')}" alt=""><span class="tag">After</span>${ph}</div><div class="b-cap">${cap(c)}</div></article>`,
+      c: c => `<div class="c-pol"><span class="c-pin"></span><button type="button" class="c-flip" aria-pressed="false" aria-label="${c.hair}: flip to see the after"><span class="c-face"><img src="${img(c, 'before')}" alt="">${ph}<p>Before</p></span><span class="c-face back"><img src="${img(c, 'after')}" alt=""><p>After</p></span></button><div class="c-cap">${cap(c)}</div></div>`,
+      d: c => `<article class="d-story"><div class="d-bar"><i></i><i></i></div><div class="d-who"><img src="assets/img/site/bee.png" alt="">${c.who}</div><figure><img src="${img(c, 'before')}" alt=""><span class="tag">Before</span></figure><figure><img src="${img(c, 'after')}" alt=""><span class="tag">After</span></figure>${ph}<div class="d-prod">${cap(c)}</div></article>`,
+      e: (c, i) => `<li><button type="button" data-e="${i}" aria-selected="${i === 0}"><img src="${img(c, 'after')}" alt=""><span>${cap(c)}</span><span class="num">0${i + 1}</span></button></li>`
+    };
+    document.querySelectorAll('[data-build]').forEach(el => (el.innerHTML = C.map(build[el.dataset.build]).join('')));
+
+    // A and D: arrows scroll the rail by one card
+    document.querySelectorAll('.opt').forEach(sec => sec.addEventListener('click', e => {
+      const b = e.target.closest('[data-go]'); if (!b) return;
+      const rail = sec.querySelector('[data-rail]'), card = rail.firstElementChild;
+      rail.scrollBy({ left: +b.dataset.go * (card.offsetWidth + 24), behavior: 'smooth' });
+    }));
+    // C: a tap keeps the polaroid flipped
+    document.querySelectorAll('.c-flip').forEach(f => f.addEventListener('click', () => f.setAttribute('aria-pressed', f.getAttribute('aria-pressed') !== 'true')));
+    // E: drag line + client list
+    const cmp = document.querySelector('.e-cmp'), [eb, ea] = cmp.querySelectorAll('img');
+    const show = i => { eb.src = img(C[i], 'before'); ea.src = img(C[i], 'after'); document.querySelectorAll('[data-e]').forEach(b => b.setAttribute('aria-selected', +b.dataset.e === i)); };
+    const at = x => { const r = cmp.getBoundingClientRect(); cmp.style.setProperty('--split', Math.min(98, Math.max(2, (x - r.left) / r.width * 100)) + '%'); };
+    let drag = false;
+    cmp.addEventListener('pointerdown', e => { drag = true; cmp.setPointerCapture(e.pointerId); at(e.clientX); });
+    cmp.addEventListener('pointermove', e => drag && at(e.clientX));
+    cmp.addEventListener('pointerup', () => (drag = false));
+    document.querySelector('.e-list').addEventListener('click', e => { const b = e.target.closest('[data-e]'); if (b) show(+b.dataset.e); });
+    show(0);
+  </script>
+</body>
+</html>

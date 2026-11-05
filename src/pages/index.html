@@ -4,7 +4,7 @@ desc: Pharmacy-developed, 100% organic hair care from Lebanon. Powered by advanc
 nav: home
 body: page-home
 head: <link rel="preload" as="image" href="assets/christmas/box/interior.jpg">
-css: assets/css/banners.css, assets/css/pantry.css, assets/css/cozy.css
+css: assets/css/banners.css, assets/css/pantry.css, assets/css/cozy.css, assets/css/clients.css
 js: assets/js/main.js, assets/js/banners.js, module assets/js/honey.js, assets/js/pantry.js, assets/christmas/hero-snow.js, assets/christmas/gift.js, assets/christmas/season.js
 -->
     <!-- HERO: the season's banners -->
@@ -166,7 +166,7 @@ js: assets/js/main.js, assets/js/banners.js, module assets/js/honey.js, assets/j
         <header class="xb-head reveal">
           <p class="eyebrow"><span class="dot"></span> The Christmas gift edit</p>
           <h2 class="sec-title" id="ge-title">Wrapped in <em>a little magic</em></h2>
-          <p class="sec-sub">Nine festive favourites, dressed in fairy lights and ready for gifting.</p>
+          <p class="sec-sub">The Deep Repair Duo, photographed as one limited Christmas ritual.</p>
         </header>
         <div class="xb" data-christmas-bundles></div>
       </div>
@@ -210,6 +210,29 @@ js: assets/js/main.js, assets/js/banners.js, module assets/js/honey.js, assets/j
       <div class="lwrap">
         <h2 class="ltitle squiggle">Offers</h2>
         <div class="lgrid" data-offers role="list"></div>
+      </div>
+    </section>
+
+    <!-- FEATURED RESULTS: before & after in arches, on rose pink (ALARA.clients, styles in assets/css/clients.css) -->
+    <section class="arches" id="results" aria-labelledby="ar-title">
+      <div class="lwrap">
+        <header class="ar-head">
+          <p class="ar-eyebrow">The ÀLara effect</p>
+          <h2 class="ltitle squiggle" id="ar-title">Real Hair, Real Results</h2>
+        </header>
+        <div class="ar-grid" role="list" data-arches></div>
+      </div>
+    </section>
+
+    <!-- CLIENT RESULTS: before & after photos (ALARA.clients in assets/js/data.js, styles in assets/css/clients.css) -->
+    <section class="clients" id="client-results" aria-labelledby="cr-title">
+      <div class="lwrap">
+        <header class="cr-head">
+          <p class="cr-eyebrow">Our clients</p>
+          <h2 class="ltitle squiggle" id="cr-title">The Results Wall</h2>
+          <p class="cr-sub">Before and after, shared with us by our clients.</p>
+        </header>
+        <div data-clients></div>
       </div>
     </section>
 

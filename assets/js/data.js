@@ -66,10 +66,23 @@ window.ALARA = (function () {
       tag: 'Alcohol-free · Vitamin E',
       desc: 'Sweet Honey. Pure Delight. Lasts All Day. The warm, sweet scent of a jar of honey — alcohol-free and enriched with vitamin E.',
       fx: { scent: '#f2b84b', shine: .12, hydrate: .08, when: 'All day' } },
-    { id: 4198, slug: 'hair-mist-tropical-vanilla', name: 'Hair Mist – Tropical Vanilla', price: 20, cats: ['Hair Care'], oos: true,
+    { id: 4198, slug: 'hair-mist-tropical-vanilla', name: 'Hair Mist – Tropical Vanilla', price: 20, cats: ['Hair Care'],
       tag: 'Alcohol-free · Vitamin E',
       desc: 'Creamy Vanilla. Exotic Touch. Lasts All Day. Creamy vanilla with exotic tropical fruits — alcohol-free and infused with vitamin E.',
       fx: { scent: '#f6d9a8', shine: .12, hydrate: .08, when: 'All day' } },
+    // the slugs below are the live alaraline.co URLs, kept from these mists' earlier scents
+    { id: 4131, slug: 'hair-mist-green-tea', name: 'Hair Mist – Coconut Milk', price: 20, cats: ['Hair Care'],
+      tag: 'Alcohol-free · Vitamin E',
+      desc: 'Creamy. Clean. Irresistible. A long-lasting coconut milk scent — alcohol-free and infused with vitamin E.',
+      fx: { scent: '#e8dcc8', shine: .12, hydrate: .08, when: 'All day' } },
+    { id: 4121, slug: 'hair-mist-amber-musk', name: 'Hair Mist – Wild Berries', price: 20, cats: ['Hair Care'],
+      tag: 'Alcohol-free · Vitamin E',
+      desc: 'Fresh. Wild. Irresistible. A long-lasting wild berries scent — alcohol-free and infused with vitamin E.',
+      fx: { scent: '#c9b3dc', shine: .12, hydrate: .08, when: 'All day' } },
+    { id: 4632, slug: '4hair-mists', name: '4 Hair Mists', price: 65, was: 80, cats: ['Offers'],
+      tag: 'Pure Honey · Tropical Vanilla · Wild Berries · Coconut Milk',
+      desc: 'The 4 Hair Mists offer includes Pure Honey, Tropical Vanilla, Wild Berries and Coconut Milk.',
+      combo: ['hair-mist-oh-honey', 'hair-mist-tropical-vanilla', 'hair-mist-amber-musk', 'hair-mist-green-tea'], sameFormula: true },
     { id: 4214, slug: 'deep-repair-duo', name: 'Deep Repair Duo', price: 53, was: 60, cats: ['Offers'], img2: true,
       tag: 'Miracle Mask · Miracle Pro-Edition',
       desc: 'A power duo for deep repair and hydration! Our Miracle Mask and oil together restore strength, reduce damage and leave your hair silky smooth and healthy.',
@@ -126,10 +139,9 @@ window.ALARA = (function () {
       desc: 'A fast-absorbing tanning oil designed to accelerate your natural tan while keeping your skin nourished — a golden glow without dryness. Lightweight and non-greasy.' }
   ];
 
-  // products with a clean transparent cut-out (the brand's current packaging, including the new hair mists)
-  const CUT = ['alaras-pouch', 'anti-dandruff-shampoo', 'conditioner', 'curl-boosting-cream', 'curl-defining-shampoo', 'curly-hair-brush', 'deep-repair-capsules', 'detox-scalp-scrub', 'diffuser-top', 'hair-mist-oh-honey', 'hair-mist-tropical-vanilla', 'heat-protectant', 'hydrating-conditioner-tropical-vanilla', 'hydrating-curl-conditioner', 'intensive-repair-shampoo-tropical-vanilla', 'leave-in', 'miracle-mask', 'miracle-pro-edition', 'scalp-massager', 'serum', 'shampoo', 'wax-stick-styling-hair-wax'];
+  // every product uses its photo from alaraline.co (the cut-outs in products/cut are only for the banners)
   products.forEach(p => {
-    p.img = (CUT.includes(p.slug) ? IMG + 'cut/' + p.slug + '.webp' : IMG + p.slug + '.jpg');
+    p.img = IMG + p.slug + '.jpg';
     if (p.img2) p.img2 = IMG + p.slug + '-2.jpg';
     p.url = 'https://alaraline.co/product/' + p.slug + '/';
   });
@@ -151,6 +163,8 @@ window.ALARA = (function () {
     'wax-stick-styling-hair-wax': ['Honey and coconut oil in a smooth-glide wax stick.', 'It tames flyaways and baby hairs with a light, non-greasy hold, so edges and partings look sleek and polished.'],
     'hair-mist-oh-honey': ['Alcohol-free mist with vitamin E, scented with honey.', 'It leaves hair softly fragranced all day and adds a light touch of softness and shine.'],
     'hair-mist-tropical-vanilla': ['Alcohol-free mist with vitamin E, scented with tropical vanilla.', 'It leaves hair softly fragranced all day and adds a light touch of softness and shine.'],
+    'hair-mist-green-tea': ['Alcohol-free mist with vitamin E, scented with coconut milk.', 'It leaves hair softly fragranced all day and adds a light touch of softness and shine.'],
+    'hair-mist-amber-musk': ['Alcohol-free mist with vitamin E, scented with wild berries.', 'It leaves hair softly fragranced all day and adds a light touch of softness and shine.'],
     'curly-hair-brush': ['A brush designed to detangle and define your natural pattern.', 'It separates hair into clumps along its natural curl, so curls look defined and bouncy without frizz or breakage.'],
     'diffuser-top': ['A diffuser top that fits all hair dryers.', 'It spreads the airflow gently so curls and waves dry in their shape, with more volume and bounce and less frizz.'],
     'satin-pillow-cover': ['A smooth, breathable satin pillow cover.', 'Less friction while you sleep means less frizz, breakage and creases, so hair keeps its moisture and shape overnight.'],
@@ -237,6 +251,43 @@ window.ALARA = (function () {
     { who: '@_may_sam_sh', text: 'Hello dear, the products are wonderful. They moisturize the hair wonderfully and for a longer time.\nThey helped me reduce hair loss from the third use, and I hope that these products will help me treat all the problems I was facing with my hair. Thank you very much.\nThanks a lot ana tazabt ktr la la2yt shy ynasb sharii bhl2d fatra 2aseraa w3njd msh mojamlii bsss 3am la2ee far2 bjann lhamdela' }
   ];
 
+  /* Before & After (results on the home page). Each result: before and after photos taken the same way (same pose, light
+     and framing), the products used, how long, hair type, concern and a short title (the italic half last).
+     A customer result adds `who` (their handle) and `quote` (their own words, shared with permission); drop the photos in
+     assets/img/results/<key>-before.webp and -after.webp, or set `before` / `after` to any path.
+     `sample: true` marks an illustration rendered by the Hair Lab from the products' ingredient lists; the page labels it
+     as one. Replace the samples with customer results as they come in. */
+  const results = [
+    { key: 'waves-curls-on', sample: true, hair: 'Soft waves', concern: 'Dry & frizzy', products: ['curls-on-collection'], time: '1 month',
+      title: ['Frizzy waves,', 'defined & bouncy'] },
+    { key: 'loose-curls-full-set', sample: true, hair: 'Loose curls', concern: 'Damaged & dull', products: ['full-treatment-set'], time: '1 month',
+      title: ['Dull lengths,', 'smooth & hydrated'] },
+    { key: 'curly-care-kit', sample: true, hair: 'Curly', concern: 'Dry & frizzy', products: ['curls-on-care-kit'], time: '1 month',
+      title: ['Dry curls,', 'soft & defined'] },
+    { key: 'waves-anti-dandruff', sample: true, hair: 'Soft waves', concern: 'Flakes & oily roots', products: ['anti-dandruff-shampoo'], time: '1 month',
+      title: ['Flaky roots,', 'a calmer scalp'] }
+  ];
+  results.forEach(r => {
+    r.before = r.before || 'assets/img/results/' + r.key + '-before.webp';
+    r.after = r.after || 'assets/img/results/' + r.key + '-after.webp';
+  });
+
+  /* Client Results (home page): a square before photo that turns into the after on hover or tap.
+     Each client: photos in assets/img/clients/<key>-before.webp and -after.webp (square, taken the same way), the products
+     used, how long, hair type, and `who` (their handle, with permission).
+     `placeholder: true` marks stock photos of different people (see assets/img/clients/CREDITS.txt), shown only to fill the
+     layout; their products and times are placeholders too. Replace them with real clients before launch. */
+  const clients = [
+    { key: 'curly', placeholder: true, hair: 'Curly hair', products: ['curls-on-collection'], time: '6 weeks' },
+    { key: 'wavy', placeholder: true, hair: 'Wavy hair', products: ['miracle-mask'], time: '1 month' },
+    { key: 'straight', placeholder: true, hair: 'Straight hair', products: ['leave-in', 'serum'], time: '3 weeks' },
+    { key: 'long', placeholder: true, hair: 'Long waves', products: ['full-treatment-set'], time: '2 months' }
+  ];
+  clients.forEach(c => {
+    c.before = c.before || 'assets/img/clients/' + c.key + '-before.webp';
+    c.after = c.after || 'assets/img/clients/' + c.key + '-after.webp';
+  });
+
   const faqs = [
     ['Are ÀLara Line products really 100% organic?', 'Yes 🤍 all our formulas are crafted with organic ingredients, pro-vitamins, peptides, and natural oils.'],
     ['Are your products safe for kids and pregnant women?', 'Absolutely! Our products are designed to be gentle, sulfate-free, paraben-free, and safe for both kids and moms-to-be.'],
@@ -286,10 +337,10 @@ window.ALARA = (function () {
     'satin-pillow-cover': { freq: 7, start: 1, full: 7, place: 'night', rinse: false, often: 'Every night', steps: ['Sleep on it every night to cut friction, frizz and breakage.'] },
     'microfiber-towel': { freq: 3, start: 1, full: 1, place: 'lengths', rinse: false, often: 'After every wash', steps: ['Squeeze and scrunch the water out. Don’t rub.'] }
   };
-  ['hair-mist-oh-honey', 'hair-mist-tropical-vanilla'].forEach(k => (USAGE[k] = USAGE['hair-mist']));
+  ['hair-mist-oh-honey', 'hair-mist-tropical-vanilla', 'hair-mist-green-tea', 'hair-mist-amber-musk'].forEach(k => (USAGE[k] = USAGE['hair-mist']));
   USAGE['intensive-repair-shampoo-tropical-vanilla'] = USAGE['shampoo'];
   USAGE['hydrating-conditioner-tropical-vanilla'] = USAGE['conditioner'];
   products.forEach(p => { if (USAGE[p.slug]) p.usage = USAGE[p.slug]; });
 
-  return { products, bundles, bySlug, bestSellers, categories, ingredients, reviews, faqs };
+  return { products, bundles, bySlug, bestSellers, categories, ingredients, reviews, results, clients, faqs };
 })();

@@ -14,8 +14,8 @@
     { key: 'curly', family: 'curly', name: 'Curly' },
     { key: 'coily', family: 'coily', name: 'Coily' }
   ];
-  const LAYERS = ['rich', 'soft', 'dry', 'ends', 'thin', 'oily', 'frizz', 'flakes', 'shine', 'glow'];
-  const OPTIONAL_LAYERS = ['oily'];
+  const LAYERS = ['rich', 'soft', 'dry', 'ends', 'thin', 'oily', 'define', 'crisp', 'frizz', 'flakes', 'shine', 'glow'];
+  const OPTIONAL_LAYERS = ['oily', 'define', 'crisp'];
 
   /* starting condition per concern — moderate, like real life, not a caricature */
   const CONCERNS = {
@@ -24,10 +24,10 @@
     thin:   { label: 'Thinning & shedding', hydrate: .55, shine: .35, frizz: .25, define: .6,  density: .4,  flakes: .1,  oil: .3,  smooth: .35, edges: .2,  volume: -.1, damage: .2,  scalp: .45 },
     flakes: { label: 'Flakes & oily roots', hydrate: .45, shine: .2,  frizz: .3,  define: .55, density: .9,  flakes: .85, oil: .7,  smooth: .3,  edges: .25, volume: -.2, damage: .15, scalp: .2 }
   };
-  const NUMERIC = ['hydrate', 'shine', 'frizz', 'define', 'density', 'length', 'flakes', 'oil', 'smooth', 'edges', 'volume', 'damage', 'glow', 'scalp', 'shield'];
+  const NUMERIC = ['hydrate', 'shine', 'frizz', 'define', 'density', 'length', 'flakes', 'oil', 'smooth', 'edges', 'volume', 'damage', 'glow', 'scalp', 'shield', 'crisp'];
 
   function baseState(concern) {
-    const c = CONCERNS[concern], s = { length: 0, glow: 0, shield: 0, scent: [] };
+    const c = CONCERNS[concern], s = { length: 0, glow: 0, shield: 0, crisp: 0, scent: [] };
     NUMERIC.forEach(k => { if (k in c) s[k] = c[k]; });
     return s;
   }
@@ -36,13 +36,14 @@
     const s = Object.assign({}, state, { scent: state.scent.slice() }), k = .85;
     const up = (key, a) => { if (a) s[key] = s[key] + (1 - s[key]) * clamp(a * k); };
     const down = (key, a) => { if (a) s[key] = s[key] * (1 - clamp(a * k)); };
-    let define = fx.define || 0, smooth = fx.smooth || 0;
-    if (fx.curlOnly && family === 'straight') { smooth += define * .6; define = 0; }
+    // curl products hydrate and add shine on any hair, but can't make purely straight hair curlier
+    const define = fx.curlOnly && family === 'straight' ? 0 : fx.define || 0, smooth = fx.smooth || 0;
     up('hydrate', fx.hydrate); up('shine', fx.shine); down('frizz', fx.frizz);
     up('define', define); up('density', fx.density); up('smooth', smooth);
     s.length = Math.min(1, s.length + (fx.length || 0));
     down('flakes', fx.flakes); down('edges', fx.edges); down('edges', (fx.frizz || 0) * .3);
     if (fx.volume) s.volume = Math.min(.5, s.volume + fx.volume);
+    if (fx.crisp) s.crisp = Math.max(s.crisp, fx.crisp);
     up('glow', fx.glow); up('scalp', fx.scalp); if (fx.flakes) up('scalp', fx.flakes * .5);
     down('damage', (fx.hydrate || 0) * .55 + smooth * .45 + (fx.shine || 0) * .2 + (fx.strength || 0) * .6);
     // effects derived from ingredients
@@ -52,7 +53,7 @@
     if (cleanse) s.volume = Math.min(.5, s.volume + cleanse * .2);
     down('edges', fx.hold); down('frizz', (fx.hold || 0) * .3);
     if (fx.shield || (fx.protect || 0) >= .5) s.shield = 1;
-    if (fx.scent) fx.scent === 'multi' ? s.scent.push('honey', 'vanilla', 'green tea', 'amber musk') : s.scent.push(fx.scentName || 'fresh');
+    if (fx.scent) fx.scent === 'multi' ? s.scent.push('honey', 'vanilla', 'coconut milk', 'wild berries') : s.scent.push(fx.scentName || 'fresh');
     return s;
   }
   function lerpState(a, b, t) { const s = { scent: b.scent }; NUMERIC.forEach(k => (s[k] = lerp(a[k], b[k], t))); return s; }
@@ -79,13 +80,16 @@
   function alphas(s) {
     return {
       rich: clamp((s.hydrate - .45) / .5) * .85,
-      soft: clamp(1 - s.define) * .75 * (1 - s.smooth * .4),
+      soft: clamp(1 - s.define) * .75 * (1 - s.smooth * .4) * (1 - s.crisp),
       dry: clamp((1 - s.hydrate) * 1.15 + s.damage * .1) * .85,
       ends: clamp(s.damage) * .9,
       thin: clamp(1 - s.density) * .9,
       oily: clamp((s.oil - .15) / .55) * .9,
+      // hydrated hair looks softer, so it gets less contrast than a dry hair defined by a brush
+      define: clamp((s.define - .3) / .55) * (.85 - clamp((s.hydrate - .45) / .5) * .35 * (1 - s.crisp)),
+      crisp: clamp(s.crisp) * .9,
       // curved so a strong anti-frizz product clears most of the halo, leaving a few strays
-      frizz: clamp(Math.pow(clamp((s.frizz - .12) / .58), 1.4) * .95 + s.edges * .08),
+      frizz: clamp(Math.pow(clamp((s.frizz - .12) / .58), 1.4) * .95 + s.edges * .08) * (1 - s.crisp * .6),
       flakes: Math.pow(clamp((s.flakes - .15) / .7), 1.3),
       shine: clamp((s.shine - .25) / .6) * .9,
       glow: clamp(s.glow) * .4
@@ -111,7 +115,7 @@
     return o;
   }
   /* products built from ingredients carry a timeline per kind of effect (see knowledge/build_effects) */
-  const EFFECT_CLASS = { hydrate: 'cosmetic', smooth: 'cosmetic', frizz: 'cosmetic', define: 'cosmetic', hold: 'cosmetic', shine: 'cosmetic',
+  const EFFECT_CLASS = { hydrate: 'cosmetic', smooth: 'cosmetic', frizz: 'cosmetic', define: 'cosmetic', crisp: 'cosmetic', hold: 'cosmetic', shine: 'cosmetic',
     glow: 'cosmetic', protect: 'cosmetic', strength: 'repair', scalp: 'scalp', flakes: 'scalp', oil: 'scalp', cleanse: 'scalp',
     density: 'growth', length: 'length' };
   function timedFx(fx, timing, day, boost) {
@@ -156,7 +160,7 @@
     for (const n of LAYERS) {
       const a = al[n]; if (a < .01 || !imgs.layers[n]) continue;
       g.globalAlpha = a;
-      g.globalCompositeOperation = n === 'shine' ? 'screen' : n === 'glow' ? 'soft-light' : 'source-over';
+      g.globalCompositeOperation = n === 'shine' ? 'screen' : n === 'glow' ? 'soft-light' : n === 'define' ? 'overlay' : 'source-over';
       g.drawImage(imgs.layers[n], 0, 0, w, h);
     }
     g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
@@ -186,14 +190,17 @@
       afterWrap: $('.lab-after'), handle: $('.lab-handle'), afterLabel: $('.lab-after-label'), count: $('.lab-count'),
       dots: $('.lab-dots'), prev: root.querySelector('.lab-prev'), next: root.querySelector('.lab-next'), typeName: root.querySelector('.lab-type-name'), timeline: $('.lab-timeline'),
       concerns: $('.lab-concerns'), filters: $('.lab-filters'), rail: $('.lab-rail'), routine: $('.lab-routine'),
-      result: $('.lab-result'), reset: $('.lab-reset'), selCount: $('.lab-sel-count')
+      reset: $('.lab-reset'), selCount: $('.lab-sel-count')
     };
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const S = { look: 0, family: 'wavy', concern: 'frizz', selected: [], routine: false, split: .5, filter: 'all', day: 30, open: null };
     let looks = [LOOKS[0]], imgs = null, beforeState, afterState, shown = null, anim = null, token = 0;
-    const SCENTS = { 'hair-mist-oh-honey': 'honey', 'hair-mist-tropical-vanilla': 'vanilla', 'hair-mist-green-tea': 'green tea', 'hair-mist-amber-musk': 'amber musk', 'shampoo': 'honey', 'conditioner': 'honey', 'intensive-repair-shampoo-tropical-vanilla': 'vanilla', 'hydrating-conditioner-tropical-vanilla': 'vanilla' };
+    const SCENTS = { 'hair-mist-oh-honey': 'honey', 'hair-mist-tropical-vanilla': 'vanilla', 'hair-mist-green-tea': 'coconut milk', 'hair-mist-amber-musk': 'wild berries', 'shampoo': 'honey', 'conditioner': 'honey', 'intensive-repair-shampoo-tropical-vanilla': 'vanilla', 'hydrating-conditioner-tropical-vanilla': 'vanilla' };
     const labProducts = A.products.filter(p => p.fx || p.combo);
-    const fxFor = slug => { const p = A.bySlug[slug]; return (p.combo || [slug]).map(s => ({ fx: Object.assign({}, A.bySlug[s].fx, { scentName: SCENTS[s] }), p: A.bySlug[s] })); };
+    // a set of one formula in different scents works like one bottle: its effects don't add up
+    // extra curl definition by hair type, as the brand asked: strongest on the tightest curls, none on straight hair
+    const CURL_BOOST = { 'curl-boosting-cream': { waves: .55, curly: .55, ringlets: .55, tight: 1, fullcurl: 1, coily: 1 } };
+    const fxFor = slug => { const p = A.bySlug[slug]; return (p.sameFormula ? p.combo.slice(0, 1) : p.combo || [slug]).map(s => ({ fx: Object.assign({}, A.bySlug[s].fx, { scentName: SCENTS[s], crisp: (CURL_BOOST[s] || {})[looks[S.look].key] }), p: A.bySlug[s] })); };
     const stateFor = (slugs, day = S.day) => {
       let s = baseState(S.concern);
       const items = slugs.flatMap(fxFor);
@@ -315,54 +322,70 @@
     els.filters.addEventListener('click', e => {
       const b = e.target.closest('[data-filter]'); if (!b) return;
       S.filter = b.dataset.filter; els.filters.querySelectorAll('[data-filter]').forEach(c => c.setAttribute('aria-pressed', c === b));
-      els.rail.querySelectorAll('.lab-prod').forEach(c => (c.hidden = !inFilter(A.bySlug[c.dataset.slug], S.filter)));
+      els.rail.querySelectorAll('.lab-row').forEach(c => (c.hidden = !inFilter(A.bySlug[c.dataset.slug], S.filter)));
       els.rail.scrollTop = 0;
       placeDetail();
     });
     els.rail.innerHTML = labProducts.map(p => `
-      <button type="button" class="lab-prod" data-slug="${p.slug}" aria-pressed="false" aria-expanded="false" aria-controls="lab-detail">
-        <span class="lab-prod-img"><img src="${p.img}" alt="" loading="lazy"></span>
-        <span class="lab-prod-txt"><b>${p.name}</b><small>${p.tag || ''}</small></span>
-        <span class="lab-prod-side"><i class="lab-prod-match">Best match</i><span class="lab-prod-price">${p.oos ? 'Sold out' : '$' + p.price}</span></span>
-        <i class="lab-prod-check" aria-hidden="true"></i>
-      </button>`).join('') + '<div class="lab-detail" id="lab-detail" role="region" aria-live="polite" hidden></div>';
+      <div class="lab-row" data-slug="${p.slug}">
+        <button type="button" class="lab-prod" data-slug="${p.slug}" aria-pressed="false">
+          <span class="lab-prod-img"><img src="${p.img}" alt="" loading="lazy"></span>
+          <span class="lab-prod-txt"><span class="lab-prod-title"><b>${p.name}</b><i class="lab-prod-match">Best match</i></span><small>${p.tag || ''}</small></span>
+          <span class="lab-prod-price">${p.oos ? 'Sold out' : '$' + p.price}</span>
+          <i class="lab-prod-check" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="lab-prod-more" data-more="${p.slug}" aria-expanded="false" aria-controls="lab-detail" aria-label="Show details for ${p.name}"><svg class="ic sm" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      </div>`).join('') + '<div class="lab-detail" id="lab-detail" role="region" aria-live="polite" hidden></div>';
     const detail = els.rail.querySelector('.lab-detail');
 
     els.rail.addEventListener('click', e => {
       if (e.target.closest('.lab-detail-close')) { S.open = null; placeDetail(); return; }
       const add = e.target.closest('.lab-detail-add'); if (add) { opts.onAdd && opts.onAdd(add.dataset.slug); return; }
+      // the arrow opens a product's details; pressing the product only selects it
+      const more = e.target.closest('.lab-prod-more'); if (more) { S.open = S.open === more.dataset.more ? null : more.dataset.more; placeDetail(true); return; }
       const b = e.target.closest('.lab-prod'); if (!b || !imgs) return;
       const slug = b.dataset.slug, on = S.selected.includes(slug);
       if (S.routine) S.selected = on ? S.selected.filter(s => s !== slug) : [...S.selected, slug];
       else S.selected = on ? [] : [slug];
-      S.open = S.selected.includes(slug) ? slug : (S.selected.length ? S.selected[S.selected.length - 1] : null);
+      if (S.open !== slug) S.open = null;
       syncRail(); recompute(false); placeDetail();
     });
     function syncRail() {
-      els.rail.querySelectorAll('.lab-prod').forEach(c => { const on = S.selected.includes(c.dataset.slug); c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', on); c.setAttribute('aria-expanded', c.dataset.slug === S.open); });
+      els.rail.querySelectorAll('.lab-row').forEach(c => {
+        const slug = c.dataset.slug, on = S.selected.includes(slug), open = slug === S.open, btn = c.querySelector('.lab-prod'), more = c.querySelector('.lab-prod-more');
+        c.classList.toggle('is-on', on); btn.classList.toggle('is-on', on); btn.setAttribute('aria-pressed', on);
+        more.setAttribute('aria-expanded', open); more.setAttribute('aria-label', `${open ? 'Hide' : 'Show'} details for ${A.bySlug[slug].name}`);
+      });
       const n = S.selected.length;
       els.selCount.textContent = n ? `${n} product${n > 1 ? 's' : ''} selected` : (S.routine ? 'Choose several products to combine' : 'No product selected');
       els.reset.disabled = !n;
     }
 
     function hairNote(p) {
-      const fxs = (p.combo || [p.slug]).map(s => A.bySlug[s].fx || {});
+      const all = (p.combo || [p.slug]).map(s => A.bySlug[s].fx || {});
+      if (S.family === 'straight' && all.every(f => f.curlOnly)) return 'Adds hydration and shine, but it won’t make straight hair curlier.';
+      const fxs = all.filter(f => !(S.family === 'straight' && f.curlOnly));
       const max = k => Math.max(0, ...fxs.map(f => +f[k] || 0));
-      const def = max('define') >= .3, sm = max('smooth') >= .3, grow = max('density') >= .3;
+      const def = max('define') >= .3, sm = max('smooth') >= .3, grow = max('density') >= .3, frz = max('frizz') >= .3, moist = max('hydrate') >= .2;
       const notes = {
-        curly: def ? 'Curls look rounder, more defined and bouncier.' : sm ? 'Curls look smoother and less frizzy.' : '',
-        wavy: def ? 'Waves keep a clearer, more even S-shape.' : sm ? 'Waves look smoother and glossier.' : '',
-        straight: def || sm ? 'Lengths lie flatter, sleeker and smoother.' : '',
-        coily: def ? 'Coils clump together and look defined, not fuzzy.' : sm ? 'Coils look softer and more moisturised.' : ''
+        curly: def ? 'Curls look rounder, more defined and bouncier.' : sm ? 'Curls look smoother and less frizzy.' : frz ? 'Curls look less frizzy.' : moist ? 'Curls look softer and more moisturised.' : '',
+        wavy: def ? 'Waves look wavier, with a clearer S-shape.' : sm ? 'Waves look smoother and glossier.' : frz ? 'Waves look less frizzy.' : moist ? 'Waves look softer and more moisturised.' : '',
+        straight: def || sm ? 'Lengths lie flatter, sleeker and smoother.' : frz ? 'Lengths look less frizzy.' : moist ? 'Lengths look softer and more moisturised.' : '',
+        coily: def ? 'Coils clump together and look defined, not fuzzy.' : sm ? 'Coils look softer and more moisturised.' : frz ? 'Coils look less frizzy.' : moist ? 'Coils look softer and more moisturised.' : ''
       };
       const extra = [];
       if (max('flakes') >= .3) extra.push('Flakes clear from the roots.');
       if (max('oil') >= .3 && S.concern === 'flakes') extra.push('Roots look cleaner and less greasy.');
       if (max('strength') >= .3) extra.push('Ends look healthier, with less breakage.');
       if (grow) extra.push('Over time the hair looks thicker and fuller.');
-      return [notes[S.family] || '', ...extra].filter(Boolean).join(' ');
+      const said = [notes[S.family] || '', ...extra].filter(Boolean);
+      // products that barely touch the photo say why, so an unchanged photo doesn't look like a fault
+      if (!said.length && (max('density') >= .15 || max('scalp') >= .3)) said.push('It works at the scalp, so changes build slowly and the hair’s shape stays the same.');
+      if (!said.length && fxs.some(f => f.scent)) said.push('It leaves hair softly scented, with no change to its shape.');
+      return said.join(' ');
     }
     function whenText(p) {
+      if (p.sameFormula) return A.bySlug[p.combo[0]].whenText || '';
       if (!p.combo) return p.whenText || (p.fx && p.fx.when) || '';
       const parts = p.combo.map(s => A.bySlug[s]);
       const growth = parts.filter(q => q.timing && (q.fx.density || 0) >= .3).map(q => q.timing.growth[0]);
@@ -385,10 +408,10 @@
         <div class="lab-detail-foot"><b>$${p.price}${p.was ? ` <s>$${p.was}</s>` : ''}</b>
           <button type="button" class="btn btn-primary lab-detail-add" data-slug="${p.slug}"${p.oos ? ' disabled' : ''}>${p.oos ? 'Sold out' : 'Add to bag'}</button></div>`;
     }
-    function placeDetail() {
+    function placeDetail(reveal) {
       syncRail();
       if (!S.open) { detail.hidden = true; return; }
-      const items = [...els.rail.querySelectorAll('.lab-prod')].filter(c => !c.hidden);
+      const items = [...els.rail.querySelectorAll('.lab-row')].filter(c => !c.hidden);
       const idx = items.findIndex(c => c.dataset.slug === S.open);
       if (idx < 0) { detail.hidden = true; return; }
       const row = items[idx];
@@ -400,42 +423,47 @@
         const top = row.offsetTop - 6, bottom = detail.offsetTop + detail.offsetHeight + 6;
         const target = bottom - top > r.clientHeight ? top : Math.min(top, Math.max(r.scrollTop, bottom - r.clientHeight));
         if (target !== r.scrollTop) r.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+      } else if (reveal) {
+        // on phones the page scrolls instead: bring the row up to just under the pinned photo
+        const under = root.querySelector('.lab-stage-wrap').getBoundingClientRect().bottom;
+        window.scrollBy({ top: row.getBoundingClientRect().top - under - 8, behavior: reduce ? 'auto' : 'smooth' });
       }
     }
     els.routine.addEventListener('change', () => {
       S.routine = els.routine.checked;
-      if (!S.routine && S.selected.length > 1) { S.selected = [S.selected[S.selected.length - 1]]; S.open = S.selected[0]; recompute(false); placeDetail(); }
+      if (!S.routine && S.selected.length > 1) { S.selected = [S.selected[S.selected.length - 1]]; recompute(false); placeDetail(); }
       else syncRail();
     });
     els.reset.addEventListener('click', () => { S.selected = []; S.open = null; recompute(false); placeDetail(); });
 
-    // wavy and curly hair types: the Curls On Collection is always the best match
-    const CURL_FAMILIES = ['wavy', 'curly'], CURL_LINE = 'Curls On Collection';
+    /* best match: wavy and curly hair get the Curls On Collection plus the best product for their concern;
+       coily gets Curls On, plus The Miracle Pro-Edition for thinning; straight gets the top 3 for its concern.
+       Best matches move to the top of the list. */
+    const CURL_LINE = 'Curls On Collection';
+    let badgeKey = null;
     function updateBadges() {
+      const key = S.family + '|' + S.concern;
+      if (key === badgeKey) return;
+      badgeKey = key;
       const base = score(metrics(baseState(S.concern), S.family), S.concern);
-      const top = CURL_FAMILIES.includes(S.family) ? labProducts.filter(p => p.cats.includes(CURL_LINE)).map(p => p.slug) : labProducts.filter(p => !p.oos && !p.combo)
+      const curlLine = labProducts.filter(p => p.cats.includes(CURL_LINE)).map(p => p.slug);
+      const ranked = labProducts.filter(p => !p.oos && !p.combo && (S.family === 'straight' || !curlLine.includes(p.slug)))
         .map(p => ({ s: p.slug, d: score(metrics(stateFor([p.slug], 60), S.family), S.concern) - base }))
-        .sort((a, b) => b.d - a.d).slice(0, 3).map(x => x.s);
-      els.rail.querySelectorAll('.lab-prod').forEach(c => c.classList.toggle('is-match', top.includes(c.dataset.slug)));
+        .sort((a, b) => b.d - a.d).map(x => x.s);
+      const top = S.family === 'straight' ? ranked.slice(0, 3)
+        : S.family === 'coily' ? [...curlLine, ...(S.concern === 'thin' ? ['miracle-pro-edition'] : [])]
+        : [...curlLine, ranked[0]];
+      const rows = [...els.rail.querySelectorAll('.lab-row')];
+      rows.forEach(c => c.querySelector('.lab-prod').classList.toggle('is-match', top.includes(c.dataset.slug)));
+      const place = c => (top.includes(c.dataset.slug) ? 0 : 1000) + labProducts.indexOf(A.bySlug[c.dataset.slug]);
+      rows.sort((a, b) => place(a) - place(b)).forEach(c => els.rail.appendChild(c));
+      els.rail.scrollTop = 0;
+      if (S.open) placeDetail();
     }
 
-    const LABELS = { hydration: 'Hydration', shine: 'Shine', frizz: 'Frizz control', define: 'Definition', fullness: 'Fullness', scalp: 'Scalp health' };
     function updateResult() {
-      const mb = metrics(beforeState, S.family), ma = metrics(afterState, S.family);
-      const sel = S.selected.map(s => A.bySlug[s]);
       const dayLabel = TIMELINE.find(t => t[0] === S.day)[1];
-      els.afterLabel.textContent = sel.length ? (S.day === 1 ? 'After first use' : 'After ' + dayLabel) : 'After';
-      if (!sel.length) { els.result.innerHTML = '<p class="res-empty">Choose a product to see how it changes this hair.</p>'; return; }
-      const title = sel.map(p => p.name).join(' + ');
-      const deltas = Object.keys(LABELS).map(k => [k, Math.round((ma[k] - mb[k]) * 100)]).filter(([, d]) => d > 2).sort((a, b) => b[1] - a[1]).slice(0, 4);
-      const total = sel.reduce((a, p) => a + p.price, 0);
-      els.result.innerHTML = `
-        <div class="res-top">
-          <div class="res-title"><h4>${title}</h4><small>${S.day === 1 ? 'After first use' : `After ${dayLabel} of regular use`}</small></div>
-          <button type="button" class="btn btn-primary res-add"${sel.every(p => p.oos) ? ' disabled' : ''}>Add ${sel.length > 1 ? 'all' : 'to bag'} · $${total}</button>
-        </div>
-        ${deltas.length ? `<ul class="res-deltas">${deltas.map(([k, d]) => `<li><span>${k === 'define' && S.family === 'straight' ? 'Sleekness' : LABELS[k]}</span><b>+${d}%</b></li>`).join('')}</ul>` : '<p class="res-note">Not visible yet at this point — move the timeline forward.</p>'}`;
-      els.result.querySelector('.res-add').addEventListener('click', () => sel.forEach(p => !p.oos && opts.onAdd && opts.onAdd(p.slug)));
+      els.afterLabel.textContent = S.selected.length ? (S.day === 1 ? 'After first use' : 'After ' + dayLabel) : 'After';
     }
 
     new ResizeObserver(() => { const w0 = els.before.width; size(); if (els.before.width !== w0) draw(); if (S.open) placeDetail(); }).observe(els.stage);
@@ -445,7 +473,7 @@
     setLook(0);
     looks.slice(1).forEach(L => loadFamily(L));
 
-    return { select(slug) { S.selected = [slug]; S.open = slug; if (imgs) recompute(false); placeDetail(); setSplit(.5); } };
+    return { select(slug) { S.selected = [slug]; S.open = null; if (imgs) recompute(false); placeDetail(); setSplit(.5); } };
   }
 
   window.HairLab = { init, LOOKS, CONCERNS };

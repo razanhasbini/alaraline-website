@@ -46,16 +46,20 @@ js: assets/js/lab-looks.js, assets/js/hairlab.js, assets/js/main.js, assets/chri
             </div>
             <p class="lab-type-name" aria-live="polite">Soft waves hair</p>
             <div class="lab-timeline" role="group" aria-label="Results over time"></div>
-            <div class="lab-result" aria-live="polite"></div>
             <p class="lab-note">Illustrative preview based on each product’s described benefits. Individual results vary.</p>
           </div>
 
           <div class="lab-panel">
             <div class="lab-block">
-              <div class="lab-step"><h3>Choose your products</h3>
-                <label class="switch"><input type="checkbox" class="lab-routine"><i></i><span>Combine products</span></label>
+              <div class="lab-step">
+                <div class="lab-step-copy"><h3>Choose your products</h3><p>Preview one product, or combine several into a routine.</p></div>
+                <label class="switch"><input type="checkbox" class="lab-routine"><i></i><span><b>Combine products</b><small>Select more than one</small></span></label>
               </div>
-              <div class="lab-concern-row"><span class="lab-label">Main concern</span><div class="lab-concerns" role="group" aria-label="Main concern"></div></div>
+              <div class="lab-concern-row">
+                <div class="lab-control-head"><span class="lab-control-num">1</span><span><b>Main concern</b><small>We’ll bring your closest matches to the top.</small></span></div>
+                <div class="lab-concerns" role="group" aria-label="Main concern"></div>
+              </div>
+              <div class="lab-products-head"><span class="lab-control-num">2</span><span><b>Products</b><small>Select a row to preview it. Use the arrow for details.</small></span></div>
               <div class="lab-filters" role="group" aria-label="Filter products"></div>
               <div class="lab-rail" role="group" aria-label="ÀLara products"></div>
               <div class="lab-panel-foot"><span class="lab-sel-count" aria-live="polite">No product selected</span><button class="link-btn lab-reset" type="button" disabled>Clear selection</button></div>

@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Client Results (home page, before Customer Love): two small polaroids per client. "Before" is taped to the wall;
+   "After" hangs lower and to the right, in front of the Before's bottom-right corner, from a gold clip on its top edge.
+   The words are written on each polaroid's white strip. Every other pair tilts the other way and hangs a little lower.
+   Content comes from ALARA.clients (assets/js/data.js).
+   ========================================================================== */
+.clients { --cr-line: #eadfda; --cr-soft: #8b7b81; padding: 110px 0 100px; background: #fbf7f4; overflow: hidden; }
+.cr-head { text-align: center; margin-bottom: 70px; }
+.cr-eyebrow { margin: 0 0 18px; font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--l-pink); }
+.cr-head .ltitle { margin-bottom: 22px; }
+.cr-sub { margin: 0; font-size: 16px; }
+
+.cr-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; align-items: start; max-width: 1280px; margin: 0 auto; }
+
+/* ---------- a pair: the polaroids are 58% of the pair's width; the After starts at 42%, so they overlap by a quarter ---------- */
+.cr-pair { position: relative; width: min(100%, 320px); margin: 0 auto; }
+.cr-pair:nth-child(even) { margin-top: 44px; }
+.cr-pol { position: relative; width: 58%; margin: 0; padding: 9px 9px 0; background: #fff;
+  box-shadow: 0 16px 26px -16px rgba(90, 40, 60, .45), 0 1px 2px rgba(0, 0, 0, .06);
+  transition: transform .7s cubic-bezier(.34, 1.4, .5, 1); }
+.cr-pol img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #f3ebe7; }
+.cr-pol figcaption { height: 46px; display: grid; place-items: center; font: italic 400 20px/1 'PT Serif', serif; color: #000; }
+
+/* Before: taped at the top left */
+.cr-before { z-index: 1; transform: rotate(-3deg); transform-origin: 50% 0; }
+.cr-before figcaption { padding-right: 30%; }   /* centred in the part of the strip the After leaves visible */
+.cr-tape { position: absolute; top: -11px; left: 50%; z-index: 3; width: 58px; height: 20px; margin-left: -29px; background: rgba(248, 190, 214, .78);
+  transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(0, 0, 0, .05); }
+.cr-ph { position: absolute; top: 15px; right: 15px; padding: 3px 7px; border-radius: 999px; background: #eceef2; color: #5f6673;
+  font: 700 8.5px/1.2 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+
+/* After: lower right, in front, its top a little past the middle of the Before (43% of the Before's height above its bottom) */
+.cr-after { z-index: 2; margin: calc(-24.9% - 16px) 0 0 42%; transform: rotate(3deg); transform-origin: 20% 0; }
+.cr-after figcaption { color: var(--l-pink); }
+/* the gold clip on the After's top edge, over the Before, that it hangs from */
+.cr-clip { position: absolute; top: -21px; left: 14%; z-index: 3; width: 14px; height: 34px; border-radius: 3px 3px 7px 7px;
+  background: linear-gradient(90deg, #a77f4c, #e3cfa8 45%, #c9a06a 70%, #9c7442); box-shadow: 0 3px 6px rgba(60, 30, 10, .3); }
+.cr-clip::before { content: ''; position: absolute; left: 3px; right: 3px; top: 4px; height: 9px; border-radius: 2px; border: 1.5px solid rgba(90, 60, 25, .45); border-bottom: 0; }
+
+/* every other pair tilts the other way */
+.cr-pair:nth-child(even) .cr-before { transform: rotate(2.5deg); }
+.cr-pair:nth-child(even) .cr-tape { transform: rotate(3deg); }
+.cr-pair:nth-child(even) .cr-after { transform: rotate(-2deg); }
+
+/* on hover the pair settles, as if the After just swung on its clip */
+@media (hover: hover) {
+  .cr-pair:hover .cr-before { transform: rotate(-1deg); }
+  .cr-pair:hover .cr-after { transform: rotate(1deg); }
+  .cr-pair:nth-child(even):hover .cr-before { transform: rotate(1deg); }
+  .cr-pair:nth-child(even):hover .cr-after { transform: rotate(-.5deg); }
+}
+
+/* ---------- caption ---------- */
+.cr-cap { margin-top: 26px; text-align: center; }
+.cr-name { margin: 0 0 6px; font: 400 17px/1.45 'PT Serif', serif; color: #000; }
+.cr-name a:hover { color: var(--l-pink); }
+.cr-meta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px 10px; margin: 0;
+  font: 500 11px/1.4 'DM Sans', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--cr-soft); }
+.cr-meta i { width: 4px; height: 4px; border-radius: 50%; background: var(--l-pink); opacity: .7; }
+
+.cr-note { margin: 56px auto 0; text-align: center; font-size: 13px; color: var(--cr-soft); }
+
+/* ---------- tablets and phones ---------- */
+@media (max-width: 1080px) { .cr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 50px 30px; max-width: 680px; } }
+@media (max-width: 760px) {
+  .clients { padding: 70px 0 60px; }
+  .cr-head { margin-bottom: 30px; }
+  /* phones: one pair at a time, swiped sideways */
+  .cr-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; padding: 20px 4px 24px; }
+  .cr-grid::-webkit-scrollbar { display: none; }
+  .cr-pair { scroll-snap-align: center; }
+  .cr-pair:nth-child(even) { margin-top: 26px; }
+  .cr-pol { padding: 7px 7px 0; }
+  .cr-pol figcaption { height: 38px; font-size: 17px; }
+  .cr-after { margin-top: calc(-24.9% - 13px); }
+  .cr-tape { width: 48px; height: 17px; margin-left: -24px; top: -9px; }
+  .cr-clip { width: 12px; height: 28px; top: -17px; }
+  .cr-ph { top: 12px; right: 12px; font-size: 7.5px; padding: 2px 5px; }
+  .cr-cap { margin-top: 20px; }
+  .cr-name { font-size: 16px; }
+  .cr-meta { font-size: 10px; letter-spacing: .14em; gap: 2px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .cr-pol { transition: none; } }
+
+/* ==========================================================================
+   Featured results (home page, above the polaroids): for each client, the Before in an arch with the After in a second
+   arch in front of it, lower and to the right, on rose pink. Content: the first three of ALARA.clients.
+   ========================================================================== */
+.arches { --ar-ink: #3b1528; padding: 110px 0 100px; background: linear-gradient(180deg, #f9c8db, #f4b6cf); }
+.ar-head { text-align: center; margin-bottom: 64px; }
+.ar-eyebrow { margin: 0 0 18px; font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--ar-ink); }
+.arches .ltitle { margin: 0; }
+.arches .ltitle.squiggle::after { background: #fff; }
+
+.ar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 50px; max-width: 1180px; margin: 0 auto; }
+.ar-pair { min-width: 0; }
+.ar-stage { position: relative; aspect-ratio: 1 / .98; }
+.ar-arch { position: absolute; width: 58%; aspect-ratio: 3 / 4.3; margin: 0; border-radius: 999px 999px 4px 4px; overflow: hidden; border: 1px solid rgba(255, 255, 255, .75);
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.ar-arch img { width: 100%; height: 100%; object-fit: cover; }
+.ar-before { left: 0; top: 0; }
+.ar-after { right: 0; bottom: 0; box-shadow: -22px 30px 50px -24px rgba(90, 20, 50, .55); }
+.ar-tag { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); padding: 8px 14px; background: rgba(255, 255, 255, .92); color: var(--ar-ink);
+  font: 600 10.5px/1 'DM Sans', sans-serif; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; }
+.ar-ph { position: absolute; left: 50%; bottom: 54px; transform: translateX(-50%); padding: 4px 9px; border-radius: 999px; background: #eceef2; color: #5f6673;
+  font: 700 9px/1.2 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+@media (hover: hover) {
+  .ar-pair:hover .ar-before { transform: translate(-6px, -4px); }
+  .ar-pair:hover .ar-after { transform: translate(4px, -6px); }
+}
+.ar-cap { margin-top: 30px; text-align: center; }
+.ar-name { margin: 0 0 6px; font: 400 19px/1.4 'PT Serif', serif; color: #000; }
+.ar-name a:hover { color: #fff; }
+.ar-meta { margin: 0; font: 600 11px/1.4 'DM Sans', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #8a3a61; }
+
+@media (max-width: 900px) {
+  .arches { padding: 70px 0 60px; }
+  .ar-head { margin-bottom: 40px; }
+  .ar-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+  .ar-grid::-webkit-scrollbar { display: none; }
+  .ar-pair { scroll-snap-align: center; }
+  .ar-tag { bottom: 10px; padding: 6px 10px; font-size: 9.5px; }
+  .ar-ph { bottom: 40px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .ar-arch { transition: none; } }

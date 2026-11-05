@@ -21,13 +21,15 @@ See the "Christmas 2026 season" section in `README.md`, plus `DESIGN.md` and `de
 - **One real model, seen from behind,** on the pink cream background from ÀLara's Instagram post "Your Beautiful Hair Journey". Only her hair type changes.
 - **Arrows outside the photo** (‹ ›) switch the hair type. There's no swipe and no list of hair types.
 - **A white before/after line** inside the photo that the user can drag.
-- **A products panel on the right.** Clicking a product shows its effect on the photo and opens an inline panel: "What's inside", "Why your hair looks like this", "When you'll see it", the full ingredient list, and Add to bag.
+- **A products panel on the right.** Pressing a product selects it and shows its effect on the photo. Details open only from the arrow on its row (the user's request): "What's inside", "Why your hair looks like this", "When you'll see it", the full ingredient list, and Add to bag.
 - **"Combine products"** stacks several products at once.
+- **Curl Boosting Cream defines hardest on the tightest curls** (the user's request): `CURL_BOOST` in `hairlab.js` sets it per look (Tight curls, Full curls and Coily full, other curly and wavy looks about half, Straight none). It drives the `crisp` layer, which only deepens the gaps between curls, because brighter crests read as oily. Sets containing the cream inherit it.
+- **No results card:** the user removed the card under the photo (product name, Add to bag, percentages) as useless. Add to bag lives in the expanded details.
 - **A results timeline:** First use, 1 week, 15 days, 1 month, 2 months.
 - **A main-concern selector:** Dry & frizzy, Damaged & dull, Thinning & shedding, Flakes & oily roots.
 - **No hair score.** The user removed it on purpose.
 
-**Hair types so far** (each in `assets/img/lab/<key>/`, listed in `assets/js/lab-looks.js`): `waves`, `straight`, `curly` (shown as "Loose curls") and `ringlets` (shown as "Curly"). **Coily is still missing.**
+**Hair types so far** (each in `assets/img/lab/<key>/`, listed in `assets/js/lab-looks.js`): `waves`, `straight`, `curly` (shown as "Loose curls") and `ringlets` (shown as "Curly"), `tight` (shown as "Tight curls", between Curly and Coily), `fullcurl` (shown as "Full curls", curly from the roots; generated from the Coily photo with `HAIRLAB_SRC`, because edits of the campaign photo keep its smooth crown) and `coily` (shown as "Coily"). Coily's hair ends above the shoulders, so it isn't drawn shorter: `anchor` is 0 in `lab-looks.js`, and growth products show fullness but no extra length.
 
 ### How it works (no AI model, no server: it all runs in the browser)
 1. `alaraline-ai/knowledge/ingredients.json` lists 77 ingredients. Each has a role, visible-effect strengths from 0 to 1 (hydrate, smooth, frizz, define, hold, shine, glow, strength, density, length, scalp, flakes, oil, cleanse, protect, scent) and an evidence level.
@@ -38,13 +40,15 @@ See the "Christmas 2026 season" section in `README.md`, plus `DESIGN.md` and `de
    - the team's claims set a minimum for the effects they promise.
    It writes `alaraline-ai/knowledge/catalog.json` and the generated website file `alaraline/assets/js/hairlab-data.js` (never hand-edit that file). It also lists any ingredient name it doesn't recognise.
 4. On the website, `assets/js/data.js` merges `window.ALARA_FX` into each product. `assets/js/hairlab.js` then turns the concern's starting state plus each product's timed effects into opacities for the photo layers.
-5. **Photo layers per look** (pre-rendered, hair-masked): `rich`, `soft`, `dry`, `ends`, `thin`, `oily`, `frizz`, `flakes`, `shine` and `glow` as `.webp`, plus `base.jpg`, `plate.jpg` (tee under the hair, used for growth), `mask.webp` and `meta.json`. Growth works by redrawing the lengths shorter before treatment and at full length after.
+5. **Photo layers per look** (pre-rendered, hair-masked): `rich`, `soft`, `dry`, `ends`, `thin`, `oily`, `define`, `frizz`, `flakes`, `shine` and `glow` as `.webp`, plus `base.jpg`, `plate.jpg` (a clean tee and arms painted to fit the body visible around the hair, used for growth), `mask.webp` and `meta.json`. Growth works by redrawing the lengths shorter before treatment and at full length after. Shine is broad, soft light in the hair's own colour, kept clear of the scalp; the user rejected thin white streaks and darker, contrasty "hydrated" hair because they read as oily.
 
 ### Adding a hair type (same model, only the hair changes)
 - **Generate:** `tools/hairlab/generate.py <key>` calls Qwen-Image-Edit on Hugging Face. It reads the `HF_TOKEN` environment variable, so ask the user for it; never write it to a file. A free account gets about one image per day; when the quota is used, ask the user to wait or use ChatGPT image editing with `hair-types-kit/model.jpg` and the prompts in `hair-types-kit/HOW-TO.md`.
 - **Build:** `tools/hairlab/build_look.py <photo> <key> --align` aligns the model to the `waves` look, keeps the campaign crop line, segments the hair with MediaPipe, builds every layer and regenerates `lab-looks.js`. Add new keys to `NAMES` and `ORDER` in that script.
 - **Rebuild one layer** on every look with `build_look.py --layer oily`.
 - **Python:** these scripts need numpy, scipy, opencv, mediapipe, pillow and gradio_client. The `alaraline-ai/.venv` environment has most of them; `seg.tflite` lives in `tools/hairlab/`.
+- **Match the model:** `tools/hairlab/match_model.py <photo> <out.jpg>` restores her skin tone and a brown hair colour when the AI changes them, as it did on Coily. Build from its output.
+- **Rebuild:** `tools/hairlab/build_look.py --rebuild [key ...]` regenerates a look's mask, plate and layers from its existing `base.jpg`.
 - **Check the result:** always review generated images visually, for the same face/back, the same tee and background, and no chopped hair.
 
 ### Testing
@@ -53,7 +57,7 @@ See the "Christmas 2026 season" section in `README.md`, plus `DESIGN.md` and `de
 - Expected 404s for `assets/video/hero-*.mp4` are normal; those videos haven't been made yet.
 
 ## Open items for the before/after
-- [ ] Generate and build the **Coily** look.
+- [x] Generate and build the **Coily** look (awaiting the user's review).
 - [ ] Ask the ÀLara team for the missing **ingredient lists**: Heat Protectant, Detox Scalp Scrub, and the full list for the Edge Control Wax Stick (only key ingredients are known).
 - [ ] Ask the team to confirm two formulas:
   - whether the **Tropical Vanilla** shampoo and conditioner share formulas with the Oh Honey versions;

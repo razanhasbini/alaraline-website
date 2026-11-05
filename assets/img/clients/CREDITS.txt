@@ -1,0 +1,13 @@
+Client Results (home page) - PLACEHOLDER PHOTOS
+These are free Unsplash photos (Unsplash License), cropped square. Each before and after is a DIFFERENT person, so they
+only show the layout. They must be replaced with real ÀLara clients' photos (shared with permission) before launch.
+Each image's Unsplash ID is in its URL: https://images.unsplash.com/photo-<id>
+
+- curly-before.webp     photo-1579119159780-51419861f69f  https://unsplash.com/photos/person-with-curly-hair-covering-face-3pqA-K__dbQ
+- curly-after.webp      photo-1665923148259-3340e61d3ff2  https://unsplash.com/photos/a-woman-with-a-large-braid-u9A65nCgA9Y
+- wavy-before.webp      photo-1560264641-1b5191cc63e2     https://unsplash.com/photos/black-and-brown-hair-dnpa8k6TGRE
+- wavy-after.webp       photo-1603139835576-4875e2c55b13  https://unsplash.com/photos/woman-in-black-shirt-with-brown-hair-X3IXJfnFzf0
+- straight-before.webp  photo-1517931465348-90458682a9a6
+- straight-after.webp   photo-1573651235591-221193be5229
+- long-before.webp      photo-1491616569293-e27f7f4cd41a
+- long-after.webp       photo-1762342019448-5b7721c89b1d

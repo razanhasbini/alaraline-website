@@ -1,0 +1,272 @@
+<!doctype html>
+<!-- TEMPORARY design preview: five simple, minimal ways to show clients' before & after photos. Pick one, then delete this file. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Before &amp; After, minimal - ÀLara Line</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=PT+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family: Butler; src: url(assets/fonts/Butler-Regular.otf) format('opentype'); font-weight: 400; }
+    @font-face { font-family: Butler; src: url(assets/fonts/Butler-Light.otf) format('opentype'); font-weight: 300; }
+    :root { --pink: #e85c9c; --ink: #111; --grey: #8d8589; --line: #e7e1de; --ivory: #fbf8f6; --bar: 52px; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font: 400 15px/1.65 'DM Sans', system-ui, sans-serif; color: #696969; background: #fff; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+
+    /* picker bar + labels (not part of any design) */
+    .pick { position: sticky; top: 0; z-index: 40; height: var(--bar); background: #23171c; color: #fff; }
+    .pick .wrap { height: 100%; display: flex; align-items: center; gap: 8px 22px; overflow-x: auto; white-space: nowrap; }
+    .pick b { font: 400 18px/1 Butler, serif; margin-right: auto; }
+    .pick a { font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+    .pick a:hover { opacity: 1; color: #f8bed6; }
+    .opt { position: relative; padding: 120px 0 110px; scroll-margin-top: var(--bar); }
+    .opt + .opt { border-top: 6px solid #23171c; }
+    .opt-label { position: absolute; top: 18px; left: 18px; z-index: 5; display: flex; align-items: center; gap: 10px; margin: 0; padding: 8px 14px 8px 8px; border-radius: 999px; background: #23171c; color: #fff; font: 600 12px/1 'DM Sans', sans-serif; letter-spacing: .06em; }
+    .opt-label span { width: 26px; height: 26px; border-radius: 50%; background: var(--pink); display: grid; place-items: center; font: 400 15px/1 Butler, serif; }
+
+    /* the shared minimal vocabulary: small caps, one serif, hairlines */
+    .head { text-align: center; margin-bottom: 64px; }
+    .eyebrow { margin: 0 0 14px; font: 500 11px/1 'DM Sans', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--grey); }
+    .title { margin: 0; font: 300 clamp(32px, 4vw, 48px)/1.15 Butler, 'PT Serif', serif; color: var(--ink); }
+    .title em { font-family: 'PT Serif', serif; font-style: italic; font-weight: 400; color: var(--pink); }
+    .cap { font: 500 10.5px/1 'DM Sans', sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--ink); }
+    .cap.soft { color: var(--grey); }
+    .serif { font: 400 18px/1.4 'PT Serif', serif; color: var(--ink); }
+    .ph { position: absolute; top: 10px; right: 10px; z-index: 3; padding: 3px 8px; border-radius: 999px; background: rgba(255, 255, 255, .9); color: #5f6673; font: 700 8.5px/1.2 'DM Sans', sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .fig { position: relative; margin: 0; overflow: hidden; background: #f3eeeb; }
+    .fig img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ===== K. The diptych ===== */
+    .k-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 860px; margin: 0 auto; transition: opacity .35s; }
+    .k-pair.fade { opacity: 0; }
+    .k-col .cap { display: block; margin-bottom: 14px; }
+    .k-col:last-child .cap { text-align: right; }
+    .k-col .fig { aspect-ratio: 4 / 5; }
+    .k-time { display: flex; align-items: center; gap: 22px; max-width: 860px; margin: 26px auto 0; }
+    .k-time i { flex: 1; height: 1px; background: var(--line); }
+    .k-time span { font: italic 400 17px/1 'PT Serif', serif; color: var(--pink); }
+    .k-foot { max-width: 860px; margin: 30px auto 0; display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+    .k-nav { display: flex; align-items: center; gap: 22px; }
+    .k-nav button { padding-bottom: 3px; border-bottom: 1px solid currentColor; }
+    .k-nav button:hover { color: var(--pink); }
+
+    /* ===== L. The word toggle ===== */
+    .l { background: var(--ivory); }
+    .l-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .l-item .fig { aspect-ratio: 4 / 5; cursor: pointer; }
+    .l-item .fig img { position: absolute; inset: 0; transition: opacity .6s ease; }
+    .l-item .fig img + img { opacity: 0; }
+    .l-item.is-after .fig img + img { opacity: 1; }
+    .l-words { display: flex; justify-content: center; align-items: center; gap: 14px; margin: 22px 0 10px; }
+    .l-words button { font: italic 400 20px/1 'PT Serif', serif; color: #c4bcbf; padding-bottom: 4px; border-bottom: 1px solid transparent; transition: color .3s, border-color .3s; }
+    .l-words button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+    .l-words button:last-child[aria-pressed="true"] { color: var(--pink); border-color: var(--pink); }
+    .l-words i { width: 1px; height: 16px; background: var(--line); }
+    .l-item .cap { display: block; text-align: center; }
+
+    /* ===== M. Picture in picture ===== */
+    .m-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px 48px; }
+    .m-item { position: relative; padding: 0 0 0 26px; }
+    .m-after { aspect-ratio: 4 / 5; }
+    .m-before { position: absolute; left: 0; bottom: 70px; z-index: 2; width: 38%; aspect-ratio: 1; border: 5px solid #fff; box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .35); }
+    .m-item .lbl { position: absolute; z-index: 3; }
+    .m-lbl-b { left: 0; bottom: calc(70px - 22px); }
+    .m-lbl-a { right: 12px; top: 14px; background: rgba(255, 255, 255, .9); padding: 6px 10px; }
+    .m-after .ph { right: auto; left: 10px; }
+    .m-txt { margin-top: 22px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+
+    /* ===== N. The index ===== */
+    .n { background: var(--ivory); }
+    .n-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .n-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .n-list button { width: 100%; display: grid; grid-template-columns: 44px 1fr auto; gap: 16px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); text-align: left; color: #b9b0b4; transition: color .3s, padding .4s; }
+    .n-list .num { font: 300 15px/1 Butler, serif; }
+    .n-list .serif { color: inherit; font-size: 22px; transition: color .3s; }
+    .n-list .cap { color: inherit; }
+    .n-list [aria-selected="true"], .n-list button:hover { color: var(--ink); padding-left: 10px; }
+    .n-list [aria-selected="true"] .num { color: var(--pink); }
+    .n-view { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; transition: opacity .35s; }
+    .n-view.fade { opacity: 0; }
+    .n-view .fig { aspect-ratio: 3 / 4; }
+    .n-view .cap { display: block; margin-top: 12px; }
+
+    /* ===== P. The cameo rows ===== */
+    .p-list { max-width: 980px; margin: 0 auto; border-top: 1px solid var(--line); }
+    .p-row { display: grid; grid-template-columns: 130px 1fr 130px 1.1fr; align-items: center; gap: 30px; padding: 34px 0; border-bottom: 1px solid var(--line); }
+    .p-oval { aspect-ratio: 4 / 5; border-radius: 50%; }
+    .p-oval-wrap { text-align: center; }
+    .p-oval-wrap .cap { display: block; margin-top: 12px; }
+    .p-arrow { display: flex; align-items: center; gap: 14px; }
+    .p-arrow i { flex: 1; height: 1px; background: var(--ink); opacity: .25; position: relative; }
+    .p-arrow i:last-child::after { content: ''; position: absolute; right: 0; top: -3px; width: 7px; height: 7px; border-top: 1px solid; border-right: 1px solid; transform: rotate(45deg); }
+    .p-arrow span { font: italic 400 16px/1 'PT Serif', serif; color: var(--pink); white-space: nowrap; }
+    .p-info .serif { font-size: 20px; }
+    .p-info .cap { display: block; margin-top: 8px; }
+
+    /* ===== phones ===== */
+    @media (max-width: 860px) {
+      .opt { padding: 96px 0 80px; }
+      .l-grid, .m-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; gap: 22px; scrollbar-width: none; }
+      .l-grid > *, .m-grid > * { scroll-snap-align: start; }
+      .n-grid { grid-template-columns: 1fr; gap: 30px; }
+      .n-view { order: -1; }
+      .p-row { grid-template-columns: 90px 1fr 90px; gap: 16px; padding: 26px 0; }
+      .p-info { grid-column: 1 / -1; text-align: center; }
+      .k-foot { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="pick" aria-label="Options">
+    <div class="wrap"><b>Before &amp; After: minimal</b>
+      <a href="#k">K · Diptych</a><a href="#l">L · Word toggle</a><a href="#m">M · Picture in picture</a><a href="#n">N · The index</a><a href="#p">P · Cameo rows</a>
+    </div>
+  </nav>
+
+  <!-- K -->
+  <section class="opt k" id="k">
+    <p class="opt-label"><span>K</span> The diptych · one client at a time, two photos, one line</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Client results</p><h2 class="title">Before &amp; <em>after</em></h2></header>
+      <div class="k-pair">
+        <div class="k-col"><span class="cap">Before</span><figure class="fig"><img alt="" data-k-b></figure></div>
+        <div class="k-col"><span class="cap">After</span><figure class="fig"><img alt="" data-k-a><span class="ph">Placeholder</span></figure></div>
+      </div>
+      <div class="k-time"><i></i><span data-k-time></span><i></i></div>
+      <div class="k-foot">
+        <div><p class="serif" style="margin:0" data-k-name></p><span class="cap soft" data-k-hair></span></div>
+        <div class="k-nav cap"><span data-k-count></span><button data-k-go="-1">Previous</button><button data-k-go="1">Next</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L -->
+  <section class="opt l" id="l">
+    <p class="opt-label"><span>L</span> The word toggle · hover or tap “After”</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Client results</p><h2 class="title">Before &amp; <em>after</em></h2></header>
+      <div class="l-grid" data-l></div>
+    </div>
+  </section>
+
+  <!-- M -->
+  <section class="opt m" id="m">
+    <p class="opt-label"><span>M</span> Picture in picture · the after large, the before small in its corner</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Client results</p><h2 class="title">Before &amp; <em>after</em></h2></header>
+      <div class="m-grid" data-m></div>
+    </div>
+  </section>
+
+  <!-- N -->
+  <section class="opt n" id="n">
+    <p class="opt-label"><span>N</span> The index · a quiet list, the photos change as you hover</p>
+    <div class="wrap n-grid">
+      <div>
+        <p class="eyebrow">Client results</p><h2 class="title" style="margin-bottom:44px">Before &amp; <em>after</em></h2>
+        <ul class="n-list" data-n></ul>
+      </div>
+      <div class="n-view">
+        <div><figure class="fig"><img alt="" data-n-b></figure><span class="cap">Before</span></div>
+        <div><figure class="fig"><img alt="" data-n-a><span class="ph">Placeholder</span></figure><span class="cap" style="color:var(--pink)">After</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- P -->
+  <section class="opt p" id="p">
+    <p class="opt-label"><span>P</span> Cameo rows · two ovals and the time between them</p>
+    <div class="wrap">
+      <header class="head"><p class="eyebrow">Client results</p><h2 class="title">Before &amp; <em>after</em></h2></header>
+      <div class="p-list" data-p></div>
+    </div>
+  </section>
+
+  <script>
+    const C = [
+      { key: 'curly', hair: 'Curly hair', product: 'Curls On Collection', time: '6 weeks' },
+      { key: 'wavy', hair: 'Wavy hair', product: 'Miracle Mask', time: '1 month' },
+      { key: 'straight', hair: 'Straight hair', product: 'Leave In Your Dreams + Serum', time: '3 weeks' },
+      { key: 'long', hair: 'Long waves', product: 'Full Treatment Set', time: '2 months' }
+    ];
+    const img = (c, s) => `assets/img/clients/${c.key}-${s}.webp`;
+    const ph = '<span class="ph">Placeholder</span>';
+    const $ = s => document.querySelector(s);
+    const pad = n => String(n).padStart(2, '0');
+
+    /* K: one pair at a time, crossfading */
+    (function () {
+      let at = 0;
+      const pair = $('.k-pair');
+      const fill = () => {
+        const c = C[at];
+        $('[data-k-b]').src = img(c, 'before'); $('[data-k-a]').src = img(c, 'after');
+        $('[data-k-time]').textContent = c.time; $('[data-k-name]').textContent = c.product; $('[data-k-hair]').textContent = c.hair;
+        $('[data-k-count]').textContent = `${pad(at + 1)} / ${pad(C.length)}`;
+      };
+      document.querySelector('.k-nav').addEventListener('click', e => {
+        const b = e.target.closest('[data-k-go]'); if (!b) return;
+        at = (at + +b.dataset.kGo + C.length) % C.length;
+        pair.classList.add('fade'); setTimeout(() => { fill(); pair.classList.remove('fade'); }, 350);
+      });
+      fill();
+    })();
+
+    /* L: the photo shows the before; "After" (hover, tap or focus) fades in the after */
+    (function () {
+      const grid = $('[data-l]');
+      grid.innerHTML = C.slice(0, 3).map(c => `
+        <div class="l-item">
+          <figure class="fig"><img src="${img(c, 'before')}" alt=""><img src="${img(c, 'after')}" alt="">${ph}</figure>
+          <div class="l-words"><button aria-pressed="true" data-w="b">Before</button><i></i><button aria-pressed="false" data-w="a">After</button></div>
+          <span class="cap">${c.product} · <span style="color:var(--grey)">${c.time}</span></span>
+        </div>`).join('');
+      const set = (item, after) => { item.classList.toggle('is-after', after); item.querySelectorAll('[data-w]').forEach(b => b.setAttribute('aria-pressed', (b.dataset.w === 'a') === after)); };
+      grid.querySelectorAll('.l-item').forEach(item => {
+        item.querySelector('[data-w="a"]').addEventListener('mouseenter', () => set(item, true));
+        item.querySelector('[data-w="b"]').addEventListener('mouseenter', () => set(item, false));
+        item.addEventListener('click', e => { const w = e.target.closest('[data-w]'); set(item, w ? w.dataset.w === 'a' : !item.classList.contains('is-after')); });
+      });
+    })();
+
+    /* M: static */
+    $('[data-m]').innerHTML = C.slice(0, 3).map(c => `
+      <div class="m-item">
+        <figure class="fig m-after"><img src="${img(c, 'after')}" alt="">${ph}</figure>
+        <figure class="fig m-before"><img src="${img(c, 'before')}" alt=""></figure>
+        <span class="cap soft lbl m-lbl-b">Before</span><span class="cap lbl m-lbl-a">After</span>
+        <div class="m-txt"><span class="serif">${c.product}</span><span class="cap soft">${c.time}</span></div>
+      </div>`).join('');
+
+    /* N: hovering (or tapping) a row changes the photos */
+    (function () {
+      const list = $('[data-n]'), view = $('.n-view');
+      list.innerHTML = C.map((c, i) => `<li><button data-i="${i}" aria-selected="${i === 0}"><span class="num">${pad(i + 1)}</span><span><span class="serif">${c.product}</span><br><span class="cap">${c.hair}</span></span><span class="cap">${c.time}</span></button></li>`).join('');
+      let at = -1;
+      const show = i => {
+        if (i === at) return; at = i;
+        list.querySelectorAll('[data-i]').forEach(b => b.setAttribute('aria-selected', +b.dataset.i === i));
+        view.classList.add('fade');
+        setTimeout(() => { $('[data-n-b]').src = img(C[i], 'before'); $('[data-n-a]').src = img(C[i], 'after'); view.classList.remove('fade'); }, 250);
+      };
+      list.addEventListener('mouseover', e => { const b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
+      list.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
+      show(0);
+    })();
+
+    /* P: static rows */
+    $('[data-p]').innerHTML = C.map(c => `
+      <div class="p-row">
+        <div class="p-oval-wrap"><figure class="fig p-oval"><img src="${img(c, 'before')}" alt=""></figure><span class="cap soft">Before</span></div>
+        <div class="p-arrow"><i></i><span>${c.time}</span><i></i></div>
+        <div class="p-oval-wrap"><figure class="fig p-oval"><img src="${img(c, 'after')}" alt=""></figure><span class="cap" style="color:var(--pink)">After</span></div>
+        <div class="p-info"><p class="serif" style="margin:0">${c.product}</p><span class="cap soft">${c.hair} · placeholder photos</span></div>
+      </div>`).join('');
+  </script>
+</body>
+</html>

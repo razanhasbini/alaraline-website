@@ -297,77 +297,89 @@ html[data-season="christmas"] .gift-edit { display: block; background: var(--xm-
   .ge-add { height: 34px; padding: 0 12px; }
 }
 
-/* Christmas bundles: pearl cards with burgundy-brown product wells and satin bows */
-.xb { position: relative; }
+/* Christmas bundles: real product cut-outs on photographed studio sets. */
+.xb { position: relative; width: min(1120px, 100%); margin-inline: auto; }
 .xb-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 0 clamp(38px, 5vw, 62px); }
 .xb-head .eyebrow { color: #e3c37c; }
 .xb-head .eyebrow .dot { background: #e3c37c; }
 .xb-head .sec-title { max-width: 760px; }
 .xb-head .sec-title em { color: #ff93b9; }
 .xb-head .sec-sub { max-width: 680px; }
-.xb-grid { --xb-gap: clamp(16px, 2vw, 26px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--xb-gap); }
-.xb-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 16px; border-radius: 24px; color: var(--ink);
-  background: linear-gradient(150deg, #fffaf6, #f6e8e5); box-shadow: inset 0 0 0 1px rgba(227, 195, 124, .58), 0 26px 50px -30px rgba(20, 0, 8, .85);
-  transition: transform 450ms var(--ease); }
-.xb-media {
-  position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 17px;
-  background:
-    radial-gradient(82% 74% at 42% 28%, rgba(188, 105, 98, .48), transparent 66%),
-    linear-gradient(145deg, #642638 0%, #421d23 58%, #281513 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 224, 217, .15), inset 0 -28px 40px -32px rgba(0, 0, 0, .65);
-}
-.xb-media .xb-product { position: absolute; z-index: 1; left: 7%; top: 8%; width: 86%; height: 84%; object-fit: contain; filter: drop-shadow(0 16px 14px rgba(20, 0, 8, .46)); transition: transform .9s var(--ease); }
-.xb-media .xb-photo { inset: 0; width: 100%; height: 100%; object-fit: contain; filter: none; }
-.xb-media { --band-top: clamp(21px, 2.25vw, 30px); --band-h: clamp(9px, .9vw, 13px); --bw: clamp(54px, 4.6vw, 70px); }
-.xb-ribbon-band {
-  position: absolute; z-index: 2; left: -7%; right: -7%; top: var(--band-top); height: var(--band-h);
-  transform: rotate(8deg); transform-origin: 84% 50%; pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(255, 100, 104, .78) 0%, #d20b23 24%, #89000f 50%, #c80a20 74%, #5b0008 100%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .2) 0 1px, transparent 1px 5px);
-  background-blend-mode: soft-light;
-  border-top: 1px solid rgba(255, 130, 134, .55); border-bottom: 1px solid rgba(66, 0, 8, .72);
-  box-shadow: 0 4px 7px rgba(20, 0, 6, .38), inset 0 1px rgba(255, 194, 195, .22);
-}
-/* the bow is tied on the ribbon: its knot (58.5% across, 20% down the photo) sits on the band's centre line at the
-   band's pivot (88.8% across the well), where the band's rotation does not move it */
-.xb-media .xb-bow { position: absolute; z-index: 4; width: var(--bw); height: auto; pointer-events: none;
-  left: calc(88.8% - var(--bw) * .585); top: calc(var(--band-top) + var(--band-h) / 2 - var(--bw) * 1.369 * .2);
-  transform: rotate(8deg); transform-origin: 58.5% 20%; filter: drop-shadow(0 7px 7px rgba(20, 0, 6, .55)); }
-.xb-no { position: absolute; z-index: 5; top: 14px; left: 14px; display: grid; place-items: center; min-width: 30px; height: 22px; padding: 0 7px; border-radius: 99px; color: #f1d28f; border: 1px solid rgba(241, 210, 143, .48); background: rgba(44, 10, 20, .44); backdrop-filter: blur(6px); font: 600 10px/1 var(--f-sans); letter-spacing: .14em; }
-.xb-card h3 { font: 400 21px/1.2 var(--f-display); margin: 6px 0 0; }
-.xb-in { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--muted); min-height: 36px; }
-.xb-card .ge-price b { font-size: 21px; }
-.xb-card .ge-price em { color: #b3152b; }
-.xb-card .ge-add { background: #b3152b; }
+.xb-grid { --xb-gap: clamp(18px, 2vw, 26px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--xb-gap); }
+.xb-card { position: relative; min-width: 0; overflow: hidden; padding: 8px; border: 1px solid rgba(227, 195, 124, .42); border-radius: 20px; color: var(--ink);
+  background: #fff9f7; box-shadow: 0 26px 54px -36px rgba(20, 0, 8, .88); transition: transform 400ms var(--ease), box-shadow 400ms var(--ease); }
+.xb-card--featured { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.58fr) minmax(270px, .72fr); align-items: stretch; }
+.xb-copy { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: clamp(18px, 2.7vw, 36px); }
+.xb-card:not(.xb-card--featured) .xb-copy { padding: 18px 14px 12px; }
+.xb-kicker { margin: 0 0 8px; color: #a04b67; font: 600 10px/1 var(--f-sans); letter-spacing: .14em; text-transform: uppercase; }
+.xb-card h3 { margin: 0; font: 400 clamp(23px, 2vw, 30px)/1.15 var(--f-display); }
+.xb-in { margin: 9px 0 20px; color: #75696e; font-size: 13px; line-height: 1.5; }
+.xb-card--featured h3 { font-size: clamp(30px, 3vw, 43px); }
+.xb-card--featured .xb-in { max-width: 30ch; font-size: 14px; }
+.xb-card .ge-row { margin-top: auto; }
+.xb-card .ge-price b { font-size: 22px; }
+.xb-card .ge-price em { color: #a01938; }
+.xb-card .ge-add { z-index: 8; min-width: 78px; background: #a01938; }
 .xb-card .ge-add:hover { background: var(--ink); }
+
+.xb-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 14px; isolation: isolate; background-position: center; background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.xb-card--featured .xb-media { min-height: 400px; aspect-ratio: 16 / 9; }
+.xb-still { position: absolute; inset: 0; }
+.xb-cut { position: absolute; z-index: 3; display: block; max-width: none; object-fit: contain; transform-origin: 50% 80%;
+  filter: drop-shadow(0 18px 14px rgba(32, 5, 15, .28)); transition: transform .65s var(--ease), filter .65s var(--ease); }
+
+.xb-art--duo { background-image: url('bundles/deep-repair-duo-v3.webp'); }
+
+.xb-art--satin { background-image: url('bundles/studio-satin.webp'); }
+.xb-art--satin .xb-cut-1 { left: 22%; bottom: 10%; width: 35%; height: 50%; }
+.xb-art--satin .xb-cut-2 { right: 28%; bottom: 11%; width: 20%; height: 61%; }
+
+.xb-art--orbit { background-image: url('bundles/deep-repair-duo-orbit-v1.webp'); }
+.xb-art--orbit .xb-cut-1 { left: 20%; bottom: 10%; width: 31%; height: 58%; transform: rotate(-3deg); }
+.xb-art--orbit .xb-cut-2 { right: 18%; bottom: 9%; width: 34%; height: 62%; transform: rotate(6deg); }
+
+.xb-art--steps { background-image: url('bundles/deep-repair-duo-steps-burgundy-pink-v1.webp'); }
+.xb-art--steps .xb-cut-1 { left: 19%; bottom: 8%; width: 31%; height: 49%; }
+.xb-art--steps .xb-cut-2 { right: 16%; top: 13%; width: 35%; height: 54%; transform: rotate(-6deg); }
+
+.xb-art--steps-light { background-image: url('bundles/deep-repair-duo-steps-pink-ivory-pr-box-v2.webp'); }
+
+.xb-art--ornaments { background-image: url('bundles/deep-repair-duo-ornaments-v1.webp'); }
+.xb-art--ornaments .xb-cut-1 { left: 15%; bottom: 8%; width: 23%; height: 64%; transform: rotate(-3deg); }
+.xb-art--ornaments .xb-cut-2 { left: 38%; bottom: 8%; width: 24%; height: 72%; }
+.xb-art--ornaments .xb-cut-3 { right: 14%; bottom: 9%; width: 22%; height: 56%; transform: rotate(3deg); }
+
+.xb-art--winter { background-image: url('bundles/deep-repair-duo-winter-v1.webp'); }
+.xb-art--winter .xb-cut-1 { left: 27%; bottom: 9%; width: 23%; height: 61%; transform: rotate(-3deg); }
+.xb-art--winter .xb-cut-2 { right: 27%; bottom: 11%; width: 24%; height: 56%; transform: rotate(3deg); }
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .xb-card:hover { transform: translateY(-6px); }
-  .xb-card:hover .xb-media .xb-product { transform: scale(1.05) rotate(-1deg); }
+  .xb-card:hover { transform: translateY(-5px); box-shadow: 0 34px 62px -34px rgba(20, 0, 8, .9); }
+  .xb-card:hover .xb-cut { transform: translateY(-4px) scale(1.018); filter: drop-shadow(0 22px 17px rgba(32, 5, 15, .34)); }
+  .xb-card--orbit:hover .xb-cut-1, .xb-card--winter:hover .xb-cut-1, .xb-card--ornaments:hover .xb-cut-1 { transform: translateY(-4px) scale(1.018) rotate(-3deg); }
+  .xb-card--orbit:hover .xb-cut-2 { transform: translateY(-4px) scale(1.018) rotate(6deg); }
+  .xb-card--steps:hover .xb-cut-2 { transform: translateY(-4px) scale(1.018) rotate(-6deg); }
+  .xb-card--ornaments:hover .xb-cut-3, .xb-card--winter:hover .xb-cut-2 { transform: translateY(-4px) scale(1.018) rotate(3deg); }
 }
 @media (max-width: 900px) {
-  .xb-grid { grid-template-columns: repeat(2, 1fr); }
-  .xb-card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc((100% - var(--xb-gap)) / 2); }
+  .xb-card--featured { grid-template-columns: minmax(0, 1.25fr) minmax(240px, .75fr); }
+  .xb-card--featured .xb-media { min-height: 330px; }
+}
+@media (max-width: 680px) {
+  .xb-grid { grid-template-columns: 1fr; }
+  .xb-card--featured { grid-column: auto; display: block; }
+  .xb-card--featured .xb-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .xb-card--featured .xb-copy { padding: 20px 14px 13px; }
+  .xb-card--featured h3 { font-size: 29px; }
 }
 @media (max-width: 520px) {
-  .xb-grid { --xb-gap: 14px; }
-  .xb-card { padding: 10px 10px 12px; }
-  .xb-card h3 { font-size: 17px; }
-  .xb-in { display: none; }
-  .xb-media { --band-top: 22px; --band-h: 9px; --bw: 48px; }
-  .xb-ribbon-band { transform: rotate(7deg); }
-  .xb-media .xb-bow { transform: rotate(7deg); }
-  .xb-no { top: 9px; left: 9px; }
+  .xb-grid { --xb-gap: 16px; }
+  .xb-card { padding: 7px; border-radius: 17px; }
+  .xb-media { border-radius: 11px; }
+  .xb-card:not(.xb-card--featured) .xb-copy { padding: 16px 9px 9px; }
 }
-
-/* one red satin bow at the section's top-right corner */
-.ge-corner { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-.ge-bow { position: absolute; right: 28px; top: 18px; width: 144px; height: auto; transform: rotate(-6deg);
-  filter: drop-shadow(0 10px 12px rgba(30, 0, 8, .55)); }
 .gift-edit > .wrap { position: relative; z-index: 2; }
-@media (max-width: 760px) {
-  .ge-bow { right: 12px; top: 14px; width: 84px; }
-}
 
 /* ---------- the Christmas gift guide: red and burgundy ---------- */
 .xmas-guide { display: none; }

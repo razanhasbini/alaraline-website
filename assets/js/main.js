@@ -111,6 +111,181 @@
     show(0);
   }
 
+  /* ---------------- Before & After: one result at a time, a drag line, the story beside it ---------------- */
+  const resEl = $('[data-results]');
+  if (resEl && A.results.length) {
+    const R = A.results, pad = n => String(n).padStart(2, '0');
+    // what did the work: the strongest ingredient-based effects across the products used (from the Hair Lab's formulas)
+    const workOf = r => {
+      const by = {};
+      r.products.flatMap(s => A.bySlug[s].combo || [s]).forEach(s => (A.bySlug[s].explain || []).forEach(e => {
+        const b = by[e.label] || (by[e.label] = { label: e.label, value: 0, from: [] });
+        b.value = Math.max(b.value, e.value);
+        e.from.forEach(f => { if (!b.from.includes(f)) b.from.push(f); });
+      }));
+      return Object.values(by).sort((a, b) => b.value - a.value).slice(0, 3);
+    };
+    // two ingredients per effect, preferring readable names over long INCI ones
+    const short = from => { const s = from.filter(f => f.length < 24); return (s.length ? s : from).slice(0, 2); };
+    resEl.innerHTML = `
+      <div class="rs-grid">
+        <figure class="rs-frame">
+          <div class="rs-compare">
+            <img class="rs-img rs-before" alt="" draggable="false">
+            <div class="rs-after"><img class="rs-img" alt="" draggable="false"></div>
+            <span class="rs-tag rs-tag-before">Before</span>
+            <span class="rs-tag rs-tag-after">After</span>
+            <span class="rs-sample" hidden>Illustration</span>
+            <div class="rs-handle" role="slider" tabindex="0" aria-label="Compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span><svg class="ic sm flip"><use href="#i-arrow"/></svg><svg class="ic sm"><use href="#i-arrow"/></svg></span></div>
+          </div>
+        </figure>
+        <div class="rs-story">
+          <div class="rs-top">
+            <p class="rs-count" aria-live="polite"><b></b> <i>/ ${pad(R.length)}</i></p>
+            <div class="rs-arrows"${R.length < 2 ? ' hidden' : ''}>
+              <button type="button" class="rs-arrow" data-rs-go="-1" aria-label="Previous result"><svg class="ic sm flip"><use href="#i-arrow"/></svg></button>
+              <button type="button" class="rs-arrow" data-rs-go="1" aria-label="Next result"><svg class="ic sm"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+          <div class="rs-body" aria-live="polite"></div>
+          <div class="rs-thumbs" role="tablist" aria-label="Results"${R.length < 2 ? ' hidden' : ''}>${R.map((r, i) => `
+            <button type="button" role="tab" class="rs-thumb" data-rs="${i}" aria-label="${esc(r.hair + ', ' + r.concern)}">
+              <img src="${r.before}" alt="" loading="lazy"><img src="${r.after}" alt="" loading="lazy">
+            </button>`).join('')}</div>
+        </div>
+      </div>
+      ${R.some(r => r.sample) ? '<p class="rs-note">Illustrations are made with the ÀLara Hair Lab from each product’s ingredient list, not customer photos. Individual results vary.</p>' : ''}`;
+
+    const cmp = $('.rs-compare', resEl), before = $('.rs-before', resEl), after = $('.rs-after img', resEl), afterWrap = $('.rs-after', resEl);
+    const handle = $('.rs-handle', resEl), body = $('.rs-body', resEl), thumbs = $$('[data-rs]', resEl);
+    let at = -1, split = .5, swapT;
+    const setSplit = v => {
+      split = Math.min(.98, Math.max(.02, v));
+      cmp.style.setProperty('--split', (split * 100).toFixed(2) + '%');
+      handle.setAttribute('aria-valuenow', Math.round(split * 100));
+      $('.rs-tag-before', resEl).style.opacity = split < .2 ? 0 : 1;
+      $('.rs-tag-after', resEl).style.opacity = split > .8 ? 0 : 1;
+    };
+    const story = r => {
+      const ps = r.products.map(s => A.bySlug[s]), total = ps.reduce((a, p) => a + p.price, 0);
+      const work = r.quote ? '' : workOf(r);
+      return `
+        <p class="rs-meta">${esc(r.hair)} <i></i> ${esc(r.concern)}</p>
+        <h3 class="rs-title">${esc(r.title[0])} <em>${esc(r.title[1])}</em></h3>
+        ${r.quote ? `<blockquote class="rs-quote"${/[؀-ۿ]/.test(r.quote) ? ' dir="rtl" lang="ar"' : ''}><p>${esc(r.quote)}</p><footer>${esc(r.who)}</footer></blockquote>` : ''}
+        <dl class="rs-facts">
+          <div><dt>The routine</dt><dd>${ps.map(p => `<a href="${productUrl(p.slug)}">${esc(p.name)}</a>`).join(' + ')}<span class="rs-price">${money(total)}</span></dd></div>
+          <div><dt>Results after</dt><dd>${esc(r.time)} of regular use</dd></div>
+          ${work.length ? `<div><dt>What did the work</dt><dd><ul class="rs-work">${work.map(w => `<li><b>${esc(w.label)}</b> ${esc(short(w.from).join(', '))}</li>`).join('')}</ul></dd></div>` : ''}
+        </dl>
+        <div class="rs-ctas">
+          ${ps.every(p => p.oos) ? `<a href="${productUrl(ps[0].slug)}" class="lbtn">View the routine</a>` : `<button type="button" class="lbtn" data-add="${ps[0].slug}">Add to bag</button>`}
+          <a href="features.html?try=${encodeURIComponent(ps[0].slug)}#hair-lab" class="rs-link" data-try="${ps[0].slug}">Try it on your hair <svg class="ic sm"><use href="#i-arrow"/></svg></a>
+        </div>`;
+    };
+    const go = i => {
+      i = (i + R.length) % R.length;
+      if (i === at) return;
+      const r = R[i], first = at < 0;
+      at = i;
+      $('.rs-count b', resEl).textContent = pad(i + 1);
+      thumbs.forEach((t, k) => t.setAttribute('aria-selected', k === i));
+      const swap = () => {
+        before.src = r.before; after.src = r.after;
+        before.alt = `${r.hair} hair before: ${r.concern.toLowerCase()}`;
+        after.alt = `${r.hair} hair after ${r.time} with ${r.products.map(s => A.bySlug[s].name).join(' and ')}`;
+        $('.rs-sample', resEl).hidden = !r.sample;
+        body.innerHTML = story(r);
+        resEl.classList.remove('is-swapping');
+      };
+      clearTimeout(swapT);
+      if (first || reduce) swap();
+      else { resEl.classList.add('is-swapping'); swapT = setTimeout(swap, 260); }
+    };
+
+    let drag = false;
+    const fromX = x => { const b = cmp.getBoundingClientRect(); setSplit((x - b.left) / b.width); };
+    cmp.addEventListener('pointerdown', e => { drag = true; cmp.setPointerCapture(e.pointerId); cmp.classList.add('is-dragging'); fromX(e.clientX); });
+    cmp.addEventListener('pointermove', e => { if (drag) fromX(e.clientX); });
+    const stop = () => { drag = false; cmp.classList.remove('is-dragging'); };
+    cmp.addEventListener('pointerup', stop);
+    cmp.addEventListener('pointercancel', stop);
+    handle.addEventListener('keydown', e => {
+      const d = { ArrowLeft: -.05, ArrowRight: .05 }[e.key];
+      if (d) { e.preventDefault(); setSplit(split + d); }
+      if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); setSplit(e.key === 'Home' ? 0 : 1); }
+    });
+    resEl.addEventListener('click', e => {
+      const t = e.target.closest('[data-rs], [data-rs-go]');
+      if (t) go(t.dataset.rs !== undefined ? +t.dataset.rs : at + +t.dataset.rsGo);
+    });
+
+    // the first time the section comes into view, the line sweeps once to show it can be dragged
+    if (!reduce) {
+      const hint = new IntersectionObserver(es => {
+        if (!es[0].isIntersecting) return;
+        hint.disconnect();
+        let t0 = 0;
+        const f = now => {
+          if (drag) return;
+          const k = Math.min(1, (now - (t0 = t0 || now)) / 2200);
+          setSplit(.5 + Math.sin(k * Math.PI * 2) * .22 * (1 - k * .3));
+          if (k < 1) requestAnimationFrame(f); else setSplit(.5);
+        };
+        setTimeout(() => requestAnimationFrame(f), 500);
+      }, { threshold: .5 });
+      hint.observe(cmp);
+    }
+    setSplit(.5);
+    go(0);
+  }
+
+  /* ---------------- Featured results: the before and after in two overlapping arches (first three clients) ---------------- */
+  const arEl = $('[data-arches]');
+  if (arEl && A.clients.length) {
+    arEl.innerHTML = A.clients.slice(0, 3).map(c => {
+      const ps = c.products.map(s => A.bySlug[s]), names = ps.map(p => p.name).join(' + ');
+      return `
+      <article class="ar-pair" role="listitem">
+        <div class="ar-stage">
+          <figure class="ar-arch ar-before"><img src="${c.before}" alt="${esc(`${c.hair} before`)}" loading="lazy"><span class="ar-tag">Before</span></figure>
+          <figure class="ar-arch ar-after"><img src="${c.after}" alt="${esc(`${c.hair} after ${c.time} with ${names}`)}" loading="lazy">${c.placeholder ? '<span class="ar-ph">Placeholder</span>' : ''}<span class="ar-tag">After</span></figure>
+        </div>
+        <div class="ar-cap">
+          <h3 class="ar-name">${ps.map(p => `<a href="${productUrl(p.slug)}">${esc(p.name)}</a>`).join(' + ')}</h3>
+          <p class="ar-meta">${esc(c.hair)} · ${esc(c.time)}${c.who ? ` · ${esc(c.who)}` : ''}</p>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  /* ---------------- Client Results: two polaroids per client, the after hanging lower right from a clip ---------------- */
+  const crEl = $('[data-clients]');
+  if (crEl && A.clients.length) {
+    crEl.innerHTML = `<div class="cr-grid" role="list">${A.clients.map(c => {
+      const ps = c.products.map(s => A.bySlug[s]), names = ps.map(p => p.name).join(' + ');
+      return `
+      <article class="cr-pair" role="listitem">
+        <figure class="cr-pol cr-before">
+          <span class="cr-tape" aria-hidden="true"></span>
+          <img src="${c.before}" alt="${esc(`${c.hair} before`)}" loading="lazy">
+          <figcaption>Before</figcaption>
+          ${c.placeholder ? '<span class="cr-ph">Placeholder</span>' : ''}
+        </figure>
+        <figure class="cr-pol cr-after">
+          <span class="cr-clip" aria-hidden="true"></span>
+          <img src="${c.after}" alt="${esc(`${c.hair} after ${c.time} with ${names}`)}" loading="lazy">
+          <figcaption>After</figcaption>
+        </figure>
+        <div class="cr-cap">
+          <h3 class="cr-name">${ps.map(p => `<a href="${productUrl(p.slug)}">${esc(p.name)}</a>`).join(' + ')}</h3>
+          <p class="cr-meta">${esc(c.hair)} <i></i> ${esc(c.time)}${c.who ? ` <i></i> ${esc(c.who)}` : ''}</p>
+        </div>
+      </article>`;
+    }).join('')}</div>
+      ${A.clients.some(c => c.placeholder) ? '<p class="cr-note">Placeholder photos from Unsplash, shown until our clients’ own photos are added.</p>' : ''}`;
+  }
+
   /* ================= SHOP and CATEGORY pages ================= */
   const shop = $('[data-shop]');
   if (shop) {
@@ -201,7 +376,7 @@
       const main = p.cats.filter(c => c !== 'Best Sellers')[0] || p.cats[0];
       const lead = p.cats[0];
       $('[data-crumbs]').innerHTML = `<a href="index.html">Home</a><i></i><a href="shop.html">Products</a><i></i><a href="${catUrl(lead)}">${esc(lead)}</a><i></i><span>${esc(p.name)}</span>`;
-      const imgs = [...new Set([p.img, p.imgPlain, p.img2].filter(Boolean))];
+      const imgs = [...new Set([p.img, p.img2].filter(Boolean))];
       const sale = p.was ? Math.round((1 - p.price / p.was) * 100) : 0;
       const opts = p.options ? Object.entries(p.options) : [];
       const shareUrl = encodeURIComponent('https://alaraline.co/product/' + p.slug + '/');

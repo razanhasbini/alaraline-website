@@ -4,7 +4,7 @@ window.ALARA_LOOKS = [
     "key": "waves",
     "family": "wavy",
     "name": "Soft waves",
-    "anchor": 621
+    "anchor": 620
   },
   {
     "key": "straight",
@@ -22,6 +22,24 @@ window.ALARA_LOOKS = [
     "key": "ringlets",
     "family": "curly",
     "name": "Curly",
-    "anchor": 633
+    "anchor": 632
+  },
+  {
+    "key": "tight",
+    "family": "curly",
+    "name": "Tight curls",
+    "anchor": 613
+  },
+  {
+    "key": "fullcurl",
+    "family": "curly",
+    "name": "Full curls",
+    "anchor": 572
+  },
+  {
+    "key": "coily",
+    "family": "coily",
+    "name": "Coily",
+    "anchor": 0
   }
 ];

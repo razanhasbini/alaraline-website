@@ -227,10 +227,8 @@ irregular shape in the system: soft, lumpy, always on a top edge, never over tex
   (clear of the centred heading; one corner on ≤900px).
 - **Ornaments.** Gold, silver, pearl and champagne mirror-glass baubles and teardrops hang from the
   garland on thin gold threads, swaying 1.8°.
-- **Santa hats.** During the season the shampoos and conditioners wear a Santa hat in their product
-  photo: the brand's own photos for Oh Honey and Curls On shampoo; the hats cut from those photos
-  and seated on the matching caps for the other four (assets/christmas/hats/). Everyday photos stay
-  untouched; the swap happens only in season (season-data.js).
+- **Product photos stay real.** Products always show their alaraline.co photos, in season too. No Santa hats or
+  fairy lights on the products (removed at the owner's request; the old files remain in assets/christmas/hats/).
 - **Snow caps on the category arches,** following the arch and only where it faces up.
 - **Snow banks** along the bottom of the velvet sections (gift edit, ritual).
 - **The Christmas gift edit.** A velvet section after Best Sellers: the gift box as the feature, the
@@ -259,8 +257,7 @@ Do:
 
 Don't:
 - Don't use red outside the gift guide, and never green. No pine garlands, cartoon bows, candy canes
-  or Santa figures (rejected by the brand owner as childish). The Santa hats on the bottles are the
-  one exception, approved by the brand owner.
+  or Santa figures (rejected by the brand owner as childish). No Santa hats on the bottles either.
 - Don't invent packaging that contradicts the photographs, and never redraw a product label.
 - Don't put snow, ornaments or sparkles over prices, product names, labels or CTAs.
 - Don't use glitter textures, rainbow foil, or gradients as decoration; gradients exist only as light
